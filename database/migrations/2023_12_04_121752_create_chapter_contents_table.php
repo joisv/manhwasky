@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chapter_gallery', function (Blueprint $table) {
+        Schema::create('chapter_contents', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('chapter_id');
-            $table->unsignedBigInteger('gallery_id');
+            $table->longText('url');
             $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
-            $table->foreign('gallery_id')->references('id')->on('galleries')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chapter_gallery');
+        Schema::dropIfExists('chapter_contents');
     }
 };

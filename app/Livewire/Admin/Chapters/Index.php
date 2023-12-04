@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Admin\Series;
+namespace App\Livewire\Admin\Chapters;
 
-use App\Models\Series;
+use App\Models\Chapter;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -20,25 +20,15 @@ class Index extends Component
 
     public $mySelected = [];
     public $selectedAll = false;
-    // public $firstId = NULL;
+    public $firstId = NULL;
 
-    public function render()
+    public $listeners = [
+        'destroy' => 'bulkDelete'
+    ];
+
+    public function getChapters()
     {
-        $query = $this->getSeries()->paginate($this->paginate);
-        // $this->firstId = $query[0]->id;
-
-        return view('livewire.admin.series.index', [
-            'serieses' => $query
-        ]);
-    }
-
-    public function getSeries()
-    {
-        $query = Series::with('gallery');
-        
-        if ($this->search) {
-            $query->search(['title', 'status', 'created', 'updated_at'], $this->search);
-        }
+        $query = Chapter::with('series')->search(['title', 'series.title'], $this->search);
 
         if (in_array($this->sortField, ['finish', 'pending', 'ongoing'])) {
             $query->where('status', $this->sortField);
@@ -52,7 +42,7 @@ class Index extends Component
 
     public function updatedSelectedAll($val)
     {
-        $val ? $this->mySelected = $this->getSeries()->limit($this->paginate)->pluck('id') : $this->mySelected = [];
+        $val ? $this->mySelected = $this->getChapters()->limit($this->paginate)->pluck('id') : $this->mySelected = [];
     }
 
     public function updatedMySelected()
@@ -85,24 +75,24 @@ class Index extends Component
             ]
         ]);
     }
-
+    
     #[On('delete')]
-    public function deleteSeries($data)
+    public function deleteChapter($data)
     {
         $this->mySelected[] = $data['value'];
         $this->bulkDelete('deleted successfully');
     }
     
     #[On('destroy')]
-    public function bulkDelete($message = 'bulk delete success')
+    public function bulkDelete()
     {
         if ($this->mySelected) {
             try {
                 //code...
-                Series::whereIn('id', $this->mySelected)->delete();
+                Chapter::whereIn('id', $this->mySelected)->delete();
                 $this->mySelected = [];
                 $this->selectedAll = false;
-                $this->alert('success', $message);
+                $this->alert('success', 'bulk delete success');
             } catch (\Throwable $th) {
                 $this->alert('error', 'series not found');
             }
@@ -119,5 +109,20 @@ class Index extends Component
             <span class="sr-only">Loading...</span>
         </div>
         HTML;
+    }
+    
+    public function render()
+    {
+        $query = $this->getChapters()->paginate($this->paginate);
+        // $this->firstId = $query[0]->id;
+
+        return view('livewire.admin.chapters.index', [
+            'chapters' => $query
+        ]);
+    }
+    #[On('close-modal')]
+    public function reRender()
+    {
+        
     }
 }

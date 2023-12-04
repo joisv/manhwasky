@@ -1,9 +1,15 @@
 @php
-    $inicialDate = $value->format('F j, Y');
+    if ($isEdit) {
+        $finalValue = \Carbon\Carbon::createFromFormat('Y-m-d', $value);
+        if ($finalValue !== false) {
+            $inicialDate = $finalValue->format('F j, Y');
+        }
+    } else {
+        $inicialDate = $value->format('F j, Y');
+    }
 @endphp
 
-<div :class="!date ? 'border-b border-b-gray-400' : ''" 
-x-data="{
+<div :class="!date ? 'border-b border-b-gray-400' : ''" x-data="{
     date: false,
     currentDate: '',
     dataDate: @entangle('value'),
@@ -11,7 +17,7 @@ x-data="{
     flatpickrInstance: null,
     dateInit: @js($inicialDate),
 
-    init(){
+    init() {
         let flat = document.querySelector('#flatpickr')
         this.flatpickrInstance = flatpickr(flat, {
             altInput: true,
@@ -35,15 +41,13 @@ x-data="{
         return formattedDate;
     },
 }">
-    <button type="button" @click="date = ! date"
-        class="flex space-x-4 gray w-full py-2 cursor-pointer">
+    <button type="button" @click="date = ! date" class="flex space-x-4 gray w-full py-2 cursor-pointer">
         <div x-data="$watch('setDate', value => {
             value == 'false' ? this.setDate = false : this.setDate = true
             $dispatch('inisiasi', this.setDate)
         })">
-            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                class="ease-in duration-200" :class="date ? 'rotate-180' : ''"
-                xmlns="http://www.w3.org/2000/svg">
+            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" class="ease-in duration-200"
+                :class="date ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
@@ -72,8 +76,7 @@ x-data="{
             <input id="default-radio-2" type="radio" value="false" name="date-radio"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 x-model="setDate">
-            <label for="default-radio-2"
-                class="ms-2 text-base font-medium text-gray-800  dark:text-gray-300">Setel
+            <label for="default-radio-2" class="ms-2 text-base font-medium text-gray-800  dark:text-gray-300">Setel
                 tanggal</label>
         </div>
         <div class="dateShow" :class="setDate ? 'hidden' : ''"

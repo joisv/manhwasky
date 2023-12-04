@@ -30,6 +30,9 @@ $logout = function (Logout $logout) {
                     <x-nav-link :href="route('series')" :active="request()->routeIs('series')" wire:navigate>
                         {{ __('Series') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('chapters')" :active="request()->routeIs('chapters')" wire:navigate>
+                        {{ __('Chapters') }}
+                    </x-nav-link>
                 </div>
             </div>
 

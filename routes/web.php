@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Series;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::view('dashboard', 'admin/dashboard')
         ->name('dashboard');
 
     Route::view('series/create', 'admin/series/create')->name('series.create');
+    Route::get('series/edit/{series:id}', function(Series $series) {
+        return view('admin/series/edit', [
+            'series' => $series->load('genres')
+        ]);
+    })->name('series.edit');
     Route::view('series', 'admin/series/index')->name('series');
+
+    Route::view('chapters', 'admin/chapters/index')->name('chapters');
 
     Route::view('profile', 'profile')
         ->name('profile');

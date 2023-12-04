@@ -10,7 +10,7 @@
     seriesSetting: $persist(false),
 
     init() {
-        console.log(this.seriesSetting)
+        this.seriesSetting = document.getElementById('series_setting');
     },
 
     setInputTag(e) {
@@ -105,8 +105,9 @@
                 </div>
             </div>
             {{-- Setting series --}}
-            <div id="series_setting" :class="!seriesSetting ? 'translate-x-full' : ''"
-                class="fixed lg:translate-x-0 right-0 w-full sm:w-[35vw] lg:w-[24vw] xl:w-[23vw] bg-white p-5 rounded-sm top-20 h-[85vh] space-y-4 overflow-y-auto ease-in duration-100">
+            <div id="series_setting"
+            :class="!seriesSetting ? 'translate-x-full' : ''"
+            class="fixed lg:translate-x-0 right-0 w-full sm:w-[35vw] lg:w-[24vw] xl:w-[23vw] bg-white p-5 rounded-sm top-20 h-[85vh] space-y-4 overflow-y-auto ease-in duration-100 {{ !$errors->isNotEmpty() ? 'translate-x-full' : '' }}">
                 <div class="flex items-center space-x-2">
                     <button type="button" class="z-50 lg:hidden flex " @click="toggleSetting">
                         <x-icons.setting default="#000000" />
@@ -227,7 +228,7 @@
                     </div>
                 </div>
                 {{-- Date picker --}}
-                <livewire:admin.series.set-date wire:model="date" />
+                <livewire:admin.series.set-date wire:model="date" :isEdit="true"/>
                 {{-- Permalink --}}
                 <livewire:admin.series.set-slug wire:model="slug" />
                 {{-- Poster --}}

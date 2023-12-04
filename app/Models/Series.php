@@ -20,6 +20,11 @@ class Series extends Model
         'created',
     ];
 
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'series_genre', 'series_id', 'genre_id');
+    }
+    
     public function gallery()
     {
         return $this->belongsTo(Gallery::class);

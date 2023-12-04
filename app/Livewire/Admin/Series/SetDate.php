@@ -9,6 +9,7 @@ class SetDate extends Component
 {
     #[Modelable]
     public $value;
+    public $isEdit = false;
     
     public function render()
     {

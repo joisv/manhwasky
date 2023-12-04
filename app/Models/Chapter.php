@@ -10,7 +10,10 @@ class Chapter extends Model
     use HasFactory;
 
     protected $fillable = [
-        'image'
+        'created',
+        'slug',
+        'title',
+        'series_id'
     ];
     
     public function series()
@@ -18,8 +21,8 @@ class Chapter extends Model
         return $this->belongsTo(Series::class);
     }
 
-    public function galleries()
+    public function contents()
     {
-        return $this->belongsToMany(Gallery::class, 'chapter_gallery', 'chapter_id', 'gallery_id');
+        return $this->hasMany(ChapterContent::class);
     }
 }
