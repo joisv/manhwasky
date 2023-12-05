@@ -15,9 +15,7 @@ use Livewire\Attributes\On;
 class Create extends Component
 {
     use LivewireAlert;
-    
-    public $series;
-    public $searchSeries;
+
     public $isEdit = false;
     
     public $created;
@@ -49,35 +47,6 @@ class Create extends Component
         $this->dispatch('close-modal');
     }
     
-    public function restoreSeries($id)
-    {
-        $restoredGenre = Series::find($id);
-        if ($restoredGenre) {
-            if (!$this->series) {
-                $this->series = collect();
-            }
-            $this->series->push($restoredGenre);
-            $this->selectedSeries = collect($this->selectedSeries)->reject(function ($genre) use ($id) {
-                return $genre['id'] == $id;
-            })->toArray();
-        }
-    }
-    
-    public function removeSeries($id)
-    {
-        // Menghapus genre dengan ID tertentu dari $this->series
-        $this->series = $this->series->reject(function ($genre) use ($id) {
-            return $genre->id == $id;
-        });
-    }
-    
-    public function setSelectedSeries($id, $name)
-    {
-        $this->removeSeries($id);
-        $this->selectedSeries = [];
-        $this->selectedSeries[] = ['id' => $id, 'name' => $name];
-    }
-    
     #[On('setslug')]
     public function setSlugAttribute()
     {
@@ -93,9 +62,14 @@ class Create extends Component
         $this->slug = $slug;
     }
     
+    #[On('setSelectedSeries')]
+    public function evtSelectedSeries($value)
+    {
+        $this->selectedSeries = $value;
+    }
+    
     public function render()
     {
-        $this->series = $this->getSeries();
         return view('livewire.admin.chapters.create');
     }
 
@@ -104,8 +78,5 @@ class Create extends Component
         $this->created = Carbon::now();
     }
     
-    public function getSeries()
-    {
-        return Series::search('title', $this->searchSeries)->latest('id')->get();
-    }
+    
 }

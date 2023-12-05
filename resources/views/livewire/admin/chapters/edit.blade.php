@@ -1,21 +1,11 @@
-@php
-    if ($isEdit) {
-        $finalValue = \Carbon\Carbon::createFromFormat('Y-m-d', $created);
-        if ($finalValue !== false) {
-            $inicialDate = $finalValue->format('F j, Y');
-        }
-    } else {
-        $inicialDate = $created->format('F j, Y');
-    }
-@endphp
 <div x-data="{
     selectShow: false,
-    permadate: false,
-    dateInit: @js($inicialDate),
-    flat: null,
+    permadateEdit: false,
+    flatpickrInstance: null,
 
     init() {
-        let flat = document.querySelector('#flatpickr_chapter')
+        this.dateStr = this.dateStr
+        let flat = document.querySelector('#flatpickr_chapter_edit')
         this.flatpickrInstance = flatpickr(flat, {
             altInput: true,
             altFormat: 'F j, Y',
@@ -23,13 +13,12 @@
             defaultDate: @js($created),
             onChange: (selectedDates, dateStr, instance) => {
                 $wire.created = dateStr;
-                this.dateInit = this.convertToCustomFormat(dateStr)
             }
         })
     },
 
     convertToCustomFormat(inputDate) {
-        const parts = inputDate.split('-');
+        const parts = inputDate ? inputDate.split('-') : '';
         const monthNames = [
             'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
@@ -59,13 +48,13 @@
                     @enderror
                 </div>
                 {{-- Permalink dan tanggal --}}
-                <div class="space-y-2 pb-2" :class="permadate ? 'border-b border-gray-400' : ''" wire:ignore>
-                    <div :class="!permadate ? 'py-0 border-b border-b-gray-400' : ''">
-                        <button type="button" @click="permadate = ! permadate"
+                <div class="space-y-2 pb-2" :class="permadateEdit ? 'border-b border-gray-400' : ''" wire:ignore>
+                    <div :class="!permadateEdit ? 'py-0 border-b border-b-gray-400' : ''">
+                        <button type="button" @click="permadateEdit = ! permadateEdit"
                             class="flex space-x-4 gray  w-full py-2 cursor-pointer">
                             <div>
                                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                    class="ease-in duration-200" :class="permadate ? 'rotate-180' : ''"
+                                    class="ease-in duration-200" :class="permadateEdit ? 'rotate-180' : ''"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -77,26 +66,28 @@
                                 </svg>
                             </div>
                             <div class="text-start">
-                                <x-input-label for="permadate">permalink & tanggal</x-input-label>
-                                <div class="text-base font-medium text-gray-400 mt-1" x-show="!permadate"
-                                    x-text="dateInit">
+                                <x-input-label for="permadateEdit">permalink & tanggal</x-input-label>
+                                <div  x-show="!permadateEdit">
+                                    <div class="text-base font-medium text-gray-400 mt-1"
+                                        x-text="convertToCustomFormat($wire.created)" >
+                                    </div>
+                                    <input type="text" disabled
+                                        class="border-0 focus:border-0 p-0 text-base font-medium text-gray-400 outline-none"
+                                        wire:model="slug">
                                 </div>
-                                <input type="text" disabled
-                                    class="border-0 focus:border-0 p-0 text-base font-medium text-gray-400 outline-none"
-                                    wire:model="slug">
                             </div>
                         </button>
-                        {{-- <div class="text-base font-medium text-gray-400 mt-2" x-show="!permadate">
+                        {{-- <div class="text-base font-medium text-gray-400 mt-2" x-show="!permadateEdit">
                         </div> --}}
                     </div>
-                    <div x-show="permadate" x-collapse class="space-y-2">
+                    <div x-show="permadateEdit" x-collapse class="space-y-2">
                         {{-- slug --}}
                         <input type="text"
                             class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
                             placeholder="permalink" id="permalink" wire:model="slug">
 
                         {{-- tanggal --}}
-                        <input id="flatpickr_chapter" wire:model="created" type="text" placeholder="YYYY-MM-DD"
+                        <input id="flatpickr_chapter_edit" wire:model="created" type="text" placeholder="YYYY-MM-DD"
                             class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0" />
                     </div>
                 </div>
