@@ -31,6 +31,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('series', [SeriesController::class, 'index'])->name('series');
 
     Route::view('chapters', 'admin/chapters/index')->name('chapters');
+    Route::view('genres', 'admin/genres/index')->name('genres');
 
     Route::view('settings', 'admin/settings')->name('settings');
 
