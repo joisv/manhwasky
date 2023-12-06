@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Chapters;
 
 use App\Models\Chapter;
+use App\Settings\GeneralSetting;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -29,12 +30,12 @@ class Index extends Component
     public function getChapters()
     {
         $query = Chapter::with('series')->search(['title', 'series.title'], $this->search);
+        $query->orderBy($this->sortField, $this->sortDirection);
 
-        if (in_array($this->sortField, ['finish', 'pending', 'ongoing'])) {
-            $query->where('status', $this->sortField);
-        } else {
-            $query->orderBy($this->sortField, $this->sortDirection);
-        }
+        // if (in_array($this->sortField, ['finish', 'pending', 'ongoing'])) {
+        //     $query->where('status', $this->sortField);
+        // } else {
+        // }
 
         // Jangan panggil get() di sini, biarkan query builder tetap sebagai objek query
         return $query;
@@ -75,14 +76,14 @@ class Index extends Component
             ]
         ]);
     }
-    
+
     #[On('delete')]
     public function deleteChapter($data)
     {
         $this->mySelected[] = $data['value'];
         $this->bulkDelete('deleted successfully');
     }
-    
+
     #[On('destroy')]
     public function bulkDelete()
     {
@@ -110,19 +111,17 @@ class Index extends Component
         </div>
         HTML;
     }
-    
-    public function render()
+
+    public function render(GeneralSetting $settings)
     {
         $query = $this->getChapters()->paginate($this->paginate);
-        // $this->firstId = $query[0]->id;
-
         return view('livewire.admin.chapters.index', [
-            'chapters' => $query
+            'chapters' => $query,
+            'settings' => $settings
         ]);
     }
     #[On('close-modal')]
     public function reRender()
     {
-        
     }
 }

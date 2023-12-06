@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SeriesController;
 use App\Models\Series;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             'series' => $series->load('genres')
         ]);
     })->name('series.edit');
-    Route::view('series', 'admin/series/index')->name('series');
+    
+    Route::get('series', [SeriesController::class, 'index'])->name('series');
 
     Route::view('chapters', 'admin/chapters/index')->name('chapters');
+
+    Route::view('settings', 'admin/settings')->name('settings');
 
     Route::view('profile', 'profile')
         ->name('profile');

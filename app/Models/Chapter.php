@@ -13,6 +13,7 @@ class Chapter extends Model
         'created',
         'slug',
         'title',
+        'views',
         'series_id'
     ];
     

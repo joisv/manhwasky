@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->date('created')->default(now());
+            $table->bigInteger('views')->default(0);
             $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
             $table->timestamps();
         });

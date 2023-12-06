@@ -10,7 +10,7 @@
 
     }
 }">
-    <x-tables.table name="Chapter" count="{{ $chapters->count() }} Series">
+    <x-tables.table name="Chapter" count="{{ $chapters->count() }} Chapter">
         <x-slot name="secondBtn">
             <button
                 class="flex items-center justify-center w-1/2 px-5 py-2 text-sm disabled:text-gray-700 transition-colors duration-200 disabled:bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700 bg-red-500 text-white"
@@ -20,7 +20,7 @@
         </x-slot>
         <x-slot name="addBtn">
             <x-tables.addbtn type="button" x-data="" @click="createChapter">
-                Add Series
+                Add Chapter
             </x-tables.addbtn>
         </x-slot>
         <x-slot name="sort">
@@ -40,10 +40,7 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 px-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         wire:model.live="sortField">
                         <option selected>Filter by</option>
-                        <option value="created">All</option>
-                        <option value="finish">Finish</option>
-                        <option value="pending">Pending</option>
-                        <option value="ongoing">Ongoing</option>
+                        <option value="updated_at">All</option>
                         <option value="views">Most View</option>
                     </select>
                 </div>
