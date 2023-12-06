@@ -196,7 +196,7 @@
 
         </div>
     </form>
-    <x-modal name="add-logo" :show="$errors->isNotEmpty()">
+    <x-modal name="add-logo" :show="true">
         <livewire:admin.gallery.create />
     </x-modal>
 </section>

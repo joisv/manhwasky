@@ -28,6 +28,7 @@ class Create extends Component
 
     public $searchGenre = '';
     public $selectedGenres = [];
+    public $selecteTag = [];
 
     public function mount()
     {

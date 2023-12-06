@@ -10,7 +10,6 @@
     seriesSetting: $persist(false),
 
     init() {
-        console.log(this.seriesSetting)
     },
 
     setInputTag(e) {
@@ -19,9 +18,13 @@
         let lastValue = inputArray[inputArray.length - 1];
 
         if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
-            this.tagSearchResult = this.dataTag
+            this.tagSearchResult = this.dataTag.filter(item => !inputArray.includes(item))
         } else {
-            this.tagSearchResult = this.dataTag.filter(item => item.includes(lastValue));
+            if(inputArray.length > 0){
+                this.tagSearchResult = this.dataTag.filter(item => item.includes(lastValue));
+            } else {
+                this.tagSearchResult = this.dataTag
+            }
         }
 
         if (e.key === ',' || e.code === 'Comma' || e.which === 188) {
@@ -165,7 +168,7 @@
                                             class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium" @click="removeGenre({{ $index }})">x</button>
                                     </div>
                                 @empty
-                                    <div class="text-base font-medium w-full text-center bg-red-500">genre tidak
+                                    <div class="text-base font-medium w-full text-center">genre tidak
                                         ada/ditemukan</div>
                                 @endforelse
                             </div>

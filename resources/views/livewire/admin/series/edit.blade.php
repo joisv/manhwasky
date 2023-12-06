@@ -10,7 +10,7 @@
     seriesSetting: $persist(false),
 
     init() {
-        this.seriesSetting = document.getElementById('series_setting');
+
     },
 
     setInputTag(e) {
@@ -19,9 +19,13 @@
         let lastValue = inputArray[inputArray.length - 1];
 
         if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
-            this.tagSearchResult = this.dataTag
+            this.tagSearchResult = this.dataTag.filter(item => !inputArray.includes(item))
         } else {
-            this.tagSearchResult = this.dataTag.filter(item => item.includes(lastValue));
+            if(inputArray.length > 0){
+                this.tagSearchResult = this.dataTag.filter(item => item.includes(lastValue));
+            } else {
+                this.tagSearchResult = this.dataTag
+            }
         }
 
         if (e.key === ',' || e.code === 'Comma' || e.which === 188) {
@@ -59,9 +63,9 @@
     },
 
     toggleSetting() {
-        this.seriesSetting = ! this.seriesSetting;
+        this.seriesSetting = !this.seriesSetting;
     },
-    removeGenre(id){
+    removeGenre(id) {
         let elementToRemove = document.getElementById('genre-' + id);
 
         if (elementToRemove) {
@@ -105,9 +109,8 @@
                 </div>
             </div>
             {{-- Setting series --}}
-            <div id="series_setting"
-            :class="!seriesSetting ? 'translate-x-full' : ''"
-            class="fixed lg:translate-x-0 right-0 w-full sm:w-[35vw] lg:w-[24vw] xl:w-[23vw] bg-white p-5 rounded-sm top-20 h-[85vh] space-y-4 overflow-y-auto ease-in duration-100 {{ !$errors->isNotEmpty() ? 'translate-x-full' : '' }}">
+            <div id="series_setting_edit" :class="!seriesSetting ? 'translate-x-full' : ''"
+                class="fixed lg:translate-x-0 right-0 w-full sm:w-[35vw] lg:w-[24vw] xl:w-[23vw] bg-white p-5 rounded-sm top-20 h-[85vh] space-y-4 overflow-y-auto ease-in duration-100">
                 <div class="flex items-center space-x-2">
                     <button type="button" class="z-50 lg:hidden flex " @click="toggleSetting">
                         <x-icons.setting default="#000000" />
@@ -163,10 +166,11 @@
                                             wire:click="setSelectedGenre({{ $genre->id }}, '{{ $genre->name }}')"
                                             class="w-full text-start p-1 hover:bg-gray-200 ease-in duration-150">{{ $genre->name }}</button>
                                         <button type="button"
-                                            class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium" @click="removeGenre({{ $index }})">x</button>
+                                            class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium"
+                                            @click="removeGenre({{ $index }})">x</button>
                                     </div>
                                 @empty
-                                    <div class="text-base font-medium w-full text-center bg-red-500">genre tidak
+                                    <div class="text-base font-medium w-full text-center">genre tidak
                                         ada/ditemukan</div>
                                 @endforelse
                             </div>
@@ -202,18 +206,7 @@
                             class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
                             x-model="inputTag" @keyup="setInputTag">
                         <div class="w-full h-32 overflow-y-auto ">
-                            <div x-show="tagSearchResult.length > 0">
-                                <template x-for="(tag, index) in tagSearchResult">
-                                    <div :id="'tag-' + index"
-                                        class=" border-b border-b-gray-300 w-full flex items-center justify-between space-x-2">
-                                        <button class="w-full text-start p-1 hover:bg-gray-200 ease-in duration-150"
-                                            x-text="tag" @click.prevent="addTag(tag, index)"></button>
-                                        <button type="button" @click="removeTag(tag, index)"
-                                            class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium">x</button>
-                                    </div>
-                                </template>
-                            </div>
-                            <div x-show="tagSearchResult.length == 0">
+                            <div>
                                 <template x-for="(tag, index) in tagSearchResult">
                                     <div :id="'tag-' + index"
                                         class=" border-b border-b-gray-300 w-full flex items-center justify-between space-x-2">
@@ -228,7 +221,7 @@
                     </div>
                 </div>
                 {{-- Date picker --}}
-                <livewire:admin.series.set-date wire:model="date" :isEdit="true"/>
+                <livewire:admin.series.set-date wire:model="date" :isEdit="true" />
                 {{-- Permalink --}}
                 <livewire:admin.series.set-slug wire:model="slug" />
                 {{-- Poster --}}
@@ -258,8 +251,8 @@
                                 @enderror
                                 @if ($urlPoster)
                                     <div class="w-full relative">
-                                        <img src="{{ asset('storage/' . $urlPoster) }}" alt="" srcset=""
-                                            class="w-1/2 h-20 object-contain object-left">
+                                        <img src="{{ asset('storage/' . $urlPoster) }}" alt=""
+                                            srcset="" class="w-1/2 h-20 object-contain object-left">
                                         <div wire:click="removePoster"
                                             class="absolute h-5 w-5 rounded-lg flex items-center justify-center -top-3 right-1/2 bg-gray-400 text-white hover:bg-rose-500">
                                             x</div>

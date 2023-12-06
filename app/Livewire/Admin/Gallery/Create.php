@@ -14,14 +14,13 @@ class Create extends Component
     use LivewireAlert;
     use WithFileUploads;
     
-    public $galleries;
+    public $paginate = 20;
     public $images = [];
-
     
     public function render()
     {
         return view('livewire.admin.gallery.create', [
-            'galleries' => $this->galleries
+            'galleries' => $this->getGalleries()->paginate($this->paginate)
         ]);
     }
     
@@ -55,15 +54,10 @@ class Create extends Component
     public function alertMe($status, $message){
         $this->alert($status, $message);
     }
-    
-    public function mount() 
-    {
-        $this->getGalleries();
-    }
 
     public function getGalleries()
     {
-        $this->galleries = Gallery::all();
+        return Gallery::latest('id');
     }
 
 }
