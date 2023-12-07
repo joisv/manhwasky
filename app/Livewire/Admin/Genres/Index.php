@@ -66,25 +66,37 @@ class Index extends Component
     #[On('delete')]
     public function deleteGenres($data)
     {
-        $this->mySelected[] = $data['value'];
-        $this->bulkDelete('deleted successfully');
+        if (auth()->user()->can('delete')) {
+            $this->mySelected[] = $data['value'];
+            $this->bulkDelete('deleted successfully');
+        } else {
+            $this->alert('error', 'kamu tidak memiliki izin');
+            $this->mySelected = [];
+            $this->selectedAll = false;
+        }
     }
 
     #[On('destroy')]
     public function bulkDelete($message = 'bulk delete success')
     {
-        if ($this->mySelected) {
-            try {
-                //code...
-                Genre::whereIn('id', $this->mySelected)->delete();
-                $this->mySelected = [];
-                $this->selectedAll = false;
-                $this->alert('success', $message);
-            } catch (\Throwable $th) {
-                $this->alert('error', 'series not found');
+        if (auth()->user()->can('delete')) {
+            if ($this->mySelected) {
+                try {
+                    //code...
+                    Genre::whereIn('id', $this->mySelected)->delete();
+                    $this->mySelected = [];
+                    $this->selectedAll = false;
+                    $this->alert('success', $message);
+                } catch (\Throwable $th) {
+                    $this->alert('error', 'series not found');
+                }
+            } else {
+                $this->alert('error', 'series required');
             }
         } else {
-            $this->alert('error', 'series required');
+            $this->alert('error', 'kamu tidak memiliki izin');
+            $this->mySelected = [];
+            $this->selectedAll = false;
         }
     }
 

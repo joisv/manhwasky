@@ -28,15 +28,21 @@ class Edit extends Component
     
     public function save()
     {
-        $this->validate();
-
-        Genre::create([
-            'name' => $this->name,
-            'slug' => $this->setSlugAttribute($this->name)
-        ]);
-
-        $this->dispatch('re-render');
-        $this->alert('success', 'genre updated successfully');
+        if (auth()->user()->can('update')) {
+            $this->validate();
+    
+            Genre::create([
+                'name' => $this->name,
+                'slug' => $this->setSlugAttribute($this->name)
+            ]);
+    
+            $this->dispatch('re-render');
+            $this->alert('success', 'genre updated successfully');
+            $this->reset(['name', 'slug']);
+        }else{
+            $this->alert('error', 'kamu tidak memiliki izin');
+        }
+        
     }
 
     public function setSlugAttribute($value)

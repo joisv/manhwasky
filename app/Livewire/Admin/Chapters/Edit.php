@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Chapters;
 use App\Models\Chapter;
 use App\Models\ChapterContent;
 use App\Models\Series;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
@@ -68,23 +69,29 @@ class Edit extends Component
     
     public function save()
     {
-        $this->validate();
-        $this->chapter->contents()->delete();
-        $chapters = preg_split('/,\s*/', $this->chapterStr, -1, PREG_SPLIT_NO_EMPTY);
-        $this->chapter->update([
-            'title' => $this->title,
-            'series_id' => $this->selectedSeries[0]['id'],
-            'slug' => $this->slug,
-            'created' => $this->created
-        ]);
-        foreach ($chapters as $chapterData) {
-            ChapterContent::create([
-                'url' => $chapterData,
-                'chapter_id' => $this->chapter->id
+        if (auth()->user()->can('create')) {
+            $this->validate();
+            $this->chapter->contents()->delete();
+            $chapters = preg_split('/,\s*/', $this->chapterStr, -1, PREG_SPLIT_NO_EMPTY);
+            $this->chapter->update([
+                'title' => $this->title,
+                'series_id' => $this->selectedSeries[0]['id'],
+                'slug' => $this->slug,
+                'created' => $this->created
             ]);
+            foreach ($chapters as $chapterData) {
+                ChapterContent::create([
+                    'url' => $chapterData,
+                    'chapter_id' => $this->chapter->id
+                ]);
+            }
+            $this->alert('success', 'Chapter created successfully');
+            $this->dispatch('close-modal');
+            $this->reset(['title', 'slug', 'chapterStr']);
+            $this->created = Carbon::now();
+        }else{
+            $this->alert('error', 'kamu tidak memiliki izin');
         }
-        $this->alert('success', 'Chapter created successfully');
-        $this->dispatch('close-modal');
     }
     
     public function render()

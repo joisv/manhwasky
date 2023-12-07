@@ -1,37 +1,37 @@
 <?php
 
-namespace App\Livewire\Admin\Chapters;
+namespace App\Livewire\Admin\Users;
 
-use App\Models\Chapter;
-use App\Settings\GeneralSetting;
+use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
     use LivewireAlert;
 
     public string $sortField = 'updated_at';
     public string $sortDirection = 'desc';
     public string $search = '';
-    public int $paginate = 10;
-
+    public $paginate = 10;
     public $mySelected = [];
     public $selectedAll = false;
 
-    public function getChapters()
+    public function getUsers()
     {
-        $query = Chapter::with('series')->search(['title', 'series.title'], $this->search);
-        $query->orderBy($this->sortField, $this->sortDirection);
+        $query = User::search(['name', 'email'], $this->search);
+        if (in_array($this->sortField, ['name', 'email'])) {
+            $query->orderBy($this->sortField, 'asc');
+        } else {
+            $query->orderBy($this->sortField, $this->sortDirection);
+        }
         return $query;
     }
 
     public function updatedSelectedAll($val)
     {
-        $val ? $this->mySelected = $this->getChapters()->limit($this->paginate)->pluck('id') : $this->mySelected = [];
+        $val ? $this->mySelected = $this->getUsers()->limit($this->paginate)->pluck('id') : $this->mySelected = [];
     }
 
     public function updatedMySelected()
@@ -66,7 +66,7 @@ class Index extends Component
     }
 
     #[On('delete')]
-    public function deleteChapter($data)
+    public function deleteSeries($data)
     {
         if (auth()->user()->can('delete')) {
             $this->mySelected[] = $data['value'];
@@ -74,32 +74,31 @@ class Index extends Component
         } else {
             $this->alert('error', 'kamu tidak memiliki izin');
             $this->mySelected = [];
-           $this->selectedAll = false;
+            $this->selectedAll = false;
         }
     }
 
     #[On('destroy')]
-    public function bulkDelete()
+    public function bulkDelete($message = 'bulk delete success')
     {
         if (auth()->user()->can('delete')) {
             if ($this->mySelected) {
                 try {
                     //code...
-                    Chapter::whereIn('id', $this->mySelected)->delete();
+                    User::whereIn('id', $this->mySelected)->delete();
                     $this->mySelected = [];
                     $this->selectedAll = false;
-                    $this->alert('success', 'bulk delete success');
+                    $this->alert('success', $message);
                 } catch (\Throwable $th) {
                     $this->alert('error', 'series not found');
                 }
             } else {
                 $this->alert('error', 'series required');
             }
-            
-        }else{
+        } else {
             $this->alert('error', 'kamu tidak memiliki izin');
             $this->mySelected = [];
-           $this->selectedAll = false;
+            $this->selectedAll = false;
         }
     }
 
@@ -113,16 +112,18 @@ class Index extends Component
         HTML;
     }
 
-    public function render(GeneralSetting $settings)
-    {
-        $query = $this->getChapters()->paginate($this->paginate);
-        return view('livewire.admin.chapters.index', [
-            'chapters' => $query,
-            'settings' => $settings
-        ]);
-    }
-    #[On('close-modal')]
+
+    #[On('re-render')]
     public function reRender()
     {
+    }
+
+    public function render()
+    {
+        $query = $this->getUsers()->paginate($this->paginate);
+
+        return view('livewire.admin.users.index', [
+            'users' => $query
+        ]);
     }
 }

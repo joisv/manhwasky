@@ -73,7 +73,14 @@
     }
 }" x-init="tagSearchResult = dataTag" class="relative">
     <form wire:submit="save">
-        <x-primary-button type="submit">save</x-primary-button>
+        <x-primary-button type="submit" class="disabled:bg-gray-600" wire:loading.attr="disabled">
+            <div class="flex items-center space-x-1 w-full">
+                <x-icons.loading wire:loading />
+                <h2>
+                    Save
+                </h2>
+            </div>
+        </x-primary-button>
         <button type="button" class="absolute -top-16 -right-5 sm:-right-12 lg:hidden flex bg-blue-500 w-10 sm:w-20 p-1"
             @click="toggleSetting">
             <x-icons.setting />

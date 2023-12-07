@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::view('dashboard', 'admin/dashboard')
         ->name('dashboard');
 
@@ -32,6 +32,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::view('chapters', 'admin/chapters/index')->name('chapters');
     Route::view('genres', 'admin/genres/index')->name('genres');
+    Route::view('users', 'admin/users/index')->name('users');
 
     Route::view('settings', 'admin/settings')->name('settings');
 

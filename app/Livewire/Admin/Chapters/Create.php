@@ -29,22 +29,29 @@ class Create extends Component
     
     public function save()
     {
-        $this->validate();
-        $chapters = preg_split('/,\s*/', $this->chapterStr, -1, PREG_SPLIT_NO_EMPTY);
-        $chapter = Chapter::create([
-            'title' => $this->title,
-            'series_id' => $this->selectedSeries[0]['id'],
-            'slug' => $this->slug,
-            'created' => $this->created
-        ]);
-        foreach ($chapters as $chapterData) {
-            ChapterContent::create([
-                'url' => $chapterData,
-                'chapter_id' => $chapter->id
+        if (auth()->user()->can('create')) {
+            $this->validate();
+            $chapters = preg_split('/,\s*/', $this->chapterStr, -1, PREG_SPLIT_NO_EMPTY);
+            $chapter = Chapter::create([
+                'title' => $this->title,
+                'series_id' => $this->selectedSeries[0]['id'],
+                'slug' => $this->slug,
+                'created' => $this->created
             ]);
+            foreach ($chapters as $chapterData) {
+                ChapterContent::create([
+                    'url' => $chapterData,
+                    'chapter_id' => $chapter->id
+                ]);
+            }
+            $this->alert('success', 'Chapter created successfully');
+            $this->dispatch('close-modal');
+            $this->reset(['title', 'slug', 'chapterStr']);
+            $this->created = Carbon::now();
+        
+        }else{
+            $this->alert('error', 'kamu tidak memiliki izin');
         }
-        $this->alert('success', 'Chapter created successfully');
-        $this->dispatch('close-modal');
     }
     
     #[On('setslug')]

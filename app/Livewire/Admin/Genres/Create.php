@@ -18,15 +18,21 @@ class Create extends Component
 
     public function save()
     {
-        $this->validate();
-
-        Genre::create([
-            'name' => $this->name,
-            'slug' => $this->setSlugAttribute($this->name)
-        ]);
-
-        $this->dispatch('re-render');
-        $this->alert('success', 'genre created successfully');
+        if (auth()->user()->can('create')) {
+           
+            $this->validate();
+    
+            Genre::create([
+                'name' => $this->name,
+                'slug' => $this->setSlugAttribute($this->name)
+            ]);
+    
+            $this->dispatch('re-render');
+            $this->alert('success', 'genre created successfully');
+            $this->reset(['name', 'slug']);
+        }else{
+            $this->alert('error', 'kamu tidak memiliki izin');
+        }
     }
 
     public function setSlugAttribute($value)

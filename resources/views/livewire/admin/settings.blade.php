@@ -3,9 +3,14 @@
     logo: false,
     favicon: false,
 
-    setImage(img){
+    setImage(img) {
         $dispatch('wich-image', { props: img });
         $dispatch('open-modal', 'add-logo');
+    },
+
+    removeImg(img) {
+        $dispatch('wich-image', { props: img });
+        $dispatch('remove-img');
     }
 }">
     <header>
@@ -79,7 +84,7 @@
                                         <img src="{{ asset('storage/' . $logo_cms) }}" alt="" srcset=""
                                             class="w-full h-14 sm:h-20 object-contain object-left">
                                     @endif
-                                    <div wire:click="removePoster"
+                                    <div @click="removeImg('logo_cms')"
                                         class="absolute h-5 w-5 rounded-lg flex items-center justify-center -top-3 -right-3 sm:right-0 bg-gray-400 text-white hover:bg-rose-500">
                                         x</div>
                                 </div>
@@ -128,7 +133,7 @@
                                         <img src="{{ asset('storage/' . $logo) }}" alt="" srcset=""
                                             class="w-full h-14 sm:h-20 object-contain object-left">
                                     @endif
-                                    <div wire:click="removePoster"
+                                    <div @click="removeImg('logo')"
                                         class="absolute h-5 w-5 rounded-lg flex items-center justify-center -top-3 -right-3 sm:right-0 bg-gray-400 text-white hover:bg-rose-500">
                                         x</div>
                                 </div>
@@ -177,7 +182,7 @@
                                         <img src="{{ asset('storage/' . $favicon) }}" alt="" srcset=""
                                             class="w-full h-14 sm:h-20 object-contain object-left">
                                     @endif
-                                    <div wire:click="removePoster"
+                                    <div @click="removeImg('favicon')"
                                         class="absolute h-5 w-5 rounded-lg flex items-center justify-center -top-3 -right-3 sm:right-0 bg-gray-400 text-white hover:bg-rose-500">
                                         x</div>
                                 </div>
@@ -191,12 +196,32 @@
                 </div>
             </div>
         </div>
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
+        {{-- Permission --}}
+        <div class="py-4">
+            <button type="button" @click="setPermission">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('Permission') }}
+                </h2>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    {{ __('Ubah izin user disini') }}
+                </p>
+            </button>
         </div>
+        <div class="flex items-center gap-4">
+            <x-primary-button type="submit" class="disabled:bg-gray-600" wire:loading.attr="disabled">
+                <div class="flex items-center space-x-1 w-full">
+                    <x-icons.loading wire:loading />
+                    <h2>
+                        Save
+                    </h2>
+                </div>
+            </x-primary-button>
+        </div>
+        <x-modal name="add-logo" :show="$errors->isNotEmpty()">
+            <livewire:admin.gallery.create />
+        </x-modal>
+        <x-modal name="set-permission" :show="true" maxWidth="lg">
+            <livewire:admin.permission />
+        </x-modal>
     </form>
-    <x-modal name="add-logo" :show="true">
-        <livewire:admin.gallery.create />
-    </x-modal>
 </section>

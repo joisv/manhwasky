@@ -13,45 +13,60 @@ class Create extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
-    
+
     public $paginate = 20;
     public $images = [];
-    
+
     public function render()
     {
         return view('livewire.admin.gallery.create', [
             'galleries' => $this->getGalleries()->paginate($this->paginate)
         ]);
     }
-    
+
     public function saveImage()
     {
-        $this->validate([
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
-        ]);
+        if (auth()->user()->can('create')) {
+            if (!empty($this->images)) {
+                $this->validate([
+                    'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+                ]);
 
-        foreach ($this->images as $image) {
-            Gallery::create([
-                'image' => $image->store('galleries')
-            ]);
+                foreach ($this->images as $image) {
+                    Gallery::create([
+                        'image' => $image->store('galleries')
+                    ]);
+                }
+
+                $this->alert('success', 'upload success');
+                $this->dispatch('re-render');
+                $this->images = [];
+            }else {
+                $this->alert('error', 'image tidak ditemukan');
+            }
+        } else {
+            $this->alert('error', 'kamu tidak memiliki izin');
         }
-
-        $this->alert('success', 'upload success');
-        $this->dispatch('re-render');
     }
-    
+
     #[On('delete-poster')]
     public function deletePoster($id)
     {
-        $gallery = Gallery::find($id);
-        $gallery->delete();
-        Storage::delete($gallery);
-        $this->alert('success', 'image deleted successfully');
-        $this->dispatch('re-render');
+        if (auth()->user()-can('delete')) {
+            # code...
+            $gallery = Gallery::find($id);
+            $gallery->delete();
+            Storage::delete($gallery);
+            $this->alert('success', 'image deleted successfully');
+            $this->dispatch('re-render');
+        } else {
+            $this->alert('error', 'kamu tidak memiliki izin');
+        }
     }
-    
+
     #[On('alert-me')]
-    public function alertMe($status, $message){
+    public function alertMe($status, $message)
+    {
         $this->alert($status, $message);
     }
 
@@ -59,5 +74,4 @@ class Create extends Component
     {
         return Gallery::latest('id');
     }
-
 }

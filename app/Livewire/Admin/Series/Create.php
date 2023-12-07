@@ -43,33 +43,37 @@ class Create extends Component
 
     public function save()
     {
-        $this->validate([
-            'title' => 'string|required|min:3',
-            'slug' => 'required',
-            'tag' => 'nullable|string',
-            'original_title' => 'nullable|string|min:3',
-            'gallery_id' => 'required',
-            'overview' => 'nullable|string|min:5',
-            'status' => 'nullable|string',
-        ]);
+        if (auth()->user()->can('create')) {
+            $this->validate([
+                'title' => 'string|required|min:3',
+                'slug' => 'required',
+                'tag' => 'nullable|string',
+                'original_title' => 'nullable|string|min:3',
+                'gallery_id' => 'required',
+                'overview' => 'nullable|string|min:5',
+                'status' => 'nullable|string',
+            ]);
 
-       $series = Series::create([
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'tag' => $this->tag,
-            'original_title' => $this->original_title,
-            'gallery_id' => $this->gallery_id,
-            'overview' => $this->overview,
-            'status' => $this->status,
-            'created' => $this->date,
-        ]);
+            $series = Series::create([
+                'title' => $this->title,
+                'slug' => $this->slug,
+                'tag' => $this->tag,
+                'original_title' => $this->original_title,
+                'gallery_id' => $this->gallery_id,
+                'overview' => $this->overview,
+                'status' => $this->status,
+                'created' => $this->date,
+            ]);
 
-        if ($this->selectedGenres) {
-            $genreIds = collect($this->selectedGenres)->pluck('id')->toArray();
-            $series->genres()->attach($genreIds);
+            if ($this->selectedGenres) {
+                $genreIds = collect($this->selectedGenres)->pluck('id')->toArray();
+                $series->genres()->attach($genreIds);
+            }
+
+            $this->flash('success', 'Series created successfully', [], route('series'));
+        }else{
+            $this->alert('error', 'kamu tidak mempunyai izin');
         }
-        
-        $this->flash('success', 'Series created successfully', [], route('series'));
     }
 
     public function removePoster()
@@ -127,7 +131,7 @@ class Create extends Component
             return $genre->id == $id;
         });
     }
-    
+
     public function setSelectedGenre($id, $name)
     {
         $this->removeGenre($id);

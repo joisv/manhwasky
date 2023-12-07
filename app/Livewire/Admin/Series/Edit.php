@@ -59,33 +59,37 @@ class Edit extends Component
 
     public function save()
     {
-        $this->validate([
-            'title' => 'string|required|min:3',
-            'slug' => 'required',
-            'tag' => 'nullable|string',
-            'original_title' => 'nullable|string|min:3',
-            'gallery_id' => 'required',
-            'overview' => 'nullable|string|min:5',
-            'status' => 'nullable|string',
-        ]);
-
-        $this->series->update([
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'tag' => $this->tag,
-            'original_title' => $this->original_title,
-            'gallery_id' => $this->gallery_id,
-            'overview' => $this->overview,
-            'status' => $this->status,
-            'created' => $this->date,
-        ]);
-
-        if ($this->selectedGenres) {
-            $genreIds = collect($this->selectedGenres)->pluck('id')->toArray();
-            $this->series->genres()->sync($genreIds);
+        if (auth()->user()->can('update')) {
+            $this->validate([
+                'title' => 'string|required|min:3',
+                'slug' => 'required',
+                'tag' => 'nullable|string',
+                'original_title' => 'nullable|string|min:3',
+                'gallery_id' => 'required',
+                'overview' => 'nullable|string|min:5',
+                'status' => 'nullable|string',
+            ]);
+    
+            $this->series->update([
+                'title' => $this->title,
+                'slug' => $this->slug,
+                'tag' => $this->tag,
+                'original_title' => $this->original_title,
+                'gallery_id' => $this->gallery_id,
+                'overview' => $this->overview,
+                'status' => $this->status,
+                'created' => $this->date,
+            ]);
+    
+            if ($this->selectedGenres) {
+                $genreIds = collect($this->selectedGenres)->pluck('id')->toArray();
+                $this->series->genres()->sync($genreIds);
+            }
+            $this->alert('success', 'Series created successfully');
+            $this->redirectRoute('series');
+        }else{
+            $this->alert('error', 'kamu tidak memiliki izin untuk update');
         }
-        $this->alert('success', 'Series created successfully');
-        $this->redirectRoute('series');
     }
 
     public function mount()

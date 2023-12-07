@@ -33,7 +33,14 @@
         <div class="p-3 min-h-[45vh] space-y-3">
             <header class="flex justify-between items-center">
                 <h1 class="text-lg font-semibold">Menambahkan Chapter</h1>
-                <x-primary-button type="submit" wire:loading.attr="disabled">save</x-primary-button>
+                <x-primary-button type="submit" class="disabled:bg-gray-600" wire:loading.attr="disabled">
+                    <div class="flex items-center space-x-1 w-full">
+                        <x-icons.loading wire:loading />
+                        <h2>
+                            Save
+                        </h2>
+                    </div>
+                </x-primary-button>
             </header>
             <div class="space-y-1">
                 <livewire:admin.chapters.set-series />
