@@ -3,18 +3,34 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
 class Permission extends Component
 {
+    use LivewireAlert;
+    
     public $searchInput = '';
     public $users;
-    public $setUserRole = [];
+    public $selectedRoles = [];
     
-    public function updatedSetUserRole()
+    public function setRole($index, $role, $user_id)
     {
-        dd($this->setUserRole);
+        if (!auth()->user()->hasRole('admin')) {
+           $this->alert('error', 'kamu tidak memiliki izin');
+           return;
+        }
+        $this->selectedRoles[$index] = $role;
+        $user = User::find($user_id);
+        $user->syncRoles($this->selectedRoles[$index]);
+
+        $this->alert('success', 'user role updated', [
+            'position' => 'top-end',
+            'timer' => 2000,
+            'toast' => true
+        ]);
     }
     
     public function getUsers()

@@ -198,7 +198,7 @@
         </div>
         {{-- Permission --}}
         <div class="py-4">
-            <button type="button" @click="setPermission">
+            <button type="button" @click="$dispatch('open-modal', 'set-permission')" class="w-full text-start">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {{ __('Permission') }}
                 </h2>
@@ -217,11 +217,12 @@
                 </div>
             </x-primary-button>
         </div>
-        <x-modal name="add-logo" :show="$errors->isNotEmpty()">
-            <livewire:admin.gallery.create />
-        </x-modal>
-        <x-modal name="set-permission" :show="true" maxWidth="lg">
-            <livewire:admin.permission />
-        </x-modal>
     </form>
+
+    <x-modal name="add-logo" :show="$errors->isNotEmpty()">
+        <livewire:admin.gallery.create />
+    </x-modal>
+    <x-modal name="set-permission" :show="$errors->isNotEmpty()" maxWidth="lg">
+        <livewire:admin.permission />
+    </x-modal>
 </section>

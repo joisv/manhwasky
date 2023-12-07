@@ -1,5 +1,5 @@
-<div class="p-3 min-h-[50vh]" x-data="{
-    permission: false
+<div class="p-3 min-h-[50vh] max-h-[80vh] overflow-y-auto" x-data="{
+    permission: false,
 }">
     <header>
         <h1 class="text-xl font-semibold">Admin dan editor</h1>
@@ -22,19 +22,19 @@
                 </svg>
             </button>
         </div>
-        <div class="w-full mt-3">
-            <div class="w-full h-32 overflow-y-auto">
+        <div class="w-full mt-3 border-b-2 border-b-gray-400" x-show="permission" x-collapse>
+            <div class="w-full h-32 overflow-y-auto space-y-2 ">
                 @empty(!$users)
                     @forelse ($users as $index => $user)
-                        <div class="flex items-end justify-between">
+                        <div class="flex items-end justify-between p-2 bg-gray-200 rounded-sm hover:bg-gray-300 bg-opacity-80 ease-i duration-150">
                             <div>
                                 <h3 class="text-blue-500 text-base font-medium">{{ $user->name }}</h3>
                                 <p class="text-sm font-medium text-gray-400">{{ $user->email }}</p>
                             </div>
                             <div>
-                                <select id="user"
-                                    class="bg-transparent border-0 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-0 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    wire:model.live.debounced.200ms="setUserRole">
+                                <select id="user-{{ $index }}"
+                                    class="bg-transparent font-semibold px-6 border-0 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-0 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    x-on:change="$wire.setRole({{ $index }}, $event.target.value, '{{ $user->id }}')" wire:model="selectedRoles.{{ $index }}">
                                     <option selected>{{ $user->getRoleNames()[0] }}</option>
                                     @foreach ($roles as $role)
                                         @if ($role->name !== $user->getRoleNames()[0])
@@ -49,8 +49,32 @@
                             ada/ditemukan</div>
                     @endforelse
                 @endempty
-
             </div>
+        </div>
+        <div class="space-y-2 mt-3">
+            @forelse ($inPermissionUser as $index => $userInPermission)
+                <div class="flex items-end justify-between p-2 bg-gray-200 rounded-sm hover:bg-gray-300 bg-opacity-80 ease-i duration-150">
+                    <div>
+                        <h3 class="text-blue-500 text-base font-medium">{{ $userInPermission->name }}</h3>
+                        <p class="text-sm font-medium text-gray-500">{{ $userInPermission->email }}</p>
+                    </div>
+                    <div>
+                        <select id="userInPermission-{{ $index }}"
+                            class="bg-transparent font-semibold px-6 border-0 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-0 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            x-on:change="$wire.setRole({{ $index }}, $event.target.value, '{{ $userInPermission->id }}')" wire:model="selectedRoles.{{ $index }}">
+                            <option selected>{{ $userInPermission->getRoleNames()[0] }}</option>
+                            @foreach ($roles as $role)
+                                @if ($role->name !== $userInPermission->getRoleNames()[0])
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            @empty
+                <div class="text-base font-medium w-full text-center mt-4">User tidak
+                    ada/ditemukan</div>
+            @endforelse
         </div>
     </div>
 </div>
