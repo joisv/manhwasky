@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::view('/', 'welcome');
 
-Route::view('/', 'home/home');
+// Route::view('/', 'home/home');
 
 Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function () {
     Route::view('dashboard', 'admin/dashboard')

@@ -14,8 +14,11 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                little: ['Little', 'cursive']
+                // little: ['Little', 'cursive']
             },
+            colors: {
+                primary: '#350B75'
+            }
         },
     },
 
