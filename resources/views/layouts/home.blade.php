@@ -14,13 +14,34 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body class="antialiased font-comicRegular" x-data="console.log('ksjdsdkjb')">
+<body class="antialiased font-comicRegular relative" x-data="{
+    setNav: false,
+}">
     <livewire:welcome.navigation />
-    <main class="sm:mt-20">
+    <main class="lg:mt-20">
         {{ $slot }}
     </main>
+    <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden" @click="setNav = true">
+        <x-icons.dotmenu default="25px" />
+    </button>
+    <footer>
+        <div class="w-full px-4 static bottom-0 mt-10 py-5 space-y-2 bg-gray-100">
+            <div class="w-full text-center">
+                <h1 class="font-comicBold text-4xl"><span class="text-primary">Doujin</span>Sky</h1>
+                <span class=" w-full">Copyright @ {{ config('app.name') }}. All right reserved.</span>
+            </div>
+            <p class="font-comicBold text-base text-center max-w-5xl mx-auto">All the comics on this website are only previews of the
+                original comics, there may be many language errors, character names, and story lines. For the original
+                version, please buy the comic if it's available in your city.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

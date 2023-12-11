@@ -1,10 +1,2 @@
-<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" {{ $attributes->merge(['class' => 'ease-in duration-200']) }}
-     xmlns="http://www.w3.org/2000/svg">
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-    <g id="SVGRepo_iconCarrier">
-        <path
-            d="M15 11L12.2121 13.7879C12.095 13.905 11.905 13.905 11.7879 13.7879L9 11M7 21H17C19.2091 21 21 19.2091 21 17V7C21 4.79086 19.2091 3 17 3H7C4.79086 3 3 4.79086 3 7V17C3 19.2091 4.79086 21 7 21Z"
-            stroke="rgb(31, 41, 55)" stroke-width="2" stroke-linecap="round"></path>
-    </g>
-</svg>
+@props(['default' => '64px', 'color' => '#000000'])
+<svg fill="#000000" width="{{ $default }}" height="{{ $default }}" viewBox="0 0 24 24" id="left-arrow" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><line id="primary" x1="21" y1="12" x2="3" y2="12" style="fill: none; stroke: {{ $color }}; stroke-linecap: round; stroke-linejoin: round; stroke-width:1.344;"></line><polyline id="primary-2" data-name="primary" points="6 9 3 12 6 15" style="fill: none; stroke: {{ $color }}; stroke-linecap: round; stroke-linejoin: round; stroke-width:1.344;"></polyline></g></svg>
