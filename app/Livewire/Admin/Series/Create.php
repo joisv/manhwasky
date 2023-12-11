@@ -52,6 +52,7 @@ class Create extends Component
                 'gallery_id' => 'required',
                 'overview' => 'nullable|string|min:5',
                 'status' => 'nullable|string',
+                
             ]);
 
             $series = Series::create([
@@ -63,6 +64,7 @@ class Create extends Component
                 'overview' => $this->overview,
                 'status' => $this->status,
                 'created' => $this->date,
+                'published_day' => Carbon::parse($this->date)->format('l')
             ]);
 
             if ($this->selectedGenres) {

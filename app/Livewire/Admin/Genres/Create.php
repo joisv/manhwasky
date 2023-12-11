@@ -15,6 +15,7 @@ class Create extends Component
     #[Validate('required|unique:genres,name|min:2|string')]
     public $name;
     public $slug;
+    public $primary_color = '#000000';
 
     public function save()
     {
@@ -24,12 +25,13 @@ class Create extends Component
     
             Genre::create([
                 'name' => $this->name,
-                'slug' => $this->setSlugAttribute($this->name)
+                'slug' => $this->setSlugAttribute($this->name),
+                'primary_color' => $this->primary_color
             ]);
     
             $this->dispatch('re-render');
             $this->alert('success', 'genre created successfully');
-            $this->reset(['name', 'slug']);
+            $this->reset(['name', 'slug', 'primary_color']);
         }else{
             $this->alert('error', 'kamu tidak memiliki izin');
         }

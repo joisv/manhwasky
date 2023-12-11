@@ -13,6 +13,7 @@ class Series extends Model
         'title',
         'slug',
         'tag',
+        'published_day',
         'original_title',
         'gallery_id',
         'overview',

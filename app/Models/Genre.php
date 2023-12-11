@@ -10,7 +10,8 @@ class Genre extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'primary_color'
     ];
 
     public function posts()

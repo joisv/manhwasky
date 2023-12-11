@@ -14,35 +14,50 @@ class Edit extends Component
     use LivewireAlert;
 
     public $genre;
-    
-    #[Validate('required|unique:genres,name|min:2|string')]
+
     public $name;
     public $slug;
+    public $primary_color;
+
+    protected $rules = [
+
+        'name' => 'required|unique:genres,name|min:2|string',
+    ];
+    
+    protected function rules()
+    {
+        $name = $this->name == $this->genre->name
+            ? 'required|min:2|string'
+            : '';
+
+        return array_merge($this->rules, ['name' => $name]);
+    }
 
     #[On('edit')]
     public function setEdit($value)
     {
         $this->genre = Genre::find($value);
         $this->name = $this->genre->name;
+        $this->primary_color = $this->genre->primary_color;
     }
-    
+
     public function save()
     {
         if (auth()->user()->can('update')) {
             $this->validate();
-    
-            Genre::create([
+
+            $this->genre->update([
                 'name' => $this->name,
-                'slug' => $this->setSlugAttribute($this->name)
+                'slug' => $this->setSlugAttribute($this->name),
+                'primary_color' => $this->primary_color
             ]);
-    
+
             $this->dispatch('re-render');
             $this->alert('success', 'genre updated successfully');
-            $this->reset(['name', 'slug']);
-        }else{
+            $this->reset(['name', 'slug', 'primary_color']);
+        } else {
             $this->alert('error', 'kamu tidak memiliki izin');
         }
-        
     }
 
     public function setSlugAttribute($value)
@@ -58,7 +73,7 @@ class Edit extends Component
 
         return $slug;
     }
-    
+
     public function render()
     {
         return view('livewire.admin.genres.edit');

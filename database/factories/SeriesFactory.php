@@ -21,6 +21,7 @@ class SeriesFactory extends Factory
            'slug' => $this->faker->slug(),
            'overview' => $this->faker->paragraph(4),
            'status' => $this->faker->randomElement(['pending', 'finish', 'ongoing']),
+           'published_day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
            'original_title' => $this->faker->word(),
            'gallery_id' => '1'
         ];

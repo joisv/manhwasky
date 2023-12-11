@@ -11,6 +11,7 @@ use App\Models\Genre;
 use App\Models\Series;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,7 +40,6 @@ class DatabaseSeeder extends Seeder
         Genre::factory(10)->create();
         Chapter::factory(10)->create();
         ChapterContent::factory(20);
-
         
     }
 }

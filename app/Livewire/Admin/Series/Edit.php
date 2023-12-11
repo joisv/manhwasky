@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Series;
 
 use App\Models\Genre;
 use App\Models\Series;
+use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -79,6 +80,7 @@ class Edit extends Component
                 'overview' => $this->overview,
                 'status' => $this->status,
                 'created' => $this->date,
+                'published_day' => Carbon::parse($this->date)->format('l')
             ]);
     
             if ($this->selectedGenres) {
