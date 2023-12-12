@@ -1,5 +1,5 @@
 <nav  class=""  >
-    <div class="@if(request()->is('chapter')) sm:hidden lg:hidden @else hidden sm:fixed lg:flex @endif  sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
+    <div class="@if(request()->is('chapter')) hidden @else hidden sm:fixed lg:flex @endif  sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
         :class="backdrop ? 'backdrop-blur-md' : ''">
         <div class="flex space-x-5 items-center ">
             <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>

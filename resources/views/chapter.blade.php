@@ -6,6 +6,7 @@
         scrollInterval: null,
         setStop: false,
         btnNav: true,
+        chapterList: false,
     
         scrollToBottom() {
             const scrollAmount = 1;
@@ -85,9 +86,6 @@
             </div>
         </div>
         <div class="max-w-3xl mx-auto ">
-            {{-- <label>Kecepatan Autoscroll:
-            <input type="number" x-model="speed" min="1" max="100" />
-        </label> --}}
             <div id="point" @click="handleNavBtn">
                 <div>
                     <img src="https://rs2j9f862xh57.mangadistrict.com/series/uploads/manga_64b3c6b4e87a7/chapter-83/01.jpg"
@@ -116,6 +114,57 @@
                     class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center">
                     <x-icons.prev class="rotate-180" default="34px" color="#000000"></x-icons.prev>
                 </button>
+            </div>
+        </div>
+        <div x-cloak class="fixed max-w-[200px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100" :class="!chapterList ? 'translate-x-full' : ''">
+            <button @click="chapterList = ! chapterList" type="button" class="absolute w-10 h-44 bg-gray-100 shadow-2xl backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-10 rounded-l-md  border-l border-primary border-y"></button>
+            <h1 class="text-xl text-center font-comicBold border-b-2 pb-2 border-gray-400">Daftar Chapter</h1>
+            <div class="space-y-1 mt-2 w-full overflow-y-auto max-h-[70vh]">
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 290</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 300</h4>
+                </div>
+                <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary">
+                    <h4>Chapter 049</h4>
+                </div>
             </div>
         </div>
     </div>
