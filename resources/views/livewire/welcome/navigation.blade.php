@@ -1,17 +1,5 @@
-<nav x-data="{
-    scrollValue: window.pageYOffset,
-    backdrop: false,
-    setSearchOpen: false,
-
-    init() {
-        window.addEventListener('scroll', () => {
-            this.scrollValue = window.pageYOffset
-        });
-    }
-}" x-init="$watch('scrollValue', value => {
-    backdrop = value >= 100 ? true : false;
-})">
-    <div class="hidden sm:fixed sm:top-0 sm:right-0 p-6 text-end z-10 w-full lg:flex justify-between items-center"
+<nav  class=""  >
+    <div class="@if(request()->is('chapter')) sm:hidden lg:hidden @else hidden sm:fixed lg:flex @endif  sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
         :class="backdrop ? 'backdrop-blur-md' : ''">
         <div class="flex space-x-5 items-center ">
             <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
@@ -48,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div x-cloak x-data class="flex flex-col lg:hidden w-full max-w-[400px] bg-white h-screen fixed z-50 p-2 right-0 ease-linear duration-75" :class="!setNav ? 'translate-x-full' : ''">
+    <div x-cloak x-data class="flex flex-col lg:hidden w-full max-w-[400px] bg-white h-screen fixed z-50 p-2 right-0 ease-in duration-100" :class="!setNav ? 'translate-x-full' : ''">
         <header class="flex items-center justify-between h-16 w-full ">
             <h1 class="font-comicBold text-4xl"><span class="text-primary">Doujin</span>Sky</h1>
         </header>
