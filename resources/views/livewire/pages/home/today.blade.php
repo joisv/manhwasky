@@ -25,14 +25,6 @@
         }
     },
 
-
-    sliceStr(str, slice) {
-        if (str.length > slice) {
-            let finalStr = str.substring(0, slice)
-            return finalStr + '...'
-        }
-        return str
-    }
 }">
     <div class="space-y-1 relative w-full flex justify-end sm:hidden">
         <button @click="seriesExpand = true" class="p-3 font-semibold flex items-center justify-between space-x-2">
@@ -62,7 +54,7 @@
             </div>
         @endforeach
     </div>
-    <div class="grid grid-cols-3 md:grid-cols-4 sm:gap-3 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
+    <div class="grid grid-cols-3 md:grid-cols-4 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
         @empty(!$series)
             @forelse ($series as $index => $series)
                 <div class="w-full h-32 sm:h-44 relative group @if (rand(1, 9) === $index) sm:col-span-2 @endif">

@@ -72,6 +72,7 @@ class Settings extends Component
             $this->favicon = $url;
         }
     }
+    
     #[On('wich-image')]
     public function setWichImage($props)
     {

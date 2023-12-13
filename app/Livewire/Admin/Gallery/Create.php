@@ -17,6 +17,11 @@ class Create extends Component
     public $paginate = 20;
     public $images = [];
 
+    // public function updatedImages($props)
+    // {
+    //     dd($props);
+    // }
+    
     public function render()
     {
         return view('livewire.admin.gallery.create', [

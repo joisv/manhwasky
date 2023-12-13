@@ -24,7 +24,7 @@
                     </div>
                     <div class="mt-5 space-y-2">
                         <div class="flex space-x-1">
-                            <h3 class="sm:text-2xl text-lg text-gray-600">Genre:</h3>
+                            <h3 class="sm:text-xl text-lg text-gray-600">Genre:</h3>
                             <div class="flex flex-wrap gap-1 w-full">
                                 <div
                                     class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="flex space-x-1">
-                            <h3 class="sm:text-2xl text-lg text-gray-600">Tags:</h3>
+                            <h3 class="sm:text-xl text-lg text-gray-600">Tags:</h3>
                             <div class="flex flex-wrap gap-1 w-full">
                                 <div
                                     class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="mt-8">
                         <button type="button" class="rounden-sm px-5 py-1 bg-primary flex items-center space-x-1">
-                            <h3 class="text-white text-lg font-comicRegular">Mulai membaca</h3>
+                            <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
                             <x-icons.book default="20px" />
                         </button>
                     </div>

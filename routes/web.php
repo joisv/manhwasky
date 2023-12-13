@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function 
     Route::view('genres', 'admin/genres/index')->name('genres');
     Route::view('users', 'admin/users/index')->name('users');
 
+    Route::view('sliders', 'admin/sliders/index')->name('sliders');
     Route::view('settings', 'admin/settings')->name('settings');
 
     Route::view('profile', 'profile')

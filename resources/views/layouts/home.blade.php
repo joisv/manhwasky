@@ -33,6 +33,15 @@
         window.addEventListener('scroll', () => {
             this.scrollValue = window.pageYOffset
         });
+    },
+
+    
+    sliceStr(str, slice) {
+        if (str.length > slice) {
+            let finalStr = str.substring(0, slice)
+            return finalStr + '...'
+        }
+        return str
     }
 }" x-init="$watch('scrollValue', value => {
     backdrop = value >= 100 ? true : false;
