@@ -34,7 +34,6 @@
             this.scrollValue = window.pageYOffset
         });
     },
-
     
     sliceStr(str, slice) {
         if (str.length > slice) {
@@ -47,7 +46,7 @@
     backdrop = value >= 100 ? true : false;
 })">
     <livewire:welcome.navigation />
-    <main class="@if (!request()->is('chapter')) lg:mt-20 @endif">
+    <main class="@if (!request()->is('chapter')) lg:mt-20 @endif" :class="setNav ? 'backdrop-blur-sm' : ''">
         {{ $slot }}
     </main>
     <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden" @click="setNav = true">

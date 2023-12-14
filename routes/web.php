@@ -18,7 +18,7 @@ Route::view('/', 'welcome')->name('home');
 
 Route::view('/chapter', 'chapter')->name('chapter');
 Route::view('/content', 'content')->name('content');
-
+Route::view('/genres', 'genres')->name('home.genres');
 // Route::view('/', 'home/home');
 
 Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function () {

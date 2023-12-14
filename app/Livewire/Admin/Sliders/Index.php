@@ -21,7 +21,7 @@ class Index extends Component
 
     public function getSliders()
     {
-        $query = Slider::search('name', $this->search)->orderBy($this->sortField, $this->sortDirection);
+        $query = Slider::search(['title', 'created_at'], $this->search)->orderBy($this->sortField, $this->sortDirection);
 
         // Jangan panggil get() di sini, biarkan query builder tetap sebagai objek query
         return $query;
@@ -75,7 +75,7 @@ class Index extends Component
             $this->selectedAll = false;
         }
     }
-
+    
     #[On('destroy')]
     public function bulkDelete($message = 'bulk delete success')
     {

@@ -26,22 +26,25 @@
     },
 
 }">
-    <div class="space-y-1 relative w-full flex justify-end sm:hidden">
-        <button @click="seriesExpand = true" class="p-3 font-semibold flex items-center justify-between space-x-2">
-            <p>Diurutkan {{ $selectedDay }}</p>
-            <x-icons.check default="24px" />
-        </button>
-        <div x-cloak @click.outside="seriesExpand = false"
-            class="absolute top-0 z-50 bg-gray-100 border border-gray-300 w-1/2" x-show="seriesExpand">
-            @foreach ($days as $day)
-                <button @click="setToday('{{ $day }}')" type="button"
-                    class="p-2 font-semibold w-full text-start flex items-center justify-between">
-                    <p>{{ $day }}</p>
-                    @if ($day === $selectedDay)
-                        <x-icons.check default="24px" />
-                    @endif
-                </button>
-            @endforeach
+    <div class="flex flex-1 justify-between items-center px-2 sm:hidden">
+        <h1 class="font-comicBold text-gray-600 text-2xl">Today</h1>
+        <div class="space-y-1 relative w-full flex justify-end sm:hidden">
+            <button @click="seriesExpand = true" class="p-3 font-semibold flex items-center justify-between space-x-2">
+                <p>Diurutkan {{ $selectedDay }}</p>
+                <x-icons.check default="24px" />
+            </button>
+            <div x-cloak @click.outside="seriesExpand = false"
+                class="absolute top-0 z-50 bg-gray-100 border border-gray-300 w-1/2" x-show="seriesExpand">
+                @foreach ($days as $day)
+                    <button @click="setToday('{{ $day }}')" type="button"
+                        class="p-2 font-semibold w-full text-start flex items-center justify-between">
+                        <p>{{ $day }}</p>
+                        @if ($day === $selectedDay)
+                            <x-icons.check default="24px" />
+                        @endif
+                    </button>
+                @endforeach
+            </div>
         </div>
     </div>
     <div class="max-w-5xl h-14 sm:h-20 mx-auto sm:flex justify-between space-x-2 items-center hidden">
@@ -54,7 +57,7 @@
             </div>
         @endforeach
     </div>
-    <div class="grid grid-cols-3 md:grid-cols-4 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
+    <div class="grid grid-cols-3 md:grid-cols-4 gap-1 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
         @empty(!$series)
             @forelse ($series as $index => $series)
                 <div class="w-full h-32 sm:h-44 relative group @if (rand(1, 9) === $index) sm:col-span-2 @endif">
@@ -72,17 +75,19 @@
                                 x-text="sliceStr('{{ $series->overview }}', 20)">
                             </p>
                             <h1
-                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-lg hidden group-hover:flex">
+                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-lg hidden sm:flex group-hover:flex">
                                 {{ $series->title }}
                             </h1>
                         </div>
                     </div>
-                    <div class="flex sm:hidden justify-between items-center pr-2">
-                        <h1 class="group-hover:bg-transparent font-comicBold text-lg " x-text="sliceStr('{{ $series->title  }}', 9)">
-                        </h1>
-                        <p class="text-sm text-primary font-medium">{{ $series->genres()->first()->name ?? '' }}</p>
+                    <div class="px-2 border-x border-b border-gray-400">
+                        <div class="flex sm:hidden justify-between items-center">
+                            <h1 class="group-hover:bg-transparent font-comicBold text-lg " x-text="sliceStr('{{ $series->title  }}', 9)">
+                            </h1>
+                            <p class="text-sm text-primary font-medium">{{ $series->genres()->first()->name ?? '' }}</p>
+                        </div>
+                        <span class="text-sm font-comicBold text-primary flex sm:hidden">Chapter 109</span>
                     </div>
-                    <span class="text-sm font-comicBold text-primary flex sm:hidden">Chapter 109</span>
                 </div>
             @empty
                 <div class="col-span-3 md:col-span-4  min-h-[45vh] justify-center items-center flex">

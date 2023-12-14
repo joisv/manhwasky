@@ -2,19 +2,20 @@
     <div class="swiper-wrapper">
         @forelse ($sliders as $slider)
             <div class="swiper-slide flex items-center ">
-                <div class="sm:w-[90%] w-full h-[60%] mx-auto flex justify-center sm:flex-col"
-                    style="background-color: {{ $slider->background }}">
+                <div class="w-[90%] h-[40%] sm:h-[60%] mx-auto flex justify-between items-end bg-cover">
                     <img src="{{ asset('storage/' . $slider->main) }}"
-                        class=" object-fill object-bottom absolute min-[300px]:w-[80vw] min-[420px]:w-[65vw] min-[500px]:w-[50vw] sm:w-[45vw] md:w-[40vw] bottom-0"
+                        class=" object-fill object-bottom absolute min-[300px]:w-[70vw] min-[420px]:w-[65vw] min-[500px]:w-[50vw] sm:w-[45vw] md:w-[40vw] bottom-0 left-0"
                         alt="" srcset="">
                     <div
-                        class="w-full h-full flex items-end px-2 sm:px-20 justify-center text-center sm:justify-end z-50 sm:text-start relative sm:items-center">
+                        class="w-full h-full flex items-end px-2 sm:px-20 text-start justify-end z-50 relative sm:items-center">
                         <article class="w-1/2 absolute sm:right-4">
                             <h1
-                                class="sm:text-white text-2xl sm:text-3xl md:text-5xl font-bold sm:font-semibold text-black">
-                                {{ Str::limit($slider->title, 50, '...') }}</h1>
-                            <p class="text-gray-100 font-medium text-base sm:text-lg hidden sm:flex"
+                                class="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold sm:font-semibold ">
+                                {{ Str::limit($slider->title, 30, '...') }}</h1>
+                            <p class="text-gray-100 font-medium md:text-xl hidden sm:flex"
                                 x-text="sliceStr('{{ $slider->description }}', 150)"></p>
+                            <p class="text-gray-100 font-medium text-sm sm:hidden flex"
+                                x-text="sliceStr('{{ $slider->description }}', 50)"></p>
                             <a href="{{ $slider->url }}">
                                 <div
                                     class="w-fit py-1 px-2 text-sm sm:text-lg bg-yellow-500 text-black font-semibold sm:mt-5 mt-1 focus:ring-1 focus:ring-yellow-600">

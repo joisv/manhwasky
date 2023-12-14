@@ -1,7 +1,7 @@
 <div x-data="{
-    main: false, 
+    main: false,
 
-    setImage(){
+    setImage() {
         $dispatch('open-modal', 'edit-image');
     },
 
@@ -10,7 +10,7 @@
     }
 }" @image-selected.window="main = false" @close-modal="show = false">
     <form wire:submit="save">
-        <div class="p-3 min-h-[45vh] space-y-3" >
+        <div class="p-3 min-h-[45vh] space-y-3">
             <header class="flex justify-between items-center">
                 <h1 class="text-lg font-semibold">Edit Slider</h1>
                 <x-primary-button type="submit" class="disabled:bg-gray-600" wire:loading.attr="disabled">
@@ -27,8 +27,7 @@
                     <x-input-label for="title">Title</x-input-label>
                     <input type="text"
                         class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
-                        placeholder="title" id="title" wire:model="title" x-on:blur="$dispatch('setslug')"
-                        x-on:focus="selectShow = false">
+                        placeholder="title" id="title" wire:model="title" >
                     @error('title')
                         <span class="error">{{ $message }}</span>
                     @enderror
@@ -37,8 +36,7 @@
                     <x-input-label for="url">Url</x-input-label>
                     <input type="text"
                         class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
-                        placeholder="url" id="url" wire:model="url" x-on:blur="$dispatch('setslug')"
-                        x-on:focus="selectShow = false">
+                        placeholder="eg. boarding-diary (tidak dengan 'https://domain.ext' jika mengarah ke local)" id="url" wire:model="url" >
                     @error('url')
                         <span class="error">{{ $message }}</span>
                     @enderror
@@ -54,8 +52,8 @@
                             class="py-[4.5px] w-fit focus:border-blue-500 border rounded-r-sm border-gray-300">
                     </div>
                     @error('background')
-                    <span class="error">{{ $message }}</span>
-                @enderror
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 {{-- main --}}
                 <div class="space-y-2 pb-2" :class="main ? 'border-b border-gray-300' : ''">
@@ -100,7 +98,7 @@
                         </button>
                         <div x-cloak x-show="main" x-collapse>
                             <x-primary-button type="button" x-data
-                                x-on:click="setImage">{{ $main ? 'change' : 'add' }}</x-primary-button>
+                                wire:click="setImg">{{ $main ? 'change' : 'add' }}</x-primary-button>
                         </div>
                     </div>
                 </div>
@@ -116,9 +114,8 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="absolute w-20 h-20 bg-red-500 right-0 top-0"></div> --}}
     </form>
-    <x-modal name="edit-image" :show="$errors->isNotEmpty()">
+    <x-modal name="edit-image" :show="$edit">
         <livewire:admin.gallery.create />
     </x-modal>
 </div>
