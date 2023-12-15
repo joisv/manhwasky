@@ -121,7 +121,11 @@
             class="fixed max-w-[200px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100"
             :class="!chapterList ? 'translate-x-full' : ''">
             <button @click="chapterList = ! chapterList" type="button"
-                class="absolute w-10 h-44 bg-gray-100 shadow-2xl backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-10 rounded-l-md  border-l border-primary border-y"></button>
+                class="absolute w-10 h-44 bg-gray-100 backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-10 rounded-l-md  border-l border-primary border-y">
+                <div class="h-full flex items-center">
+                    <p class="text-sm transform rotate-90">pilih chapter</p>
+                </div>
+            </button>
             <h1 class="text-xl text-center font-comicBold border-b-2 pb-2 border-gray-400">Daftar Chapter</h1>
             <div class="space-y-1 mt-5 w-full overflow-y-auto max-h-[70vh]">
                 @foreach ($series->chapters as $chapter)

@@ -8,9 +8,9 @@
     dataTag: $persist([]),
     tagSearchResult: [],
     seriesSetting: $persist(false),
+    category: false,
 
-    init() {
-    },
+    init() {},
 
     setInputTag(e) {
         let inputArray = this.inputTag.split(', ');
@@ -20,7 +20,7 @@
         if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
             this.tagSearchResult = this.dataTag.filter(item => !inputArray.includes(item))
         } else {
-            if(inputArray.length > 0){
+            if (inputArray.length > 0) {
                 this.tagSearchResult = this.dataTag.filter(item => item.includes(lastValue));
             } else {
                 this.tagSearchResult = this.dataTag
@@ -59,12 +59,13 @@
         if (elementToRemove) {
             elementToRemove.parentNode.removeChild(elementToRemove);
         }
+        $wire.tag = this.inputTag;
     },
 
     toggleSetting() {
-        this.seriesSetting = ! this.seriesSetting;
+        this.seriesSetting = !this.seriesSetting;
     },
-    removeGenre(id){
+    removeGenre(id) {
         let elementToRemove = document.getElementById('genre-' + id);
 
         if (elementToRemove) {
@@ -125,6 +126,11 @@
                         class="text-base font-semibold text-gray-700 hover:text-blue-700 ease-in duration-100 cursor-pointer">
                         Setelan Series</h1>
                 </div>
+                {{-- category --}}
+                <livewire:admin.series.set-category />
+                @error('category_id')
+                    <span class="error">{{ $message }}</span>
+                @enderror
                 {{-- genre --}}
                 <div class="space-y-2 pb-2" :class="genre ? 'border-b border-gray-400' : ''">
                     <div :class="!genre ? 'border-b border-b-gray-400' : ''">
@@ -172,7 +178,8 @@
                                             wire:click="setSelectedGenre({{ $genre->id }}, '{{ $genre->name }}')"
                                             class="w-full text-start p-1 hover:bg-gray-200 ease-in duration-150">{{ $genre->name }}</button>
                                         <button type="button"
-                                            class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium" @click="removeGenre({{ $index }})">x</button>
+                                            class="w-fit bg-gray-300 px-1 h-fit hover:bg-rose-400 hover:text-gray-200 ease-in duration-150 text-sm font-medium"
+                                            @click="removeGenre({{ $index }})">x</button>
                                     </div>
                                 @empty
                                     <div class="text-base font-medium w-full text-center">genre tidak
@@ -209,7 +216,7 @@
                     <div x-show="tag" x-collapse wire:ignore>
                         <input type="text" placeholder="Pisahkan dengan koma dan spasi (foo, bar)"
                             class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
-                            x-model="inputTag" @keyup="setInputTag">
+                            x-model="inputTag" @keyup="setInputTag" x-on:blur="$wire.tag = inputTag">
                         <div class="w-full h-32 overflow-y-auto ">
                             <div x-show="tagSearchResult.length > 0">
                                 <template x-for="(tag, index) in tagSearchResult">
@@ -267,8 +274,8 @@
                                 @enderror
                                 @if ($urlPoster)
                                     <div class="w-full relative">
-                                        <img src="{{ asset('storage/' . $urlPoster) }}" alt="" srcset=""
-                                            class="w-1/2 h-20 object-contain object-left">
+                                        <img src="{{ asset('storage/' . $urlPoster) }}" alt=""
+                                            srcset="" class="w-1/2 h-20 object-contain object-left">
                                         <div wire:click="removePoster"
                                             class="absolute h-5 w-5 rounded-lg flex items-center justify-center -top-3 right-1/2 bg-gray-400 text-white hover:bg-rose-500">
                                             x</div>

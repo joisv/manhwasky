@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('gallery_id');
+            $table->unsignedBigInteger('category_id');
             $table->bigInteger('views')->default(0);
             $table->string('title');
             $table->string('slug');
@@ -21,9 +22,10 @@ return new class extends Migration
             $table->longText('overview')->nullable();
             $table->enum('status', ['finish', 'ongoing', 'pending'])->nullable();
             $table->date('created')->default(now());
-            $table->string('tag')->nullable();
+            $table->longText('tag')->nullable();
             $table->string('published_day')->nullable();
             $table->foreign('gallery_id')->references('id')->on('galleries')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

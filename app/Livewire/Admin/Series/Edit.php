@@ -23,6 +23,7 @@ class Edit extends Component
         $tag,
         $date,
         $gallery_id,
+        $category_id,
         $urlPoster,
         $status = 'ongoing';
 
@@ -37,6 +38,16 @@ class Edit extends Component
         $this->urlPoster = $url;
     }
 
+    #[On('setSelectedCategory')]
+    public function evtSelectedSeries($value)
+    {
+        if (empty($value)) {
+            $this->category_id = '';
+        } else {
+            $this->category_id = $value;
+        }
+    }
+    
     #[On('setslug')]
     public function setSlugAttribute()
     {
@@ -69,6 +80,7 @@ class Edit extends Component
                 'gallery_id' => 'required',
                 'overview' => 'nullable|string|min:5',
                 'status' => 'nullable|string',
+                'category_id' => 'required'
             ]);
     
             $this->series->update([
@@ -80,7 +92,8 @@ class Edit extends Component
                 'overview' => $this->overview,
                 'status' => $this->status,
                 'created' => $this->date,
-                'published_day' => Carbon::parse($this->date)->format('l')
+                'published_day' => Carbon::parse($this->date)->format('l'),
+                'category_id' => $this->category_id
             ]);
     
             if ($this->selectedGenres) {

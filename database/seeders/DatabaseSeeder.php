@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Category;
 use App\Models\Chapter;
 use App\Models\ChapterContent;
 use App\Models\Gallery;
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
                 'email' => $role.'@example.com',
             ])->assignRole($role);
         }
-        
+        Category::factory(10)->create();
         Gallery::factory(5)->create();
         Series::factory(10)->create();
         Genre::factory(10)->create();

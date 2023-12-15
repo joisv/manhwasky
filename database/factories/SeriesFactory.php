@@ -23,7 +23,8 @@ class SeriesFactory extends Factory
            'status' => $this->faker->randomElement(['pending', 'finish', 'ongoing']),
            'published_day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
            'original_title' => $this->faker->word(),
-           'gallery_id' => '1'
+           'gallery_id' => '1',
+           'category_id' => $this->faker->numberBetween(1, 10)
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Series;
 
+use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Series;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ class Create extends Component
         $date,
         $gallery_id,
         $urlPoster,
+        $category_id,
         $genres,
         $status = 'ongoing';
 
@@ -52,7 +54,8 @@ class Create extends Component
                 'gallery_id' => 'required',
                 'overview' => 'nullable|string|min:5',
                 'status' => 'nullable|string',
-                
+                'tag' => 'nullable|string',
+                'category_id' => 'required'
             ]);
 
             $series = Series::create([
@@ -64,7 +67,9 @@ class Create extends Component
                 'overview' => $this->overview,
                 'status' => $this->status,
                 'created' => $this->date,
-                'published_day' => Carbon::parse($this->date)->format('l')
+                'published_day' => Carbon::parse($this->date)->format('l'),
+                'tag' => trim($this->tag),
+                'category_id' => $this->category_id
             ]);
 
             if ($this->selectedGenres) {
@@ -73,7 +78,7 @@ class Create extends Component
             }
 
             $this->flash('success', 'Series created successfully', [], route('series'));
-        }else{
+        } else {
             $this->alert('error', 'kamu tidak mempunyai izin');
         }
     }
@@ -82,6 +87,16 @@ class Create extends Component
     {
         $this->urlPoster = '';
         $this->gallery_id = '';
+    }
+
+    #[On('setSelectedCategory')]
+    public function evtSelectedSeries($value)
+    {
+        if (empty($value)) {
+            $this->category_id = '';
+        } else {
+            $this->category_id = $value;
+        }
     }
 
     #[On('select-poster')]

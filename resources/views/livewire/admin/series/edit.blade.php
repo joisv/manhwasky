@@ -126,6 +126,11 @@
                         class="text-base font-semibold text-gray-700 hover:text-blue-700 ease-in duration-100 cursor-pointer">
                         Setelan Series</h1>
                 </div>
+                {{-- category --}}
+                <livewire:admin.series.set-category :series="$series"/>
+                @error('category_id')
+                    <span class="error">{{ $message }}</span>
+                @enderror
                 {{-- genre --}}
                 <div class="space-y-2 pb-2" :class="genre ? 'border-b border-gray-400' : ''">
                     <div :class="!genre ? 'border-b border-b-gray-400' : ''">

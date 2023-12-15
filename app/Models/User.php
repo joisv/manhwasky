@@ -45,4 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function bookmarkedSeries()
+    {
+        return $this->belongsToMany(Series::class, 'user_series')->withTimestamps();
+    }
 }

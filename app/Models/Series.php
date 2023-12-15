@@ -16,16 +16,22 @@ class Series extends Model
         'published_day',
         'original_title',
         'gallery_id',
+        'category_id',
         'overview',
         'status',
         'created',
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'series_genre', 'series_id', 'genre_id');
     }
-    
+
     public function gallery()
     {
         return $this->belongsTo(Gallery::class);
@@ -34,5 +40,10 @@ class Series extends Model
     public function chapters()
     {
         return $this->hasMany(Chapter::class);
+    }
+
+    public function bookmarkedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_series')->withTimestamps();
     }
 }

@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('home');
 
 Route::get('/content/{series:slug}', function(Series $series){
-    return view('content', compact('series'));
+    return view('content',[
+        'series' => $series->load(['genres', 'gallery', 'chapters'])
+    ]);
 })->name('content');
 
 Route::get('read/{series:title}/{chapter:slug}', function(Series $series, Chapter $chapter) {

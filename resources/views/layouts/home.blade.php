@@ -64,6 +64,8 @@
                 version, please buy the comic if it's available in your city.</p>
         </div>
     </footer>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
 </body>
 
 </html>

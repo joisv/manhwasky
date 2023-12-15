@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chapters', function (Blueprint $table) {
+        Schema::create('user_series', function (Blueprint $table) {
             $table->id();
+            $table->uuid('user_id');
             $table->unsignedBigInteger('series_id');
-            $table->longText('thumbnail')->nullable();
-            $table->string('title');
-            $table->string('slug');
-            $table->string('published_day')->nullable();
-            $table->date('created')->default(now());
-            $table->bigInteger('views')->default(0);
             $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
             $table->timestamps();
         });
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chapters');
+        Schema::dropIfExists('user_series');
     }
 };
