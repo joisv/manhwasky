@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\SeriesController;
+use App\Models\Chapter;
 use App\Models\Series;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::view('/', 'welcome')->name('home');
 
-Route::view('/chapter', 'chapter')->name('chapter');
-Route::view('/content', 'content')->name('content');
+Route::get('/content/{series:slug}', function(Series $series){
+    return view('content', compact('series'));
+})->name('content');
+
+Route::get('read/{series:title}/{chapter:slug}', function(Series $series, Chapter $chapter) {
+    return view('chapter', compact(['chapter', 'series']));
+})->name('chapter');
+
 Route::view('/genres', 'genres')->name('home.genres');
+Route::view('/populer', 'populer')->name('populer');
 // Route::view('/', 'home/home');
 
 Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function () {

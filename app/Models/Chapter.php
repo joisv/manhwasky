@@ -12,6 +12,7 @@ class Chapter extends Model
     protected $fillable = [
         'created',
         'slug',
+        'published_day',
         'title',
         'views',
         'series_id'

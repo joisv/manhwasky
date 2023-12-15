@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Home;
 
+use App\Models\Chapter;
 use App\Models\Series;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -9,7 +10,7 @@ use Livewire\Component;
 class Today extends Component
 {
     public $loading = true;
-    public $series;
+    public $chapters;
     public $selectedDay;
     public $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -32,7 +33,7 @@ class Today extends Component
     public function getSeries()
     {
         $this->loading = true;
-        $this->series = Series::with(['gallery', 'genres'])->where('published_day', $this->selectedDay)->get();
+        $this->chapters = Chapter::with(['series', 'series.genres', 'series.gallery'])->where('published_day', $this->selectedDay)->get();
         $this->loading = false;
     }
 

@@ -77,7 +77,8 @@ class Edit extends Component
                 'title' => $this->title,
                 'series_id' => $this->selectedSeries[0]['id'],
                 'slug' => $this->slug,
-                'created' => $this->created
+                'created' => $this->created,
+                'published_day' => Carbon::parse($this->created)->format('l')
             ]);
             foreach ($chapters as $chapterData) {
                 ChapterContent::create([

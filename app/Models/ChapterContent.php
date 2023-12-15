@@ -11,7 +11,6 @@ class ChapterContent extends Model
 
     protected $fillable = [
         'url',
-        'created',
         'chapter_id'
     ];
     

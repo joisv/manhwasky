@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('status', ['finish', 'ongoing', 'pending'])->nullable();
             $table->date('created')->default(now());
             $table->string('tag')->nullable();
-            $table->string('published_day')->nullable(['Sunday', 'Monday', 'Tusday', 'Wednesday','Thursday', 'Friday', 'Saturday']);
+            $table->string('published_day')->nullable();
             $table->foreign('gallery_id')->references('id')->on('galleries')->onDelete('cascade');
             $table->timestamps();
         });
