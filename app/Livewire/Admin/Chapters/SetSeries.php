@@ -53,7 +53,7 @@ class SetSeries extends Component
     {
         $this->selectedSeries = [];
     }
-    
+
     #[On('editSeries')]
     public function editSeries($value)
     {
@@ -66,9 +66,13 @@ class SetSeries extends Component
         $this->series = $this->getSeries();
     }
 
+    public function updatedSearchSeries()
+    {
+       $this->series = $this->getSeries();
+    }
+
     public function render()
     {
-        // $this->series = $this->getSeries();
         return view('livewire.admin.chapters.set-series');
     }
 }

@@ -1,6 +1,6 @@
 <div wire:init="getSeries" x-data="{
     seriesExpand: $persist(false),
-    series: @entangle('series'),
+    {{-- series: @entangle('series'), --}}
 
     init() {},
     setToday(day) {
@@ -8,23 +8,6 @@
         $wire.getSeries()
         $wire.$refresh()
     },
-
-    setHover(hover, index) {
-        const hoverTag = document.getElementById('wrapperSeries_' + index)
-
-        if (hoverTag) {
-            hoverTag.style.backgroundColor = hover;
-        }
-    },
-
-    removeHover(hover, index) {
-        const hoverTag = document.getElementById('wrapperSeries_' + index)
-
-        if (hoverTag) {
-            hoverTag.style.removeProperty('background-color');
-        }
-    },
-
 }">
     <div class="flex flex-1 justify-between items-center px-2 sm:hidden">
         <h1 class="font-comicBold text-gray-600 text-2xl">Today</h1>

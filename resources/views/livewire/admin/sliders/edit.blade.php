@@ -115,7 +115,4 @@
             </div>
         </div>
     </form>
-    <x-modal name="edit-image" :show="$edit">
-        <livewire:admin.gallery.create />
-    </x-modal>
 </div>

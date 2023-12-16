@@ -41,7 +41,22 @@
             return finalStr + '...'
         }
         return str
-    }
+    },
+    setHover(hover, index) {
+        const hoverTag = document.getElementById('wrapperSeries_' + index)
+
+        if (hoverTag) {
+            hoverTag.style.backgroundColor = hover;
+        }
+    },
+
+    removeHover(hover, index) {
+        const hoverTag = document.getElementById('wrapperSeries_' + index)
+
+        if (hoverTag) {
+            hoverTag.style.removeProperty('background-color');
+        }
+    },
 }" x-init="$watch('scrollValue', value => {
     backdrop = value >= 100 ? true : false;
 })">

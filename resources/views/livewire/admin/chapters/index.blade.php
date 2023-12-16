@@ -94,4 +94,7 @@
     <x-modal name="chapter-edit" :show="$errors->isNotEmpty()">
         <livewire:admin.chapters.edit />
     </x-modal>
+    <x-modal name="add-thumbnail" :show="$errors->isNotEmpty()">
+        <livewire:admin.gallery.create />
+    </x-modal>
 </div>

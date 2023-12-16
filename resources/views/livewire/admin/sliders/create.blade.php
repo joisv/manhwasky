@@ -116,7 +116,4 @@
         </div>
         {{-- <div class="absolute w-20 h-20 bg-red-500 right-0 top-0"></div> --}}
     </form>
-    <x-modal name="add-image" :show="$create">
-        <livewire:admin.gallery.create />
-    </x-modal>
 </div>

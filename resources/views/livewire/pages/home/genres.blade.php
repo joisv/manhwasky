@@ -29,7 +29,7 @@
         <div class="grid  grid-cols-5 lg:grid-cols-8 xl:grid-cols-10">
             @foreach ($allGenre as $index => $genre)
                 <div class="flex items-center justify-center w-full h-full py-3 border border-gray-300">
-                    <p class="sm:text-lg font-comicRegular text-base">{{ $genre->name }}</p>
+                    <p class="font-comicRegular text-base sm:text-xl">{{ $genre->name }}</p>
                 </div>
             @endforeach
         </div>

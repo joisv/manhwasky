@@ -17,7 +17,6 @@ class Edit extends Component
     public $main;
     public $background = '#000000';
     public $url;
-    public $edit = false;
     
     #[On('select-poster')]
     public function setImage($id, $url)
@@ -68,8 +67,7 @@ class Edit extends Component
     
     public function setImg()
     {
-        $this->dispatch('open-modal', 'edit-image');
-        $this->edit = true;
+        $this->dispatch('open-modal', 'add-image');
     }
     
     public function render()

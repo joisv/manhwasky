@@ -90,8 +90,8 @@
                     @forelse ($chapters as $chapter)
                         <div class="flex space-x-3 items-center">
                             <div class="w-36 sm:h-40 h-36 relative overflow-hidden">
-                                <img src="{{ $chapter->contents()->first()->url }}" alt=""
-                                    class="object-fill absolute bottom-0" wire:loading.remove>
+                                <img src="{{ $chapter->thumbnail ? asset('storage/'.$chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}" alt=""
+                                    class="w-full h-full object-cover" wire:loading.remove>
                             </div>
                             <a href="{{ route('chapter', [$chapter->series->title, $chapter->slug]) }}"
                                 class="sm:flex justify-between w-full items-center" wire:navigate>

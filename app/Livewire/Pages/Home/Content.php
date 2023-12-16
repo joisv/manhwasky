@@ -27,7 +27,7 @@ class Content extends Component
     
     public function getChapters() 
     {
-        $this->chapters = $this->series->chapters()->orderBy('created_at', $this->sortDirection)->get();    
+        $this->chapters = $this->series->chapters()->orderBy('created', $this->sortDirection)->get();    
     }
     
     public function render()

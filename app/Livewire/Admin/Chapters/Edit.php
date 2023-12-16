@@ -20,6 +20,7 @@ class Edit extends Component
     public $slug;
     public $created;
     public $isEdit = false;
+    public $thumbnail;
 
     #[Validate('required|min:3|string')]
     public $title;
@@ -35,6 +36,7 @@ class Edit extends Component
         $this->chapter = Chapter::find($value);
         $this->title = $this->chapter->title;
         $this->slug = $this->chapter->slug;
+        $this->thumbnail = $this->chapter->thumbnail;
         $this->created = $this->chapter->created;
         $this->created = $this->chapter->created;
         $this->chapterStr = implode(",\n", $this->chapter->contents()->pluck('url')->toArray());
@@ -44,6 +46,18 @@ class Edit extends Component
             'id' => $this->chapter->series->id,
         ];
         $this->dispatch('editSeries', $this->selectedSeries);
+    }
+    
+    public function setImg()
+    {
+        $this->dispatch('open-modal', 'add-thumbnail');
+    }
+    
+    #[On('select-poster')]
+    public function setImage($id, $url)
+    {
+        $this->thumbnail = $url;
+        $this->dispatch('image-selected');
     }
     
     #[On('setSelectedSeries')]
@@ -77,6 +91,7 @@ class Edit extends Component
                 'title' => $this->title,
                 'series_id' => $this->selectedSeries[0]['id'],
                 'slug' => $this->slug,
+                'thumbnail' => $this->thumbnail,
                 'created' => $this->created,
                 'published_day' => Carbon::parse($this->created)->format('l')
             ]);
@@ -88,7 +103,7 @@ class Edit extends Component
             }
             $this->alert('success', 'Chapter created successfully');
             $this->dispatch('close-modal');
-            $this->reset(['title', 'slug', 'chapterStr']);
+            $this->reset(['title', 'slug', 'chapterStr', 'thumbnail']);
             $this->created = Carbon::now();
         }else{
             $this->alert('error', 'kamu tidak memiliki izin');

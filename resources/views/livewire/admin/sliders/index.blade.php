@@ -8,7 +8,7 @@
             $dispatch('edit', { id: id });
 
         }
-}">
+}" >
     <x-tables.table name="Slider" count="{{ $sliders->count() }} User">
         <x-slot name="secondBtn">
             <button
@@ -96,5 +96,8 @@
     </x-modal>
     <x-modal name="edit-slider" :show="$errors->isNotEmpty()" focusable>
         <livewire:admin.sliders.edit />
+    </x-modal>
+    <x-modal name="add-image" :show="$errors->isNotEmpty()">
+        <livewire:admin.gallery.create />
     </x-modal>
 </div>

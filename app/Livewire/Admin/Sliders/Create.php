@@ -16,7 +16,6 @@ class Create extends Component
     public $main;
     public $background = '#000000';
     public $url;
-    public $create = false;
     
     #[On('select-poster')]
     public function setImage($id, $url)
@@ -33,7 +32,6 @@ class Create extends Component
     
     public function setImg()
     {
-        $this->create = true;
         $this->dispatch('open-modal', 'add-image');
     }
     

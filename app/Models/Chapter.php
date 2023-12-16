@@ -15,7 +15,8 @@ class Chapter extends Model
         'published_day',
         'title',
         'views',
-        'series_id'
+        'series_id',
+        'thumbnail'
     ];
     
     public function series()

@@ -17,7 +17,7 @@ class Create extends Component
     use LivewireAlert;
 
     public $isEdit = false;
-    
+    public $thumbnail;
     public $created;
     public $slug;
     #[Validate('required')]
@@ -37,6 +37,7 @@ class Create extends Component
                 'series_id' => $this->selectedSeries[0]['id'],
                 'slug' => $this->slug,
                 'created' => $this->created,
+                'thumbnail' => $this->thumbnail,
                 'published_day' => Carbon::parse($this->created)->format('l')
             ]);
             foreach ($chapters as $chapterData) {
@@ -47,12 +48,24 @@ class Create extends Component
             }
             $this->alert('success', 'Chapter created successfully');
             $this->dispatch('close-modal');
-            $this->reset(['title', 'slug', 'chapterStr']);
+            $this->reset(['title', 'slug', 'chapterStr', 'thumbnail']);
             $this->created = Carbon::now();
         
         }else{
             $this->alert('error', 'kamu tidak memiliki izin');
         }
+    }
+    
+    public function setImg()
+    {
+        $this->dispatch('open-modal', 'add-thumbnail');
+    }
+    
+    #[On('select-poster')]
+    public function setImage($id, $url)
+    {
+        $this->thumbnail = $url;
+        $this->dispatch('image-selected');
     }
     
     #[On('setslug')]
