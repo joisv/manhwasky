@@ -28,10 +28,14 @@
     scrollValue: window.pageYOffset,
     backdrop: false,
     setSearchOpen: false,
+    widthValue: window.innerWidth,
     
     init() {
         window.addEventListener('scroll', () => {
             this.scrollValue = window.pageYOffset
+        });
+        window.addEventListener('resize', () => {
+            this.widthValue = window.innerWidth
         });
     },
     

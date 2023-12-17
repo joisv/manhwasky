@@ -40,7 +40,7 @@
             </div>
         @endforeach
     </div>
-    <div class="grid grid-cols-3 md:grid-cols-4 gap-0 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
         @empty(!$chapters)
             @forelse ($chapters as $index => $chapter)
                 <div class="w-full h-32 sm:h-44 relative group @if (rand(1, 9) === $index) sm:col-span-2 @endif">
@@ -82,12 +82,12 @@
                     </a>
                 </div>
             @empty
-                <div class="col-span-3 md:col-span-4  min-h-[45vh] justify-center items-center flex">
+                <div class="col-span-3 sm:col-span-4 md:col-span-5 min-h-[45vh] justify-center items-center flex">
                     <p class="text-3xl text-gray-400 animate-pulse font-comicBold ">tidak ada series</p>
                 </div>
             @endforelse
         @endempty
-        <div class="col-span-3 md:col-span-4 min-h-[45vh] justify-center items-center" wire:loading.flex>
+        <div class="col-span-3 sm:col-span-4 md:col-span-5 min-h-[45vh] justify-center items-center" wire:loading.flex>
             <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
         </div>
     </div>

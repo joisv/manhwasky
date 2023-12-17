@@ -24,7 +24,7 @@ class SeriesFactory extends Factory
            'published_day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
            'original_title' => $this->faker->word(),
            'gallery_id' => '1',
-           'category_id' => $this->faker->numberBetween(1, 10)
+           'category_id' => $this->faker->numberBetween(1, 3)
         ];
     }
 }

@@ -1,18 +1,24 @@
 <div class="w-full max-w-5xl mx-auto min-h-[50vh]" x-data="{
     swiper: null,
-    widthValue: window.innerWidth,
     slidePerView: 3,
 
     init() {
-        this.slidePerView = this.widthValue >= 768 ? 4 : 3
-        this.sliderInit(this.slidePerView)
-        window.addEventListener('resize', () => {
-            this.widthValue = window.innerWidth
-        });
+        let slide;
 
+        switch (true) {
+            case this.widthValue >= 768:
+                slide = 5;
+                break;
+            case this.widthValue >= 640:
+                slide = 4;
+                break;
+            default:
+                slide = 3;
+        }
+        this.sliderInitGenre(slide)
     },
 
-    sliderInit(slide) {
+    sliderInitGenre(slide) {
         this.swiper = new Swiper('.popularGenre', {
             slidesPerView: slide,
             spaceBetween: 15,
@@ -24,8 +30,20 @@
         });
     }
 }" x-init="$watch('widthValue', value => {
-    slidePerView = value >= 768 ? 4 : 3
-    sliderInit(slidePerView)
+    let slidePreview;
+
+    switch (true) {
+        case value >= 768:
+            slidePreview = 5;
+            break;
+        case value >= 640:
+            slidePreview = 4;
+            break;
+        default:
+            slidePreview = 3;
+    }
+    
+    sliderInitGenre(slidePreview);
 })">
     <div class="w-full space-y-3">
         <h1 class="text-xl font-comicBold text-gray-600 text-center">Newrelease</h1>

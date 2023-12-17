@@ -16,8 +16,9 @@ class GenreFactory extends Factory
      */
     public function definition(): array
     {
+        $random = $this->faker->unique()->randomElement(['Bikini', 'Blowjob', 'Glasses', 'Handjob', 'Muscle', 'Swimsuit', 'Group', 'Big Breast', 'Milf', 'Masturbation', 'Sweating', 'Sole Male', 'Pregnant', 'Sole Female']);
         return [
-            'name' => $this->faker->randomElement(['Bikini', 'Blowjob', 'Glases', 'Hanjob', 'Muscle', 'Swimsuit', 'Group']), 
+            'name' => $random,
             'slug' => $this->faker->slug(),
             'primary_color' => $this->faker->randomElement([
                 '#1a3bcf',

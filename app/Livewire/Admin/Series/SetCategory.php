@@ -56,8 +56,8 @@ class SetCategory extends Component
     {
         $this->categories = Category::search('name', $this->searchCategory)->orderBy('name', 'desc')->get();
         $this->selectedCategory[] = [
-            'id' => $this->series->category->id,
-            'name' => $this->series->category->name
+            'id' => $this->series?->category->id,
+            'name' => $this->series?->category->name
         ];    
     }
     

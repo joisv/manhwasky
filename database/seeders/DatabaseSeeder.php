@@ -35,10 +35,10 @@ class DatabaseSeeder extends Seeder
                 'email' => $role.'@example.com',
             ])->assignRole($role);
         }
-        Category::factory(10)->create();
+        Category::factory(3)->create();
         Gallery::factory(5)->create();
         Series::factory(10)->create();
-        Genre::factory(10)->create();
+        Genre::factory(13)->create();
         Chapter::factory(10)->create();
         ChapterContent::factory(20);
         
