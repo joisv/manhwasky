@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
 
 <head>
@@ -19,7 +19,7 @@
             display: none !important;
         }
     </style>
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -29,7 +29,7 @@
     backdrop: false,
     setSearchOpen: false,
     widthValue: window.innerWidth,
-    
+
     init() {
         window.addEventListener('scroll', () => {
             this.scrollValue = window.pageYOffset
@@ -38,7 +38,7 @@
             this.widthValue = window.innerWidth
         });
     },
-    
+
     sliceStr(str, slice) {
         if (str.length > slice) {
             let finalStr = str.substring(0, slice)
@@ -64,7 +64,9 @@
 }" x-init="$watch('scrollValue', value => {
     backdrop = value >= 100 ? true : false;
 })">
-    <livewire:welcome.navigation />
+    @if (!request()->routeIs('chapter'))
+        <livewire:welcome.navigation />
+    @endif
     <main class="@if (!request()->is('chapter')) lg:mt-20 @endif" :class="setNav ? 'backdrop-blur-sm' : ''">
         {{ $slot }}
     </main>

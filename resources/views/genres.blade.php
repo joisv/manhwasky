@@ -62,6 +62,6 @@
     
         sliderInit(slidePreview);
     })">
-        <livewire:pages.home.genres :$staticGenre :$genreActive/>
+        <livewire:pages.home.genres :$staticGenre :selectedGenre="$genre"/>
     </div>
 </x-home-layout>

@@ -79,17 +79,17 @@
                 </button>
             </div>
             <div>
-                <h1 class="text-2xl font-comicBold">Chapter 109</h1>
+                <h1 class="text-2xl font-comicBold">{{ $chapter->title }}</h1>
             </div>
             <div>
 
             </div>
         </div>
-        <div class="max-w-3xl mx-auto ">
+        <div class="max-w-3xl mx-auto flex justify-center">
             <div id="point" @click="handleNavBtn">
-                @foreach ($chapter->contents as $chapter)
+                @foreach ($chapter->contents as $content)
                     <div>
-                        <img src="{{ $chapter->url }}" class="object-fill" alt="">
+                        <img src="{{ $content->url }}" class="object-fill" alt="">
                     </div>
                 @endforeach
             </div>
@@ -118,19 +118,22 @@
             </div>
         </div>
         <div x-cloak
-            class="fixed max-w-[200px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100"
+            class="fixed max-w-[250px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100"
             :class="!chapterList ? 'translate-x-full' : ''">
-            <button @click="chapterList = ! chapterList" type="button"
-                class="absolute w-10 h-44 bg-gray-100 backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-10 rounded-l-md  border-l border-primary border-y">
+            <button @click="chapterList = ! chapterList" type="button" :disabled="!btnNav && !chapterList && widthValue < 850"
+                class="disabled:opacity-30 absolute w-16 h-44 bg-gray-100 backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-16 rounded-l-md  border-l border-primary border-y ease-in duration-100" >
                 <div class="h-full flex items-center">
-                    <p class="text-sm transform rotate-90">pilih chapter</p>
+                    <p class="text-sm font-comicBold transform rotate-90 w-16">{{ $chapter->title }}</p>
                 </div>
             </button>
             <h1 class="text-xl text-center font-comicBold border-b-2 pb-2 border-gray-400">Daftar Chapter</h1>
             <div class="space-y-1 mt-5 w-full overflow-y-auto max-h-[70vh]">
-                @foreach ($series->chapters as $chapter)
-                    <div class="pb-1 border-b border-gray-400 cursor-pointer hover:text-primary px-2">
-                        <h4>{{ $chapter->title }}</h4>
+                @foreach ($series->chapters as $chapterlist)
+                    <div class="cursor-pointer hover:text-primary px-2 flex items-center justify-between">
+                        <h4>{{ $chapterlist->title }}</h4>
+                        @if ($chapterlist->id == $chapter->id)
+                            <x-icons.check default="15px" />
+                        @endif
                     </div>
                 @endforeach
             </div>

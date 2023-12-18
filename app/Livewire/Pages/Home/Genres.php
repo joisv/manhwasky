@@ -12,28 +12,40 @@ class Genres extends Component
     public $staticGenre;
     public $allGenre;
     public $series;
-    #[Url]
-    public $genreActive;
+
+    #[Url(as:'sort')]
+    public $sortDirection = 'All';
+    #[Url(as:'g')]
+    public $selectedGenre;
 
     public function getSeriesWhereGenre()
     {
         if (!empty($this->staticGenre)) {
-            $this->series =  Series::whereHas('genres', function ($query) {
-                $query->where('name', $this->genreActive);
-            })->get();
+            $query =  Series::whereHas('genres', fn ($query) => $query->where('name', $this->selectedGenre));
+
+            if (!is_null($this->sortDirection) && $this->sortDirection !== 'All') {
+                if (in_array($this->sortDirection, ['Ongoing', 'Pending', 'Finish'])) {
+                    $query->where('status', $this->sortDirection)->orderByDesc('views');
+                }else{
+                    $sort = $this->sortDirection === 'Updated' ? 'updated_at' : $this->sortDirection;
+                    $this->series = $query->orderByDesc(strtolower($sort));
+                }
+            }
+
+            $this->series = $query->get();
         }
     }
 
     public function setGenre($name)
     {
-        $this->genreActive = $name;
+        $this->selectedGenre = $name;
         $this->getSeriesWhereGenre();
     }
 
-    public function mount($staticGenre, $genreActive)
+    public function mount($staticGenre, $selectedGenre)
     {
         $this->allGenre = Genre::whereNotIn('id', $staticGenre->pluck('id'))->OrderBy('name', 'desc')->get();
-        $this->genreActive = $genreActive;
+        $this->selectedGenre = $selectedGenre;
         $this->getSeriesWhereGenre();
     }
 

@@ -35,10 +35,10 @@ Route::get('/genres', function(Request $request) {
             ->orderByDesc('series_count')
             ->take(10)
             ->get();
-    $genreActive = $request->input('genreActive') ?? $staticGenre[0]->name; 
+    $genre = $request->input('g') ?? $staticGenre[0]->name; 
     
     return view('genres', [
-        'genreActive' => $genreActive,
+        'genre' => $genre,
         'staticGenre' => $staticGenre
     ]);
     

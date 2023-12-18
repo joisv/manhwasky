@@ -22,7 +22,7 @@
                         <h3 class="sm:text-xl text-lg text-gray-600">Genre:</h3>
                         <div class="flex flex-wrap gap-1 w-full">
                             @foreach ($series->genres as $genre)
-                                <a href="{{ route('home.genres', ['genreActive' => $genre->name]) }}"
+                                <a href="{{ route('home.genres', ['g' => $genre->name]) }}"
                                     class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm" wire:navigate>
                                     #{{ $genre->name }}
                                 </a>

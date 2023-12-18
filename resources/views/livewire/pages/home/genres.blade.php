@@ -1,11 +1,12 @@
 <div class="min-h-screen" x-data="{
-    activeTab: @entangle('genreActive').live,
+    activeTab: @entangle('selectedGenre').live,
+    setSort: false,
 
-    init(){
+    init() {
         document.getElementById(this.activeTab).classList.add('border-b-2', 'border-b-gray-800')
     },
-    setGenre(name){
-        $wire.genreActive = name;
+    setGenre(name) {
+        $wire.selectedGenre = name;
         $wire.getSeriesWhereGenre()
         $wire.$refresh()
         let clearTabs = document.getElementsByClassName('genresTab');
@@ -14,6 +15,11 @@
         }
         let tab = document.getElementById(name);
         tab.classList.add('border-b-2', 'border-b-gray-800');
+    },
+    sortBy(sort) {
+        $wire.sortDirection = sort;
+        $wire.getSeriesWhereGenre();
+        $wire.$refresh();
     }
 }">
     {{-- mobile: ambil 6/7 data index ke 0-2 show 3-6 hidden --}}
@@ -22,8 +28,10 @@
         <div class="swiper genresSlide" wire:ignore x-cloak>
             <div class="swiper-wrapper">
                 @foreach ($staticGenre as $index => $genre)
-                    <div class="swiper-slide" >
-                        <button @click="setGenre('{{ $genre->name }}')" class="flex items-center justify-center w-full h-full py-3 genresTab" id="{{ $genre->name }}">
+                    <div class="swiper-slide">
+                        <button @click="setGenre('{{ $genre->name }}')"
+                            class="flex items-center justify-center w-full h-full py-3 genresTab"
+                            id="{{ $genre->name }}">
                             <p class="sm:text-lg font-comicRegular text-base">{{ $genre->name }}</p>
                         </button>
                     </div>
@@ -44,16 +52,40 @@
     <div class="space-y-2 w-[96.9%] " x-cloak x-show="showGenre" x-collapse>
         <div class="grid max-[410px]:grid-cols-3 grid-cols-5 lg:grid-cols-8 xl:grid-cols-10" wire:ignore>
             @foreach ($allGenre as $index => $genre)
-                <button type="button" @click="setGenre('{{ $genre->name }}')" class="flex items-center justify-center w-full h-full border border-gray-300 py-3 genresTab" id="{{ $genre->name }}">
+                <button type="button" @click="setGenre('{{ $genre->name }}')"
+                    class="flex items-center justify-center w-full h-full border border-gray-300 py-3 genresTab"
+                    id="{{ $genre->name }}">
                     <p class="font-comicRegular text-base sm:text-lg">{{ $genre->name }}</p>
                 </button>
             @endforeach
         </div>
     </div>
     <div class="max-w-5xl mx-auto px-2 md:p-0">
-        <h1 class="text-primary text-xl font-comicBold mt-4">{{ $genreActive }}</h1>
-        <div
-            class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto">
+        <div class="flex items-center justify-between w-full mt-4" @click.outside="setSort = false">
+            <h1 class="text-primary text-xl font-comicBold ">{{ $selectedGenre }}</h1>
+            <div class="relative min-w-[10%]">
+                <button @click="setSort = ! setSort" class="flex justify-between items-center w-full">
+                    <h4>Urutkan berdasar: <span class="font-comicBold">{{ $sortDirection }}</span></h4>
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div class="w-36 right-2 bg-gray-100 absolute p-2 space-y-1"  x-cloak x-show="setSort" x-transition>
+                    @foreach (['All', 'Views', 'Created', 'Updated' , 'Ongoing', 'Pending', 'Finish'] as $sort)
+                        <button @click="sortBy('{{ $sort }}')" type="button"
+                            class="w-full text-start flex items-center justify-between">
+                            <p>{{ $sort }}</p>
+                            @if ($sort === $sortDirection)
+                                <x-icons.check default="14px" />
+                            @endif
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto">
             @empty(!$series)
                 @forelse ($series as $series)
                     <div class="w-full h-32 sm:h-44 relative group ">
