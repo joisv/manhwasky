@@ -16,8 +16,14 @@
                 case this.widthValue >= 1024:
                     slide = 8;
                     break;
-                default:
+                case this.widthValue >= 640:
                     slide = 5;
+                    break;
+                case this.widthValue <= 410:
+                    slide = 3;
+                    break;
+                default:
+                    slide = 4;
             }
             this.sliderInit(slide)
     
@@ -44,12 +50,18 @@
             case value >= 1024:
                 slidePreview = 8;
                 break;
-            default:
+            case value >= 640:
                 slidePreview = 5;
+                break;
+            case value <= 410:
+                slidePreview = 3;
+                break;
+            default:
+                slidePreview = 4;
         }
     
         sliderInit(slidePreview);
-    })" >
-        <livewire:pages.home.genres />
+    })">
+        <livewire:pages.home.genres :$staticGenre :$genreActive/>
     </div>
 </x-home-layout>

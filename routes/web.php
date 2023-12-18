@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\SeriesController;
 use App\Models\Chapter;
+use App\Models\Genre;
 use App\Models\Series;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +29,20 @@ Route::get('read/{series:title}/{chapter:slug}', function(Series $series, Chapte
     return view('chapter', compact(['chapter', 'series']));
 })->name('chapter');
 
-Route::view('/genres', 'genres')->name('home.genres');
+Route::get('/genres', function(Request $request) {
+
+    $staticGenre = Genre::withCount('series')
+            ->orderByDesc('series_count')
+            ->take(10)
+            ->get();
+    $genreActive = $request->input('genreActive') ?? $staticGenre[0]->name; 
+    
+    return view('genres', [
+        'genreActive' => $genreActive,
+        'staticGenre' => $staticGenre
+    ]);
+    
+})->name('home.genres');
 Route::view('/populer', 'populer')->name('populer');
 // Route::view('/', 'home/home');
 

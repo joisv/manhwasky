@@ -22,10 +22,10 @@
                         <h3 class="sm:text-xl text-lg text-gray-600">Genre:</h3>
                         <div class="flex flex-wrap gap-1 w-full">
                             @foreach ($series->genres as $genre)
-                                <div
-                                    class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm">
+                                <a href="{{ route('home.genres', ['genreActive' => $genre->name]) }}"
+                                    class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm" wire:navigate>
                                     #{{ $genre->name }}
-                                </div>
+                                </a>
                             @endforeach
                         </div>
                     </div>
@@ -42,36 +42,22 @@
                     </div>
                 </div>
                 <div class="mt-8">
-                    <a href="{{ route('chapter', [$series->title, $series->chapters()->first()->slug]) }}"
-                        wire:navigate>
-                        <button type="button" class="rounden-sm px-5 py-1 bg-primary flex items-center space-x-1">
-                            <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
-                            <x-icons.book default="20px" />
-                        </button>
-                    </a>
+                    @empty(!$series->chapters()->first())
+                        <a href="{{ route('chapter', [$series->title, $series->chapters()->first()->slug]) }}"
+                            wire:navigate>
+                            <button type="button" class="rounden-sm px-5 py-1 bg-primary flex items-center space-x-1">
+                                <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
+                                <x-icons.book default="20px" />
+                            </button>
+                        </a>
+                    @endempty
                 </div>
             </div>
 
         </div>
     </div>
     <div class="flex flex-col-reverse sm:grid grid-cols-3 gap-3 min-h-[50vh]">
-        <div class="space-y-3 w-full border border-gray-300 p-3 rounded-sm min-h-full">
-            <div>
-                <header class="text-xl text-gray-600 font-comicBold">Newsfeed</header>
-                <div class="h-16 w-full bg-rose-500"></div>
-            </div>
-            <div class="space-y-1">
-                <header class="text-xl text-gray-600 font-comicBold">Trending</header>
-                <div class="flex items-center space-x-3">
-                    <div class="h-20 w-20 bg-violet-500">
-                    </div>
-                    <div>
-                        <h3 class="font-comicBold text-lg">My Aunt</h3>
-                        <p class="text-sm">Dec 2 2023</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <livewire:pages.home.trending />
         <div class="w-full border-t-2 border-gray-300 rota pt-2 col-span-2 max-h-screen overflow-y-auto p-3">
             <div class="flex relative w-full justify-end">
                 <button class="block" wire:click="setDirection">
@@ -90,8 +76,8 @@
                     @forelse ($chapters as $chapter)
                         <div class="flex space-x-3 items-center">
                             <div class="w-36 sm:h-40 h-36 relative overflow-hidden">
-                                <img src="{{ $chapter->thumbnail ? asset('storage/'.$chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}" alt=""
-                                    class="w-full h-full object-cover" wire:loading.remove>
+                                <img src="{{ $chapter->thumbnail ? asset('storage/' . $chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}"
+                                    alt="" class="w-full h-full object-cover" wire:loading.remove>
                             </div>
                             <a href="{{ route('chapter', [$chapter->series->title, $chapter->slug]) }}"
                                 class="sm:flex justify-between w-full items-center" wire:navigate>
@@ -107,10 +93,10 @@
                             </a>
                         </div>
                     @empty
-                        <span>tidak ada chapter</span>
+                        <div class="flex justify-center items-center min-h-[45vh] h-full text-lg sm:text-xl text-gray-400 font-comicBold">tidak ada chapter</div>
                     @endforelse
                 @endempty
-                <div class="col-span-3 md:col-span-4 min-h-[45vh] justify-center items-center" wire:loading.flex
+                <div class=" min-h-[45vh] justify-center items-center" wire:loading.flex
                     wire:target="getChapters">
                     <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
                 </div>

@@ -17,7 +17,9 @@ class BookmarkSeries extends Component
     public function mount()
     {
         $this->user = Auth::user();
-        $this->isSeriesExist();    
+        if(auth()->check()){
+            $this->isSeriesExist();    
+        }
     }
     
     public function bookmarkSeries()

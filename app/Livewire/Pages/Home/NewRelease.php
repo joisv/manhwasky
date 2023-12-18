@@ -14,6 +14,11 @@ class NewRelease extends Component
     //     $this->series =    
     // }
     
+    public function redirectTo($slug)
+    {
+        $this->redirect(route('content', $slug), navigate: true);    
+    }
+    
     public function render()
     {
         return view('livewire.pages.home.new-release', [

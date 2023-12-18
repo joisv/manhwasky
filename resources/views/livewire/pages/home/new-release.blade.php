@@ -52,8 +52,8 @@
                 @empty(!$series)
                     @forelse ($series as $index => $series)
                         <div class="swiper-slide">
-                            <div class="w-full h-32 sm:h-44 relative group ">
-                                <a href="{{ route('content', $series->slug) }}" wire:navigate>
+                            <div class="w-full h-32 sm:h-44 relative group cursor-pointer" wire:click="redirectTo('{{ $series->slug }}')">
+                                {{-- <a href="{{ route('content', $series->slug) }}" wire:navigate> --}}
                                     <img src="{{ asset('storage/' . $series->gallery->image) ?? '' }}"
                                         class="object-cover object-top w-full h-full" alt="" srcset="">
                                     <div id="wrapperSeries_{{ $index }}"
@@ -89,7 +89,8 @@
                                         </div>
                                         <span class="text-sm text-gray-500 flex sm:hidden">{{ $series->title }}</span>
                                     </div>
-                                </a>
+                                    
+                                {{-- </a> --}}
                             </div>
                         </div>
                     @empty
@@ -98,9 +99,9 @@
                         </div>
                     @endforelse
                 @endempty
-                <div class="col-span-3 md:col-span-4 min-h-[45vh] justify-center items-center" wire:loading.flex>
+                {{-- <div class="col-span-3 md:col-span-4 min-h-[45vh] justify-center items-center" wire:loading.flex>
                     <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

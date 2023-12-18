@@ -1,12 +1,14 @@
 <nav>
-    <div class="@if (request()->is('chapter')) hidden @else hidden sm:fixed lg:flex @endif  sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
+    <div class="hidden sm:fixed lg:flex sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
         :class="backdrop ? 'backdrop-blur-md' : ''">
         <div class="flex space-x-5 items-center ">
             <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
             <div>
-                <ul class="flex space-x-2 text-xl font-medium">
+                <ul class="flex space-x-2 text-lg font-comicBold text-gray-600">
                     <li class="hover:text-primary ease-in duration-100"><a href="{{ route('home.genres') }}"
-                            wire:navigate>Genre</a></li>
+                            wire:navigate>Genres</a></li>
+                    <li class="hover:text-primary ease-in duration-100"><a href=""
+                            wire:navigate>Category</a></li>
                     {{-- <li class="hover:text-primary ease-in duration-100"><a href="">Jadwal</a></li>
                     <li class="hover:text-primary ease-in duration-100"><a href="{{ route('populer') }}"
                             wire:navigate>Populer</a></li> --}}
@@ -14,10 +16,10 @@
             </div>
         </div>
         <div class="flex space-x-2 items-center">
-            <button x-show="!setSearchOpen" @click="setSearchOpen = true">
+            <button x-cloak x-show="!setSearchOpen" @click="setSearchOpen = true">
                 <x-icons.search default="24px" />
             </button>
-            <div x-show="setSearchOpen">
+            <div x-cloak x-show="setSearchOpen">
                 <x-search class="focus:ring-0 focus:border-primary p-0" @click.outside="setSearchOpen = false" />
             </div>
             <div>
@@ -26,7 +28,7 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center px-3 py-2 font-comicBold border border-transparent text-base leading-4 rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    class="inline-flex items-center px-3 py-2 font-comicBold border border-transparent text-base leading-4 rounded-md dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                     <div x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
                                         x-on:profile-updated.window="name = $event.detail.name"></div>
 

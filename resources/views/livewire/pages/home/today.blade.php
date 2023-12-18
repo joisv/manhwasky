@@ -1,49 +1,82 @@
 <div wire:init="getSeries" x-data="{
     seriesExpand: $persist(false),
-    {{-- series: @entangle('series'), --}}
+    swiperGenre: null,
+    selectedDay: @entangle('selectedDay'),
 
-    init() {},
+    init() {
+        let slide;
+        document.getElementById(this.selectedDay).classList.add('sm:bg-primary', 'sm:text-white', 'border-b', 'border-b-gray-800')
+        switch (true) {
+            {{-- case this.widthValue >= 1280:
+                slide = 10;
+                break; --}}
+            case this.widthValue >= 640:
+                slide = 7;
+                break;
+            default:
+                slide = 5;
+        }
+        this.sliderInitToday(slide)
+
+    },
+
+    sliderInitToday(slide) {
+        this.swiper = new Swiper('.todaySlide', {
+            slidesPerView: slide,
+            spaceBetween: 15,
+            freeMode: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    },
     setToday(day) {
         $wire.selectedDay = day
         $wire.getSeries()
         $wire.$refresh()
+
+        let clearTabs = document.getElementsByClassName('swiper-days');
+        for (let tab of clearTabs) {
+            tab.classList.remove('sm:bg-primary', 'sm:text-white', 'border-b', 'border-b-gray-800');
+        }
+        document.getElementById(day).classList.add('sm:bg-primary', 'sm:text-white', 'border-b', 'border-b-gray-800');
     },
-}">
-    <div class="flex flex-1 justify-between items-center px-2 sm:hidden">
-        <h1 class="font-comicBold text-gray-600 text-2xl">Today</h1>
-        <div class="space-y-1 relative w-full flex justify-end sm:hidden">
-            <button @click="seriesExpand = true" class="p-3 font-semibold flex items-center justify-between space-x-2">
-                <p>Diurutkan {{ $selectedDay }}</p>
-                <x-icons.check default="24px" />
-            </button>
-            <div x-cloak @click.outside="seriesExpand = false"
-                class="absolute top-0 z-50 bg-gray-100 border border-gray-300 w-1/2" x-show="seriesExpand">
-                @foreach ($days as $day)
-                    <button @click="setToday('{{ $day }}')" type="button"
-                        class="p-2 font-semibold w-full text-start flex items-center justify-between">
-                        <p>{{ $day }}</p>
-                        @if ($day === $selectedDay)
-                            <x-icons.check default="24px" />
-                        @endif
-                    </button>
-                @endforeach
-            </div>
+}" x-init="$watch('widthValue', value => {
+    let slidePreview;
+
+    switch (true) {
+        {{-- case value >= 1280:
+            slidePreview = 10;
+            break; --}}
+        case value >= 640:
+            slidePreview = 7;
+            break;
+        default:
+            slidePreview = 5;
+    }
+
+    sliderInitToday(slidePreview);
+})">
+    <div class="swiper todaySlide max-w-5xl h-10 sm:h-20 mx-auto " wire:ignore>
+        <div class="swiper-wrapper">
+            @foreach ($days as $index => $day)
+                <div class="swiper-slide">
+                    <div
+                        class=" w-full h-full flex items-center justify-center font-medium swiper-days px-1" id="{{ $day }}">
+                        <button type="button" @click="setToday('{{ $day }}')"
+                            class="disabled:text-gray-300 font-comicBold text-sm sm:text-base md:text-xl"
+                            wire:loading.attr="disbled">{{ $day }}</button>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
-    <div class="max-w-5xl h-14 sm:h-20 mx-auto sm:flex justify-between space-x-2 items-center hidden">
-        @foreach ($days as $day)
-            <div
-                class=" w-full h-full flex items-center justify-center font-medium  @if ($day === $selectedDay) bg-primary text-white @endif">
-                <button type="button" @click="setToday('{{ $day }}')"
-                    class="disabled:text-gray-300 font-comicBold text-sm sm:text-base md:text-xl"
-                    wire:loading.attr="disbled">{{ $day }}</button>
-            </div>
-        @endforeach
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
+    <div
+        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mx-auto sm:mt-3 px-2 sm:px-0">
         @empty(!$chapters)
             @forelse ($chapters as $index => $chapter)
-                <div class="w-full h-32 sm:h-44 relative group @if (rand(1, 9) === $index) sm:col-span-2 @endif">
+                <div class="w-full h-32 sm:h-44 relative group @if (rand(1, 9) === $index) sm:col-span-2 @endif" wire:loading.remove>
                     <a href="{{ route('content', $chapter->series->slug) }}" wire:navigate>
                         <img src="{{ asset('storage/' . $chapter->series->gallery->image) ?? '' }}"
                             class="object-cover object-top w-full h-full" alt="" srcset="">
@@ -82,7 +115,7 @@
                     </a>
                 </div>
             @empty
-                <div class="col-span-3 sm:col-span-4 md:col-span-5 min-h-[45vh] justify-center items-center flex">
+                <div class="col-span-3 sm:col-span-4 md:col-span-5 min-h-[45vh] justify-center items-center flex" wire:loading.remove>
                     <p class="text-3xl text-gray-400 animate-pulse font-comicBold ">tidak ada series</p>
                 </div>
             @endforelse

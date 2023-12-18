@@ -13,14 +13,13 @@
             tab.classList.remove('border-b-2', 'border-b-gray-800');
         }
         let tab = document.getElementById(name);
-        console.log(tab)
         tab.classList.add('border-b-2', 'border-b-gray-800');
     }
 }">
     {{-- mobile: ambil 6/7 data index ke 0-2 show 3-6 hidden --}}
-    <div class="h-full w-full items-center justify-between flex border-gray-300 "
+    <div class="sm:h-full h-fit w-full items-center justify-between flex border-gray-300"
         :class="showGenre ? 'border-t' : 'border-y'">
-        <div class="swiper genresSlide" wire:ignore>
+        <div class="swiper genresSlide" wire:ignore x-cloak>
             <div class="swiper-wrapper">
                 @foreach ($staticGenre as $index => $genre)
                     <div class="swiper-slide" >
@@ -43,7 +42,7 @@
         </div>
     </div>
     <div class="space-y-2 w-[96.9%] " x-cloak x-show="showGenre" x-collapse>
-        <div class="grid grid-cols-5 lg:grid-cols-8 xl:grid-cols-10" wire:ignore>
+        <div class="grid max-[410px]:grid-cols-3 grid-cols-5 lg:grid-cols-8 xl:grid-cols-10" wire:ignore>
             @foreach ($allGenre as $index => $genre)
                 <button type="button" @click="setGenre('{{ $genre->name }}')" class="flex items-center justify-center w-full h-full border border-gray-300 py-3 genresTab" id="{{ $genre->name }}">
                     <p class="font-comicRegular text-base sm:text-lg">{{ $genre->name }}</p>
@@ -54,7 +53,7 @@
     <div class="max-w-5xl mx-auto px-2 md:p-0">
         <h1 class="text-primary text-xl font-comicBold mt-4">{{ $genreActive }}</h1>
         <div
-            class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto px-2 sm:px-0">
+            class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto">
             @empty(!$series)
                 @forelse ($series as $series)
                     <div class="w-full h-32 sm:h-44 relative group ">
