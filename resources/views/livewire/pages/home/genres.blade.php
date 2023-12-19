@@ -87,7 +87,7 @@
         </div>
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto">
             @empty(!$series)
-                @forelse ($series as $series)
+                @forelse ($series as $index => $series)
                     <div class="w-full h-32 sm:h-44 relative group ">
                         <a href="{{ route('content', $series->slug) }}" wire:navigate>
                             <img src="{{ asset('storage/' . $series->gallery->image) ?? '' }}"

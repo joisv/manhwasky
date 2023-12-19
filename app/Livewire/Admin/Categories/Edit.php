@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Livewire\Admin\Genres;
+namespace App\Livewire\Admin\Categories;
 
-use App\Models\Genre;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Category;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use Livewire\Attributes\On;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Edit extends Component
 {
     use LivewireAlert;
-
-    public $genre;
-
+    
     public $name;
     public $slug;
-    public $primary_color;
+    public $category;
 
     protected $rules = [
 
@@ -25,56 +23,53 @@ class Edit extends Component
     
     protected function rules()
     {
-        $name = $this->name == $this->genre->name
+        $name = $this->name == $this->category->name
             ? 'required|min:2|string'
             : '';
 
         return array_merge($this->rules, ['name' => $name]);
     }
-
+    
     #[On('edit')]
-    public function setEdit($value)
+    public function getEdit($value)
     {
-        $this->genre = Genre::find($value);
-        $this->name = $this->genre->name;
-        $this->primary_color = $this->genre->primary_color;
+        $this->category = Category::find($value);
+        $this->name = $this->category->name;
+        $this->slug = $this->category->slug;
     }
-
+    
     public function save()
     {
         if (auth()->user()->can('update')) {
             $this->validate();
-
-            $this->genre->update([
+            $this->category->update([
                 'name' => $this->name,
-                'slug' => $this->setSlugAttribute($this->name),
-                'primary_color' => $this->primary_color
+                'slug' => $this->setSlugAttribute($this->name)
             ]);
-
+    
+            $this->reset(['name', 'slug']);
             $this->dispatch('re-render');
-            $this->alert('success', 'genre updated successfully');
-            $this->reset(['name', 'slug', 'primary_color']);
-        } else {
+        }else{
             $this->alert('error', 'kamu tidak memiliki izin');
         }
     }
-
+    
     public function setSlugAttribute($value)
     {
         $slug = Str::slug($value);
         $originalSlug = $slug;
         $count = 2;
 
-        while (Genre::where('slug', $slug)->exists()) {
+        while (Category::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $count;
             $count++;
         }
 
         return $slug;
     }
-
+    
     public function render()
     {
-        return view('livewire.admin.genres.edit');
+        return view('livewire.admin.categories.edit');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\SeriesController;
+use App\Models\Category;
 use App\Models\Chapter;
 use App\Models\Genre;
 use App\Models\Series;
@@ -43,6 +44,20 @@ Route::get('/genres', function(Request $request) {
     ]);
     
 })->name('home.genres');
+
+Route::get('/categories', function(Request $request) {
+
+    $allcategories = Category::latest('id')->get();
+
+    $categoryname = $request->input('cat') ?? $allcategories[0]->name;
+    // dd($category);
+    return view('categories', [
+        'allcategories' => $allcategories,
+        'categoryname' => $categoryname
+    ]);
+    
+})->name('home.categories');
+
 Route::view('/populer', 'populer')->name('populer');
 // Route::view('/', 'home/home');
 
@@ -62,6 +77,7 @@ Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function 
     Route::view('chapters', 'admin/chapters/index')->name('chapters');
     Route::view('genres', 'admin/genres/index')->name('genres');
     Route::view('users', 'admin/users/index')->name('users');
+    Route::view('categories', 'admin/categories/index')->name('categories');
 
     Route::view('sliders', 'admin/sliders/index')->name('sliders');
     Route::view('settings', 'admin/settings')->name('settings');

@@ -7,11 +7,8 @@
                 <ul class="flex space-x-2 text-lg font-comicBold text-gray-600">
                     <li class="hover:text-primary ease-in duration-100"><a href="{{ route('home.genres') }}"
                             wire:navigate>Genres</a></li>
-                    <li class="hover:text-primary ease-in duration-100"><a href=""
+                    <li class="hover:text-primary ease-in duration-100"><a href="{{ route('home.categories') }}"
                             wire:navigate>Category</a></li>
-                    {{-- <li class="hover:text-primary ease-in duration-100"><a href="">Jadwal</a></li>
-                    <li class="hover:text-primary ease-in duration-100"><a href="{{ route('populer') }}"
-                            wire:navigate>Populer</a></li> --}}
                 </ul>
             </div>
         </div>
@@ -19,9 +16,7 @@
             <button x-cloak x-show="!setSearchOpen" @click="setSearchOpen = true">
                 <x-icons.search default="24px" />
             </button>
-            <div x-cloak x-show="setSearchOpen">
-                <x-search class="focus:ring-0 focus:border-primary p-0" @click.outside="setSearchOpen = false" />
-            </div>
+            <livewire:welcome.search />
             <div>
                 @auth
                     <div class="hidden sm:flex sm:items-center sm:ms-6">

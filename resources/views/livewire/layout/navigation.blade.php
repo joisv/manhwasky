@@ -39,6 +39,9 @@ $logout = function (Logout $logout) {
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')" wire:navigate>
                         {{ __('Users') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
+                        {{ __('Categories') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('sliders')" :active="request()->routeIs('sliders')" wire:navigate>
                         {{ __('Sliders') }}
                     </x-nav-link>
@@ -95,6 +98,27 @@ $logout = function (Logout $logout) {
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('series')" :active="request()->routeIs('series')" wire:navigate>
+                {{ __('Series') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('chapters')" :active="request()->routeIs('chapters')" wire:navigate>
+                {{ __('Chapters') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('genres')" :active="request()->routeIs('genres')" wire:navigate>
+                {{ __('Genres') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')" wire:navigate>
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
+                {{ __('Categories') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('sliders')" :active="request()->routeIs('sliders')" wire:navigate>
+                {{ __('Sliders') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('settings')" :active="request()->routeIs('settings')" wire:navigate>
+                {{ __('Settings') }}
             </x-responsive-nav-link>
         </div>
 

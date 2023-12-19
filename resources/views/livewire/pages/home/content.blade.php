@@ -8,7 +8,7 @@
             <div class="w-full">
                 <div class="flex items-center space-x-1 ">
                     <div class="text-sm px-1 text-white bg-primary">{{ $series->status }}</div>
-                    <div class="text-sm px-1 border border-primary">{{ $series->category->name }}</div>
+                    <a href="{{ route('home.categories', [ 'cat' => $series->category->name ]) }}" class="text-sm px-1 border border-primary" wire:navigate>{{ $series->category->name }}</a>
                 </div>
                 <div class="flex w-full justify-between items-start">
                     <div>
