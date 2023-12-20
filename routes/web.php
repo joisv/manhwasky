@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\SeriesController;
-use App\Models\Category;
+use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\HomeController;
 use App\Models\Chapter;
-use App\Models\Genre;
 use App\Models\Series;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,45 +20,18 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::view('/', 'welcome')->name('home');
 
-Route::get('/content/{series:slug}', function(Series $series){
-    return view('content',[
-        'series' => $series->load(['genres', 'gallery', 'chapters'])
-    ]);
-})->name('content');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('read/{series:title}/{chapter:slug}', function(Series $series, Chapter $chapter) {
-    return view('chapter', compact(['chapter', 'series']));
-})->name('chapter');
+Route::get('/content/{series:slug}', [HomeController::class, 'show'])->name('content');
 
-Route::get('/genres', function(Request $request) {
+Route::get('read/{series:title}/{chapter:slug}', [ChapterController::class, 'index'])->name('chapter');
 
-    $staticGenre = Genre::withCount('series')
-            ->orderByDesc('series_count')
-            ->take(10)
-            ->get();
-    $genre = $request->input('g') ?? $staticGenre[0]->name; 
-    
-    return view('genres', [
-        'genre' => $genre,
-        'staticGenre' => $staticGenre
-    ]);
-    
-})->name('home.genres');
+Route::get('/genres', [GenreController::class, 'index'])->name('home.genres');
 
-Route::get('/categories', function(Request $request) {
+Route::get('/categories', [CategoryController::class, 'index'])->name('home.categories');
 
-    $allcategories = Category::latest('id')->get();
-
-    $categoryname = $request->input('cat') ?? $allcategories[0]->name;
-    // dd($category);
-    return view('categories', [
-        'allcategories' => $allcategories,
-        'categoryname' => $categoryname
-    ]);
-    
-})->name('home.categories');
+Route::middleware('auth')->get('bookmarks', [BookmarkController::class, 'index'])->name('bookmarks');
 
 Route::view('/populer', 'populer')->name('populer');
 // Route::view('/', 'home/home');

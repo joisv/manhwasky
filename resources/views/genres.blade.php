@@ -1,7 +1,7 @@
-@php
-    $i = 0;
-@endphp
 <x-home-layout>
+    <x-slot name="seo">
+        {!! seo($seo) !!}
+    </x-slot>
     <div x-data="{
         showGenre: false,
         swiperGenre: null,

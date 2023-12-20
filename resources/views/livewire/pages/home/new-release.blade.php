@@ -94,7 +94,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-3 md:col-span-4  min-h-[45vh] justify-center items-center flex">
+                        <div class="min-h-[45vh] justify-center items-center flex w-full">
                             <p class="text-3xl text-gray-400 animate-pulse font-comicBold ">tidak ada series</p>
                         </div>
                     @endforelse

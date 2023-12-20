@@ -1,10 +1,10 @@
 <div class="min-h-screen max-w-5xl mx-auto space-y-4" wire:init="getChapters">
-    <div class="sm:grid grid-cols-4 items-center">
+    <div class="sm:grid grid-cols-4 items-center p-2 xl:p-0">
         <div class="w-full h-72 col-span-2 overflow-hidden">
             <img src="{{ asset('storage/' . $series->gallery->image) }}" alt=""
                 class="object-cover w-full h-full object-top">
         </div>
-        <div class="flex justify-between w-full col-span-2  p-2 font-comicBold h-fit">
+        <div class="flex justify-between w-full col-span-2 p-2 font-comicBold h-fit">
             <div class="w-full">
                 <div class="flex items-center space-x-1 ">
                     <div class="text-sm px-1 text-white bg-primary">{{ $series->status }}</div>

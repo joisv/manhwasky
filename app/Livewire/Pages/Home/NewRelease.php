@@ -7,13 +7,7 @@ use Livewire\Component;
 
 class NewRelease extends Component
 {
-    // public $series;
-
-    // public function getSeries()
-    // {
-    //     $this->series =    
-    // }
-    
+   
     public function redirectTo($slug)
     {
         $this->redirect(route('content', $slug), navigate: true);    

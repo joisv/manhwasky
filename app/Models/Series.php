@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use RalphJSmit\Laravel\SEO\SchemaCollection;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class Series extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSEO;
 
     protected $fillable = [
         'title',
@@ -22,6 +25,18 @@ class Series extends Model
         'created',
     ];
 
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            title: "Baca $this->title",
+            description: $this->overview,
+            robots: 'follow, index',
+            image: "storage/".$this->gallery->image ?? '',
+            schema: SchemaCollection::initialize()->addArticle(),
+            tags: $this->tag
+        );
+    }
+    
     public function category()
     {
         return $this->belongsTo(Category::class);

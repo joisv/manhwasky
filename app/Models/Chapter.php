@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Settings\GeneralSetting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use RalphJSmit\Laravel\SEO\SchemaCollection;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class Chapter extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSEO;
 
     protected $fillable = [
         'created',
@@ -18,6 +22,18 @@ class Chapter extends Model
         'series_id',
         'thumbnail'
     ];
+    
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            title: $this->series->title." - $this->title",
+            description: $this->series->overview,
+            robots: 'follow, index',
+            image: "storage/".$this->series->gallery->image ?? '',
+            schema: SchemaCollection::initialize()->addArticle(),
+            tags: $this->series->tag
+        );
+    }
     
     public function series()
     {

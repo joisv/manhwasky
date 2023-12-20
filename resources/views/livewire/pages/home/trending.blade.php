@@ -8,13 +8,13 @@
         @empty(!$trending)
             @foreach ($trending as $trending)
                 <a href="{{ route('content', $trending->slug) }}" class="flex items-center space-x-3">
-                    <div class="h-20 w-20 bg-violet-500">
+                    <div class="h-20 w-20 ">
                         <img src="{{ asset('storage/' . $trending->gallery->image) }}" alt=""
                             class="w-full h-full object-cover object-top">
                     </div>
                     <div>
-                        <h3 class="font-comicBold text-lg">My Aunt</h3>
-                        <p class="text-sm">Dec 2 2023</p>
+                        <h3 class="font-comicBold text-lg">{{ $trending->title }}</h3>
+                        <p class="text-sm">{{ Carbon\Carbon::createFromFormat('Y-m-d', $trending->created)->format('F j, Y') }}</p>
                     </div>
                 </a>
             @endforeach
