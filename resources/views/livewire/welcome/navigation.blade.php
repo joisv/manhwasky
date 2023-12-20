@@ -1,33 +1,29 @@
-<?php
-
-use App\Livewire\Actions\Logout;
-
-$logout = function (Logout $logout) {
-    $logout();
-
-    $this->redirect('/', navigate: true);
-};
-
-?>
 <nav>
-    <h1 x-init="console.log(setting)"></h1>
-    <img :src="" alt="" srcset="">
-    <div class="hidden sm:fixed lg:flex sm:top-0 sm:right-0 p-6 text-end z-10 w-full justify-between items-center"
+    <div class="hidden sm:fixed lg:flex sm:top-0 sm:right-0 px-6 py-2 text-end z-10 w-full justify-between items-center"
         :class="backdrop ? 'backdrop-blur-md' : ''">
         <div class="flex space-x-5 items-center ">
-            <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
+            @empty(!$setting->logo)
+            <div class="w-36 h-14">
+                <img src="{{ asset('storage/' . $setting->logo) }}" alt="logo" class="w-full h-full object-cover">
+            </div>
+            @else
+                <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
+            @endempty
             <div>
                 <ul class="flex space-x-2 text-lg font-comicBold text-gray-600">
                     <li
                         class="hover:text-primary ease-in duration-100  {{ request()->routeIs('home.genres') ? 'text-primary' : '' }}">
                         <a href="{{ route('home.categories') }}"><a href="{{ route('home.genres') }}"
-                                wire:navigate>Genres</a></li>
+                                wire:navigate>Genres</a>
+                    </li>
                     <li
                         class="hover:text-primary ease-in duration-100 {{ request()->routeIs('home.categories') ? 'text-primary' : '' }}">
-                        <a href="{{ route('home.categories') }}" wire:navigate>Categories</a></li>
+                        <a href="{{ route('home.categories') }}" wire:navigate>Categories</a>
+                    </li>
                     <li
                         class="hover:text-primary ease-in duration-100 {{ request()->routeIs('bookmarks') ? 'text-primary' : '' }}">
-                        <a href="{{ route('bookmarks') }}" wire:navigate>Bookmark</a></li>
+                        <a href="{{ route('bookmarks') }}" wire:navigate>Bookmark</a>
+                    </li>
                 </ul>
             </div>
         </div>

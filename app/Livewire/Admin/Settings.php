@@ -11,7 +11,6 @@ class Settings extends Component
 {
     use LivewireAlert;
 
-    // public GeneralSetting $settings;
     public string $site_name;
     public string $logo_cms;
     public string $favicon;
@@ -22,7 +21,6 @@ class Settings extends Component
 
     public function mount(GeneralSetting $settings)
     {
-        // $this->settings = $settings;
         $this->site_name = $settings->site_name;
         $this->primary_color = $settings->primary_color;
         $this->logo_cms = $settings->logo_cms;

@@ -71,7 +71,10 @@
                             </svg>
                         </div>
                         <div class="text-start w-full">
-                            <x-input-label id="logo" for="logo_cms">Logo cms</x-input-label>
+                            <div class="flex space-x-2 items-center">
+                                <x-input-label id="logo" for="logo_cms">Logo cms</x-input-label>
+                                <p class="font-comicBold text-sm text-gray-500">recomended 56px * 144 px</p>
+                            </div>
                             @error('logo_cms')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -120,7 +123,10 @@
                             </svg>
                         </div>
                         <div class="text-start w-full">
-                            <x-input-label for="logo">Logo web</x-input-label>
+                            <div class="flex space-x-2">
+                                <x-input-label for="logo">Logo web</x-input-label>
+                                <p class="font-comicBold text-sm text-gray-500">recomended 56px * 144 px</p>
+                            </div>
                             @error('logo')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -169,7 +175,10 @@
                             </svg>
                         </div>
                         <div class="text-start w-full">
-                            <x-input-label for="favicon">favicon</x-input-label>
+                            <div class="flex space-x-2">
+                                <x-input-label for="favicon">favicon</x-input-label>
+                                <p class="font-comicBold text-sm text-gray-500">recomended 100px * 100 px</p>
+                            </div>
                             @error('favicon')
                                 <span class="error">{{ $message }}</span>
                             @enderror
