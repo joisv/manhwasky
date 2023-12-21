@@ -24,6 +24,7 @@
                         class="hover:text-primary ease-in duration-100 {{ request()->routeIs('bookmarks') ? 'text-primary' : '' }}">
                         <a href="{{ route('bookmarks') }}" wire:navigate>Bookmark</a>
                     </li>
+                    <livewire:get-coins-button />
                 </ul>
             </div>
         </div>

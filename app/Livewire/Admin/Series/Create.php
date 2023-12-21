@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Series;
 
-use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Series;
 use Carbon\Carbon;

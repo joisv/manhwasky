@@ -68,6 +68,9 @@
     <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden" @click="setNav = true">
         <x-icons.dotmenu default="25px" />
     </button>
+    <x-modal name="get-coins" maxWidth="sm" :show="$errors->isNotEmpty()">
+        <livewire:coins-modal />
+    </x-modal>
     <footer>
         <div class="w-full px-4 static bottom-0 mt-10 py-5 space-y-2 bg-gray-100">
             <div class="w-full text-center">

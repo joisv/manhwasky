@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SeriesController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CoinsController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Models\Chapter;
@@ -34,7 +35,8 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('home.cate
 Route::middleware('auth')->get('bookmarks', [BookmarkController::class, 'index'])->name('bookmarks');
 
 Route::view('/populer', 'populer')->name('populer');
-// Route::view('/', 'home/home');
+
+Route::middleware('auth')->get('/coins', [CoinsController::class, 'getCoins'])->name('coins');
 
 Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function () {
     Route::view('dashboard', 'admin/dashboard')
