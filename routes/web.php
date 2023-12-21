@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Models\Chapter;
 use App\Models\Series;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::middleware('auth')->get('bookmarks', [BookmarkController::class, 'index']
 Route::view('/populer', 'populer')->name('populer');
 
 Route::middleware('auth')->get('/coins', [CoinsController::class, 'getCoins'])->name('coins');
+
+Route::get('/forget', function(){
+   Session::forget('coins-token'); 
+});
 
 Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function () {
     Route::view('dashboard', 'admin/dashboard')

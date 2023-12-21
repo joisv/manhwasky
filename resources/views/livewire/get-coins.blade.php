@@ -1,25 +1,35 @@
 <div class="max-w-4xl p-2 mx-auto" x-data="{
-    countdown: 20,
+    countdown: 25,
     btnScroll: true,
     shownBtn: false,
     token: @entangle('token').live,
-    
+    scrollTo: $refs.get_coin,
+
     init() {
-        //lakukan pengecekan jika tidak ada token jangan lakukan countdown
-        const intervalId = setInterval(() => {
-            if (this.countdown > 0) {
-                this.countdown--
-            }else{
-                clearInterval(intervalId);
-                this.btnScroll = false;
-            }
-        }, 1000)
+        if (this.token !== '') {
+            const intervalId = setInterval(() => {
+                if (this.countdown > 0) {
+                    this.countdown--
+                } else {
+                    clearInterval(intervalId);
+                    this.btnScroll = false;
+                }
+            }, 1000)
+        }
     },
-    handleScroll(){
-        window.location.href = '#halo';
+    handleScroll() {
+        this.scrollTo.scrollIntoView({ behavior: 'smooth', block: 'center' });
         this.shownBtn = true;
     }
-}">
+}"
+    @redirect-to.window="() => {
+    const setId = setTimeout(() => {
+         window.history.back()
+     }, 4000)
+     return () => {
+         clearTimeout(setId)
+     }
+ }">
     <div class="w-full flex flex-col justify-center items-center space-y-6">
         <h1 class="font-comicBold text-2xl">Dapatkan 2 coin dengan click tombol dibawah</h1>
         <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center">
@@ -27,11 +37,12 @@
                 <p x-text="countdown" class="font-comicBold text-lg"></p>
             </div>
         </div>
-        <button @click="handleScroll" :disabled="btnScroll" class="bg-primary w-20 disabled:opacity-75 p-1 text-white text-center font-comicBold rounded-sm block">
-            get coin
+        <button @click="handleScroll" :disabled="btnScroll"
+            class="bg-primary w-20 disabled:opacity-50 p-1 text-white text-center font-comicBold rounded-sm block">
+            click 2x
         </button>
     </div>
-    <div class="mt-20">
+    <div class="mt-10">
         <h1 class="font-comicBold text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h1> Impedit
         itaque voluptatum quasi ut fugit possimus necessitatibus numquam eaque explicabo natus quisquam magni
         dolorem, quidem dignissimos quo aspernatur placeat exercitationem quia ea harum, minima nobis blanditiis
@@ -107,8 +118,10 @@
         Earum est nulla sapiente sequi ea, omnis fugit commodi sed nobis, id magnam error.
     </div>
     <div class="flex w-full items-center justify-center">
-        <button x-show="shownBtn" id="halo" class="bg-primary w-20 disabled:opacity-50 p-1 text-white text-center font-comicBold rounded-sm block">
-            get coin
+        <button wire:click="validateCoins" x-show="shownBtn" x-ref="get_coin"
+            class="bg-primary w-20 disabled:opacity-50 p-1 text-white text-center font-comicBold rounded-sm block">
+            <p wire:loading.remove>get coin</p>
+            <p wire:loading class="animate-pulse">loading...</p>
         </button>
     </div>
 </div>

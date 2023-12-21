@@ -5,5 +5,5 @@
             membaca comic tanpa terganggu dengan iklan, coin yang didapat bisa digunakan untuk mengakses manga /
             manhwa yang </p>
     </div>
-    <button wire:click="getCoins" type="button" class="p-2 bg-primary rounded-sm text-lg w-full text-white">get coins</button>
+    <button wire:click="getCoins" wire:loading.attr="disabled" type="button" class="disabled:opacity-50 p-2 bg-primary rounded-sm text-lg w-full text-white">get coins</button>
 </div>
