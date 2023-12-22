@@ -19,7 +19,7 @@
         this.sliderInitToday(slide)
 
     },
-
+    
     sliderInitToday(slide) {
         this.swiper = new Swiper('.todaySlide', {
             slidesPerView: slide,
@@ -82,8 +82,8 @@
                             class="object-cover object-top w-full h-full" alt="" srcset="">
                         <div id="wrapperSeries_{{ $index }}"
                             class="absolute bottom-0 w-full h-full ease-in duration-100 group-hover:bg-opacity-50 "
-                            @mouseover="setHover('{{ $chapter->series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
-                            @mouseout="removeHover('{{ $chapter->series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
+                            @mouseover="setHover('wrapperSeries_', '{{ $chapter->series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
+                            @mouseout="removeHover('wrapperSeries_', '{{ $chapter->series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
                             style="transition: background-color 0.3s ease;">
                             <div class="absolute text-sm bg-sky-500 text-white right-2 top-2 px-1 flex group-hover:hidden">
                                 {{ $chapter->title }}</div>

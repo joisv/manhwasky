@@ -92,10 +92,10 @@
                         <a href="{{ route('content', $series->slug) }}" wire:navigate>
                             <img src="{{ asset('storage/' . $series->gallery->image) ?? '' }}"
                                 class="object-cover object-top w-full h-full" alt="" srcset="">
-                            <div id="wrapperSeries_{{ $index }}"
+                            <div id="wrapperSeriesGenre_{{ $index }}"
                                 class="absolute bottom-0 w-full h-full ease-in duration-100 group-hover:bg-opacity-50 "
-                                @mouseover="setHover('{{ $series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
-                                @mouseout="removeHover('{{ $series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
+                                @mouseover="setHover('wrapperSeriesGenre_', '{{ $series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
+                                @mouseout="removeHover('wrapperSeriesGenre_', '{{ $series->genres()->first()->primary_color ?? '' }}', {{ $index }})"
                                 style="transition: background-color 0.3s ease;">
                                 <div
                                     class="absolute text-sm bg-sky-500 text-white right-2 top-2 px-1 flex group-hover:hidden">

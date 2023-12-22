@@ -22,7 +22,6 @@ class Edit extends Component
     public $isEdit = false;
     public $thumbnail;
     public $is_free = 1;
-    public $price = 0;
 
     #[Validate('required|min:3|string')]
     public $title;
@@ -32,9 +31,8 @@ class Edit extends Component
     public $selectedSeries = [];
     
     #[On('set-coins')]
-    public function setCoins($price, $is_free)
+    public function setCoins($is_free)
     {
-        $this->price = $price;
         $this->is_free = $is_free;
     }
     
@@ -49,7 +47,6 @@ class Edit extends Component
         $this->created = $this->chapter->created;
         $this->created = $this->chapter->created;
         $this->is_free = $this->chapter->is_free;
-        $this->price = $this->chapter->price;
         $this->chapterStr = implode(",\n", $this->chapter->contents()->pluck('url')->toArray());
         $this->selectedSeries = [];
         $this->selectedSeries[] = [
@@ -57,7 +54,7 @@ class Edit extends Component
             'id' => $this->chapter->series->id,
         ];
         $this->dispatch('editSeries', $this->selectedSeries);
-        $this->dispatch('edit-coins', price: $this->price, is_free: $this->is_free);
+        $this->dispatch('edit-coins', is_free: $this->is_free);
     }
     
     public function setImg()
@@ -105,7 +102,6 @@ class Edit extends Component
                 'slug' => $this->slug,
                 'thumbnail' => $this->thumbnail,
                 'created' => $this->created,
-                'price' =>  $this->is_free ? 0 : $this->price,
                 'is_free' => $this->is_free,
                 'published_day' => Carbon::parse($this->created)->format('l')
             ]);

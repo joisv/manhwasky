@@ -35,11 +35,5 @@
                 <label for="coin" class="ms-2 text-base font-medium text-gray-800  dark:text-gray-300">Coin</label>
             </div>
         </div>
-        @if (!$is_free)
-            <div>
-                <input type="number" placeholder="Cari berdasarkan nama"
-                    class="border-0 focus:ring-0 outline-none w-full p-0" wire:model.live="price">
-            </div>
-        @endif
     </div>
 </div>

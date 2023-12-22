@@ -16,7 +16,6 @@ class Chapter extends Model
     protected $fillable = [
         'created',
         'price',
-        'is_free',
         'slug',
         'published_day',
         'title',
@@ -33,7 +32,7 @@ class Chapter extends Model
             robots: 'follow, index',
             image: "storage/".$this->series->gallery->image ?? '',
             schema: SchemaCollection::initialize()->addArticle(),
-            tags: $this->series->tag
+            tags: $this->series->tag ? explode(', ', $this->series->tag) : []
         );
     }
     

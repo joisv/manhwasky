@@ -35,7 +35,7 @@ class Series extends Model
             robots: 'follow, index',
             image: "storage/".$this->gallery->image ?? '',
             schema: SchemaCollection::initialize()->addArticle(),
-            tags: $this->tag
+            tags: $this->tag ? explode(', ', $this->tag) : []
         );
     }
     

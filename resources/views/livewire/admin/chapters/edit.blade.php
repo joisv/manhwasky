@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 {{-- coins --}}
-                <livewire:admin.chapters.set-coins :$price :$is_free />
+                <livewire:admin.chapters.set-coins :$is_free />
                 <div class="space-y-1">
                     <x-input-label for="chapterStr">Chapter</x-input-label>
                     <textarea id="chapterStr" rows="4"

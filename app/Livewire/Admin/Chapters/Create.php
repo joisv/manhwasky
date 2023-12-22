@@ -26,14 +26,18 @@ class Create extends Component
     public $title;
     #[Validate('required|string|min:3')]
     public $chapterStr;
-    public $is_free = 1;
-    public $price = 0;
+    public $is_free = 0;
     
     #[On('set-coins')]
-    public function setCoins($price, $is_free)
+    public function setCoins($is_free)
     {
-        $this->price = $price;
         $this->is_free = $is_free;
+    }
+    
+    public function updatedSelectedSeries()
+    {
+        dd('dasd');
+      
     }
     
     public function save()
@@ -47,7 +51,6 @@ class Create extends Component
                 'slug' => $this->slug,
                 'created' => $this->created,
                 'thumbnail' => $this->thumbnail,
-                'price' =>  $this->is_free ? 0 : $this->price,
                 'is_free' => $this->is_free,
                 'published_day' => Carbon::parse($this->created)->format('l')
             ]);
@@ -98,6 +101,13 @@ class Create extends Component
     public function evtSelectedSeries($value)
     {
         $this->selectedSeries = $value;
+        if (!empty($value)) {
+            $series =  Series::find($this->selectedSeries[0]['id']);
+            if (!empty($series)) {
+                $this->is_free = $series->is_free;
+                $this->dispatch('edit-coins', is_free: $this->is_free);
+            }
+        }
     }
     
     public function render()

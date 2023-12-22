@@ -41,16 +41,16 @@
         }
         return str
     },
-    setHover(hover, index) {
-        const hoverTag = document.getElementById('wrapperSeries_' + index)
+    setHover(wrapper, hover, index) {
+        const hoverTag = document.getElementById(wrapper + index)
 
         if (hoverTag) {
             hoverTag.style.backgroundColor = hover;
         }
     },
 
-    removeHover(hover, index) {
-        const hoverTag = document.getElementById('wrapperSeries_' + index)
+    removeHover(wrapper, hover, index) {
+        const hoverTag = document.getElementById(wrapper + index)
 
         if (hoverTag) {
             hoverTag.style.removeProperty('background-color');
