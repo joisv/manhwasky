@@ -14,6 +14,8 @@ class Series extends Model
 
     protected $fillable = [
         'title',
+        'price',
+        'is_free',
         'slug',
         'tag',
         'published_day',

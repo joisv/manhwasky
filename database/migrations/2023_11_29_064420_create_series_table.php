@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('views')->default(0);
             $table->string('title');
             $table->string('slug');
+            $table->bigInteger('price')->default(0);
+            $table->boolean('is_free')->default(true);
             $table->string('original_title')->nullable();
             $table->longText('overview')->nullable();
             $table->enum('status', ['finish', 'ongoing', 'pending'])->nullable();

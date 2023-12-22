@@ -25,12 +25,21 @@ class Create extends Component
         $urlPoster,
         $category_id,
         $genres,
+        $is_free = 1,
+        $price = 0,
         $status = 'ongoing';
 
     public $searchGenre = '';
     public $selectedGenres = [];
     public $selecteTag = [];
 
+    #[On('set-coins')]
+    public function setCoins($price, $is_free)
+    {
+        $this->price = $price;
+        $this->is_free = $is_free;
+    }
+    
     public function mount()
     {
         $this->date = Carbon::now();
@@ -68,7 +77,9 @@ class Create extends Component
                 'created' => $this->date,
                 'published_day' => Carbon::parse($this->date)->format('l'),
                 'tag' => trim($this->tag),
-                'category_id' => $this->category_id
+                'category_id' => $this->category_id,
+                'price' =>  $this->is_free ? 0 : $this->price,
+                'is_free' => $this->is_free
             ]);
 
             if ($this->selectedGenres) {

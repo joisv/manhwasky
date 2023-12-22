@@ -14,6 +14,7 @@ class CoinsModal extends Component
             $token = Str::random(20);
             session(['coins-token' => $token]);
             $this->redirect(route('coins', ['token' => $token]), navigate:true);
+            $this->dispatch('close-modal');
         }else{
             $this->alert('error', 'ada yang salah deh keknya!!');
         }

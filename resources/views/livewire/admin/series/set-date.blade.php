@@ -90,10 +90,6 @@
         }">
             <input id="flatpickr" wire:model="value" wire:ignore type="text" placeholder="YYYY-MM-DD"
                 class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0" />
-
-            {{-- <button type="button" flatpickrInstance.clear()" class="underline">
-                Clear
-            </button> --}}
         </div>
     </div>
 </div>

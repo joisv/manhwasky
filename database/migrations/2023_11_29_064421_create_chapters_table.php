@@ -17,6 +17,8 @@ return new class extends Migration
             $table->longText('thumbnail')->nullable();
             $table->string('title');
             $table->string('slug');
+            $table->bigInteger('price')->default(0);
+            $table->boolean('is_free')->default(true);
             $table->string('published_day')->nullable();
             $table->date('created')->default(now());
             $table->bigInteger('views')->default(0);

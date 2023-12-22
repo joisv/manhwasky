@@ -1,4 +1,4 @@
-<div class="bg-white p-2 rounded-sm flex flex-col justify-center items-center space-y-3">
+<div class="bg-white p-2 rounded-sm flex flex-col justify-center items-center space-y-3" @close-modal.window="show = false">
     <div class="w-full text-start">
         <h1 class="text-lg font-comicBold">Dapatkan coins dengan click tombol dibawah</h1>
         <p class="font-comicRegular text-base">Fitur ini ada untuk memaksimalkan pengalaman user dalam menggunakan aplikasi / web, user dapat

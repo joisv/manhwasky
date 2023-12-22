@@ -26,6 +26,15 @@ class Create extends Component
     public $title;
     #[Validate('required|string|min:3')]
     public $chapterStr;
+    public $is_free = 1;
+    public $price = 0;
+    
+    #[On('set-coins')]
+    public function setCoins($price, $is_free)
+    {
+        $this->price = $price;
+        $this->is_free = $is_free;
+    }
     
     public function save()
     {
@@ -38,6 +47,8 @@ class Create extends Component
                 'slug' => $this->slug,
                 'created' => $this->created,
                 'thumbnail' => $this->thumbnail,
+                'price' =>  $this->is_free ? 0 : $this->price,
+                'is_free' => $this->is_free,
                 'published_day' => Carbon::parse($this->created)->format('l')
             ]);
             foreach ($chapters as $chapterData) {

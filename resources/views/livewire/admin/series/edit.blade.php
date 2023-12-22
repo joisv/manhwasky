@@ -126,6 +126,8 @@
                         class="text-base font-semibold text-gray-700 hover:text-blue-700 ease-in duration-100 cursor-pointer">
                         Setelan Series</h1>
                 </div>
+                 {{-- coins --}}
+                 <livewire:admin.series.set-coins :$price :$is_free />
                 {{-- category --}}
                 <livewire:admin.series.set-category :series="$series"/>
                 @error('category_id')

@@ -25,12 +25,21 @@ class Edit extends Component
         $gallery_id,
         $category_id,
         $urlPoster,
+        $price,
+        $is_free = 1,
         $status = 'ongoing';
 
     public $genres;
     public $searchGenre = '';
     public $selectedGenres = [];
 
+    #[On('set-coins')]
+    public function setCoins($price, $is_free)
+    {
+        $this->price = $price;
+        $this->is_free = $is_free;
+    }
+    
     #[On('select-poster')]
     public function setSelectedposted($id, $url)
     {
@@ -93,7 +102,9 @@ class Edit extends Component
                 'status' => $this->status,
                 'created' => $this->date,
                 'published_day' => Carbon::parse($this->date)->format('l'),
-                'category_id' => $this->category_id
+                'category_id' => $this->category_id,
+                'price' => $this->is_free ? 0 : $this->price,
+                'is_free' => $this->is_free
             ]);
     
             if ($this->selectedGenres) {
@@ -116,8 +127,11 @@ class Edit extends Component
         $this->tag = $this->series->tag;
         $this->date = $this->series->created;
         $this->gallery_id = $this->series->gallery_id;
+        $this->category_id = $this->series->category_id;
         $this->urlPoster = $this->series->urlPoster;
         $this->status = $this->series->status;
+        $this->price = $this->series->price;
+        $this->is_free = $this->series->is_free;
         $this->getGenre();
     }
 

@@ -15,6 +15,8 @@ class Chapter extends Model
 
     protected $fillable = [
         'created',
+        'price',
+        'is_free',
         'slug',
         'published_day',
         'title',

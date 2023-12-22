@@ -3,9 +3,9 @@
         :class="backdrop ? 'backdrop-blur-md' : ''">
         <div class="flex space-x-5 items-center ">
             @empty(!$setting->logo)
-            <div class="w-36 h-14">
-                <img src="{{ asset('storage/' . $setting->logo) }}" alt="logo" class="w-full h-full object-cover">
-            </div>
+                <div class="w-36 h-14">
+                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="logo" class="w-full h-full object-cover">
+                </div>
             @else
                 <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
             @endempty
@@ -58,7 +58,12 @@
                                 <x-dropdown-link :href="route('profile')" wire:navigate>
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
-                                @hasanyrole('admin|editor')
+                                @auth
+                                    <button type="button" @click="$dispatch('open-modal', 'get-coins')" class="text-sm text-gray-700 w-full text-start px-4 py-2 hover:bg-gray-200">
+                                       Coins {{ Auth::user()->coins }}
+                                    </button>
+                                @endauth
+                                @hasanyrole('admin|editor|demo')
                                     <x-dropdown-link :href="route('dashboard')" wire:navigate>
                                         {{ __('Admin panel') }}
                                     </x-dropdown-link>
