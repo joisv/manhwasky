@@ -8,7 +8,8 @@
             <div class="w-full">
                 <div class="flex items-center space-x-1 ">
                     <div class="text-sm px-1 text-white bg-primary">{{ $series->status }}</div>
-                    <a href="{{ route('home.categories', [ 'cat' => $series->category->name ]) }}" class="text-sm px-1 border border-primary" wire:navigate>{{ $series->category->name }}</a>
+                    <a href="{{ route('home.categories', ['cat' => $series->category->name]) }}"
+                        class="text-sm px-1 border border-primary" wire:navigate>{{ $series->category->name }}</a>
                 </div>
                 <div class="flex w-full justify-between items-start">
                     <div>
@@ -23,7 +24,8 @@
                         <div class="flex flex-wrap gap-1 w-full">
                             @foreach ($series->genres as $genre)
                                 <a href="{{ route('home.genres', ['g' => $genre->name]) }}"
-                                    class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm" wire:navigate>
+                                    class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm"
+                                    wire:navigate>
                                     #{{ $genre->name }}
                                 </a>
                             @endforeach
@@ -41,15 +43,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-8">
+                <div class="mt-8 flex items-center space-x-3">
                     @empty(!$series->chapters()->first())
-                        <a href="{{ route('chapter', [$series->title, $series->chapters()->first()->slug]) }}"
-                            wire:navigate>
-                            <button type="button" class="rounden-sm px-5 py-1 bg-primary flex items-center space-x-1">
-                                <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
-                                <x-icons.book default="20px" />
-                            </button>
-                        </a>
+                        <x-primary-btn type="button" class="bg-primary" wire:click="startRead">
+                            <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
+                            <x-icons.book default="20px" />
+                        </x-primary-btn>
+                        <livewire:pages.home.purchase-button :$series />
                     @endempty
                 </div>
             </div>
@@ -93,11 +93,12 @@
                             </a>
                         </div>
                     @empty
-                        <div class="flex justify-center items-center min-h-[45vh] h-full text-lg sm:text-xl text-gray-400 font-comicBold">tidak ada chapter</div>
+                        <div
+                            class="flex justify-center items-center min-h-[45vh] h-full text-lg sm:text-xl text-gray-400 font-comicBold">
+                            tidak ada chapter</div>
                     @endforelse
                 @endempty
-                <div class=" min-h-[45vh] justify-center items-center" wire:loading.flex
-                    wire:target="getChapters">
+                <div class=" min-h-[45vh] justify-center items-center" wire:loading.flex wire:target="getChapters">
                     <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
                 </div>
             </div>

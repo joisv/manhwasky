@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Series::class, 'user_series')->withTimestamps();
     }
+
+    public function purchasedSeries()
+    {
+       return $this->belongsToMany(Series::class, 'purchase_series', 'series_id', 'user_id');
+    }
 }

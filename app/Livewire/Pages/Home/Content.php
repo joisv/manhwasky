@@ -30,6 +30,11 @@ class Content extends Component
         $this->chapters = $this->series->chapters()->orderBy('created', $this->sortDirection)->get();    
     }
     
+    public function startRead()
+    {
+        $this->redirect(route('chapter', [$this->series->title, $this->series->chapters()->first()->slug]), navigate:true);
+    }
+    
     public function render()
     {
         return view('livewire.pages.home.content', [

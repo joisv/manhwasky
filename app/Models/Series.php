@@ -33,12 +33,12 @@ class Series extends Model
             title: "Baca $this->title",
             description: $this->overview,
             robots: 'follow, index',
-            image: "storage/".$this->gallery->image ?? '',
+            image: "storage/" . $this->gallery->image ?? '',
             schema: SchemaCollection::initialize()->addArticle(),
             tags: $this->tag ? explode(', ', $this->tag) : []
         );
     }
-    
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -63,4 +63,10 @@ class Series extends Model
     {
         return $this->belongsToMany(User::class, 'user_series')->withTimestamps();
     }
+
+    public function purchasedByUsers()
+    {
+        $this->belongsToMany(User::class, 'purchase_series', 'series_id', 'user_id');    
+    }
+    
 }

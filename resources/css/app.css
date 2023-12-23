@@ -11,10 +11,12 @@
     font-family: "Comic-Light";
     src: url("../../public/fonts/ComicNeue-Light.ttf");
 }
+
 @font-face {
     font-family: "Comic-Regular";
     src: url("../../public/fonts/ComicNeue-Regular.ttf");
 }
+
 @font-face {
     font-family: "Comic-Bold";
     src: url("../../public/fonts/ComicNeue-Bold.ttf");
@@ -24,5 +26,9 @@
     .swiper {
         width: 100%;
         height: 100%;
+    }
+
+    .start-read {
+        box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.25);
     }
 }
