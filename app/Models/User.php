@@ -15,6 +15,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids;
 
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -53,6 +56,6 @@ class User extends Authenticatable
 
     public function purchasedSeries()
     {
-       return $this->belongsToMany(Series::class, 'purchase_series', 'series_id', 'user_id');
+       return $this->belongsToMany(Series::class, 'purchase_series', 'user_id', 'series_id');
     }
 }

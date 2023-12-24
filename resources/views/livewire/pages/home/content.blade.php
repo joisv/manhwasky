@@ -1,4 +1,4 @@
-<div class="min-h-screen max-w-5xl mx-auto space-y-4" wire:init="getChapters">
+<div class="min-h-screen max-w-5xl mx-auto space-y-4" wire:init="getChapters" @redirect-to.window="console.log('dsa')">
     <div class="sm:grid grid-cols-4 items-center p-2 xl:p-0">
         <div class="w-full h-72 col-span-2 overflow-hidden">
             <img src="{{ asset('storage/' . $series->gallery->image) }}" alt=""
@@ -46,10 +46,10 @@
                 <div class="mt-8 flex items-center space-x-3">
                     @empty(!$series->chapters()->first())
                         <x-primary-btn type="button" class="bg-primary" wire:click="startRead">
-                            <h3 class="text-white text-xl font-comicRegular">Mulai membaca</h3>
+                            <h3 class="text-white xl:text-xl text-lg font-comicRegular">Mulai membaca</h3>
                             <x-icons.book default="20px" />
                         </x-primary-btn>
-                        <livewire:pages.home.purchase-button :$series />
+                        <livewire:pages.home.purchase-button :$series :$hasSeries :$user />
                     @endempty
                 </div>
             </div>
@@ -77,20 +77,28 @@
                         <div class="flex space-x-3 items-center">
                             <div class="w-36 sm:h-40 h-36 relative overflow-hidden">
                                 <img src="{{ $chapter->thumbnail ? asset('storage/' . $chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}"
-                                    alt="" class="w-full h-full object-cover" wire:loading.remove>
+                                    alt="" class="w-full h-full object-cover">
                             </div>
-                            <a href="{{ route('chapter', [$chapter->series->title, $chapter->slug]) }}"
-                                class="sm:flex justify-between w-full items-center" wire:navigate>
+                            <div wire:click="chapterRead({{ $chapter->is_free }}, '{{ $chapter->slug }}')"
+                                class="sm:flex justify-between w-full items-center cursor-pointer" >
                                 <div>
                                     <h1 class="sm:text-2xl text-xl font-comicBold">{{ $chapter->title }}</h1>
                                     <p class="text-sm">
                                         {{ Carbon\Carbon::createFromFormat('Y-m-d', $chapter->created)->format('F j, Y') }}
                                     </p>
                                 </div>
-                                <div
-                                    class="py-1 px-4 border-2 border-gray-300 text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
-                                    Free</div>
-                            </a>
+                                @if ($chapter->series->is_free || $chapter->is_free)
+                                    <div
+                                        class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
+                                        Free</div>
+                                @elseif($hasSeries)
+                                    <div
+                                        class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
+                                        Unlocked</div>
+                                @else
+                                    <x-icons.padlock default="25px" color="rgb(107, 114, 128)" />
+                                @endif
+                            </div>
                         </div>
                     @empty
                         <div
@@ -104,4 +112,23 @@
             </div>
         </div>
     </div>
+    <x-modal name="coins-required" :show="$errors->isNotEmpty()" maxWidth="sm">
+        <div class="bg-white p-2 space-y-2">
+            <h1 class="text-xl font-comicBold">Dapatkan coin untuk baca manhwa/manga ini 🥳</h1>
+            <p class="font-comicRegular">Buka manga atau manhwa ini tanpa ribet, dan kamu bisa nyaman baca tanpa ada
+                iklan atau di-redirect ke sana-sini. Semua ini bisa kamu nikmati dengan coins</p>
+            <div class="flex items-center w-full space-x-2">
+                <x-primary-btn class="border border-gray-400" @click="show = false">
+                    Batal
+                </x-primary-btn>
+                <x-primary-btn class="w-full bg-primary"
+                    @click="() => {
+                    $dispatch('coins');
+                    show = false;    
+                }">
+                    <p class="text-white">Lanjutkan</p>
+                </x-primary-btn>
+            </div>
+        </div>
+    </x-modal>
 </div>

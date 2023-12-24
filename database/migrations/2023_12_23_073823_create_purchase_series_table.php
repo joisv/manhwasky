@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('series_id');
             $table->uuid('user_id');
             $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

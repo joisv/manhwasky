@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Home;
 
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class PurchaseButton extends Component
@@ -11,26 +12,21 @@ class PurchaseButton extends Component
     use LivewireAlert;
     
     public $series;
+    #[Reactive]
     public $hasSeries;
     public $user;
-    
-    public function mount()
-    {
-        $this->user = Auth::user();
-        if (auth()->check()) {
-            $this->checkPurchasedSeries();
-        }    
-    }
     
     public function handlePurchase()
     {
         if (auth()->check()) {
             
-            if ($this->user->coins > $this->series->coins) {
-                $this->user->coins -= $this->series->coins;
+            if ($this->user->coins >= $this->series->price) {
+                $this->user->coins -= $this->series->price;
                 $this->user->save();
                 $this->user->purchasedSeries()->attach($this->series->id);
                 $this->alert('success', 'Series berhasil dibuka 🥳🥳');
+                $this->dispatch('close');
+                $this->dispatch('has-series', series: $this->hasSeries);
             }else{
                 $this->alert('error', 'coins kamu tidak cukup, dapatkan coins lagi');
             }
@@ -38,11 +34,6 @@ class PurchaseButton extends Component
         } else{
             $this->alert('error', 'login dulu teman');
         }
-    }
-    
-    public function checkPurchasedSeries()
-    {
-        $this->hasSeries = $this->user->purchasedSeries()->find($this->series->id) ? true : false;
     }
     
     public function render()

@@ -21,7 +21,7 @@ class Edit extends Component
     public $created;
     public $isEdit = false;
     public $thumbnail;
-    public $is_free = 1;
+    public $is_free;
 
     #[Validate('required|min:3|string')]
     public $title;

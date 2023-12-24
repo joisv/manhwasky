@@ -53,7 +53,6 @@ class Create extends Component
 
     public function save()
     {
-        dd($this->price);
         if (auth()->user()->can('create')) {
             $this->validate([
                 'title' => 'string|required|min:3',

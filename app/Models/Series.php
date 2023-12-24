@@ -66,7 +66,7 @@ class Series extends Model
 
     public function purchasedByUsers()
     {
-        $this->belongsToMany(User::class, 'purchase_series', 'series_id', 'user_id');    
+        $this->belongsToMany(User::class, 'purchase_series', 'user_id', 'series_id');    
     }
     
 }

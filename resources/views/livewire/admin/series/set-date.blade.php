@@ -17,7 +17,7 @@
     flatpickrInstance: null,
     dateInit: @js($inicialDate),
 
-    init() {
+    init() {                                 
         let flat = document.querySelector('#flatpickr')
         this.flatpickrInstance = flatpickr(flat, {
             altInput: true,
@@ -79,7 +79,7 @@
             <label for="default-radio-2" class="ms-2 text-base font-medium text-gray-800  dark:text-gray-300">Setel
                 tanggal</label>
         </div>
-        <div class="dateShow" :class="setDate ? 'hidden' : ''"
+        <div wire:ignore class="dateShow" :class="setDate ? 'hidden' : ''"
             @inisiasi.window="() => {
             let wrapp = document.querySelector('.dateShow')
             if($event.detail){

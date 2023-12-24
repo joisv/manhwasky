@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -16,6 +17,7 @@ class GetCoins extends Component
     public function validateCoins(Request $request)
     {
         $session_token = $request->session()->get('coins-token', '');
+
         if (auth()->check()) {
             if (!empty($session_token)) {
                 if ($session_token === $this->token) {
@@ -25,27 +27,17 @@ class GetCoins extends Component
                     Session::forget('coins-token');
                     $this->alert('success', '2 coin ditambahkan');
                     $this->dispatch('redirect-to');
-                }else{
+                } else {
                     $this->alert('error', 'ada yang salah!');
                 }
-            }else{
+            } else {
                 $this->alert('error', 'token mana token!!');
             }
-        }else{
+        } else {
             $this->alert('error', 'login dulu bjir');
         }
     }
-    
-    public function mount()
-    {
-        // $this->session_token = ;
 
-        if (empty($this->token)) {
-            $this->alert('error', 'ada yang salah guys');
-            $this->redirect(route('home'), navigate: true);
-        }
-    }
-  
     public function render()
     {
         return view('livewire.get-coins');

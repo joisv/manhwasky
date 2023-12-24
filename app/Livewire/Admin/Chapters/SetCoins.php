@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class SetCoins extends Component
 {
-    public $is_free = 1;
+    public $is_free;
     
     public function updated()
     {

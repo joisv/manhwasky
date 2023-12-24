@@ -1,7 +1,7 @@
 <div>
-    @if (!$series->is_free)
+    @if (!$series->is_free && !$hasSeries)
         <x-primary-btn class="border border-gray-400" @click="$dispatch('open-modal', 'purchase-alert')">
-            <h3 class="text-base sm:text-xl font-comicRegular">Beli</h3>
+            <h3 class="text-base sm:text-xl font-comicRegular">Unlock</h3>
             <div class="flex items-center">
                 <x-icons.coins default="20px" />
                 <p class="text-base sm:text-xl font-comicRegular">{{ number_format($series->price) }}</p>
@@ -9,7 +9,7 @@
         </x-primary-btn>
     @endif
     <x-modal name="purchase-alert" :show="$errors->isNotEmpty()" maxWidth="sm">
-        <div class="bg-white p-2 space-y-2">
+        <div class="bg-white p-2 space-y-2" @close.window="show = false">
             <h1 class="text-xl">Unlock this manga/manhwa 🥳</h1>
             <p class="font-comicRegular">Buka manga atau manhwa ini tanpa ribet, dan kamu bisa nyaman baca tanpa ada
                 iklan atau di-redirect ke sana-sini. Semua ini bisa kamu nikmati dengan coins {{ $series->price }}</p>
