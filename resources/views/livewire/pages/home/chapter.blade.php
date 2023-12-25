@@ -99,10 +99,15 @@
                 x-transition:leave="transition ease-in duration-300 transform"
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 translate-y-full">
-                <button type="button"
-                    class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center">
-                    <x-icons.prev default="34px" color="#000000"></x-icons.prev>
-                </button>
+
+                <a @if (!empty($prev)) href="{{ route('chapter', [$series->title, $prev]) }}" @endif
+                    wire:navigate>
+                    <button type="button"
+                        class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($prev) ? 'opacity-30' : '' }}">
+                        <x-icons.prev default="34px" color="#000000"></x-icons.prev>
+                    </button>
+                </a>
+                {{-- play and puse --}}
                 <button x-show="!isScrolling" type="button" @click.stop="scrollToBottom"
                     class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-end">
                     <x-icons.play default="30px" color="#000000" class="ml-1"></x-icons.play>
@@ -111,17 +116,22 @@
                     class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-end">
                     <x-icons.pause default="34px" color="#000000" class="ml-1"></x-icons.pause>
                 </button>
-                <button type="button"
-                    class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center">
-                    <x-icons.prev class="rotate-180" default="34px" color="#000000"></x-icons.prev>
-                </button>
+                {{-- play and puse --}}
+                <a @if (!empty($next)) href="{{ route('chapter', [$series->title, $next]) }}" @endif
+                    wire:navigate>
+                    <button type="button"
+                        class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($next) ? 'opacity-30' : '' }}">
+                        <x-icons.prev class="rotate-180" default="34px" color="#000000"></x-icons.prev>
+                    </button>
+                </a>
             </div>
         </div>
         <div x-cloak
             class="fixed max-w-[250px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100"
             :class="!chapterList ? 'translate-x-full' : ''">
-            <button @click="chapterList = ! chapterList" type="button" :disabled="!btnNav && !chapterList && widthValue < 850"
-                class="disabled:opacity-30 absolute w-16 h-44 bg-gray-100 backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-16 rounded-l-md  border-l border-primary border-y ease-in duration-100" >
+            <button @click="chapterList = ! chapterList" type="button"
+                :disabled="!btnNav && !chapterList && widthValue < 850"
+                class="disabled:opacity-30 absolute w-16 h-44 bg-gray-100 backdrop-blur-sm bg-opacity-70 bottom-[35%] -left-16 rounded-l-md  border-l border-primary border-y ease-in duration-100">
                 <div class="h-full flex items-center">
                     <p class="text-sm font-comicBold transform rotate-90 w-16">{{ $chapter->title }}</p>
                 </div>
@@ -129,12 +139,14 @@
             <h1 class="text-xl text-center font-comicBold border-b-2 pb-2 border-gray-400">Daftar Chapter</h1>
             <div class="space-y-1 mt-5 w-full overflow-y-auto max-h-[70vh]">
                 @foreach ($series->chapters as $chapterlist)
-                    <div class="cursor-pointer hover:text-primary px-2 flex items-center justify-between">
-                        <h4>{{ $chapterlist->title }}</h4>
-                        @if ($chapterlist->id == $chapter->id)
-                            <x-icons.check default="15px" />
-                        @endif
-                    </div>
+                    <a href="{{ route('chapter', [$series->title, $chapterlist->slug]) }}" wire:navigate>
+                        <div class="cursor-pointer hover:text-primary px-2 flex items-center justify-between">
+                            <h4>{{ $chapterlist->title }}</h4>
+                            @if ($chapterlist->id == $chapter->id)
+                                <x-icons.check default="15px" />
+                            @endif
+                        </div>
+                    </a>
                 @endforeach
             </div>
         </div>
