@@ -21,7 +21,7 @@
     sliderInitGenre(slide) {
         this.swiper = new Swiper('.popularGenre', {
             slidesPerView: slide,
-            spaceBetween: 15,
+            spaceBetween: 8,
             freeMode: true,
             pagination: {
                 el: '.swiper-pagination',
@@ -48,12 +48,11 @@
     <div class="w-full space-y-3">
         <h1 class="text-xl font-comicBold text-gray-600 text-center">Newrelease</h1>
         <div class="swiper popularGenre">
-            <div class="swiper-wrapper sm:mt-3 px-2 sm:px-0">
+            <div class="swiper-wrapper sm:mt-3 px-2 2xl:px-0">
                 @empty(!$series)
                     @forelse ($series as $index => $series)
                         <div class="swiper-slide">
                             <div class="w-full h-32 sm:h-44 relative group cursor-pointer" wire:click="redirectTo('{{ $series->slug }}')">
-                                {{-- <a href="{{ route('content', $series->slug) }}" wire:navigate> --}}
                                     <img src="{{ asset('storage/' . $series->gallery->image) ?? '' }}"
                                         class="object-cover object-top w-full h-full" alt="" srcset="">
                                     <div id="wrapperNewRelease_{{ $index + 1 }}"
@@ -62,7 +61,7 @@
                                         @mouseout="removeHover('wrapperNewRelease_', '{{ $series->genres()->first()->primary_color ?? '' }}', {{ $index + 1 }})"
                                         style="transition: background-color 0.3s ease;">
                                         <div
-                                            class="absolute text-sm bg-sky-500 text-white right-2 top-2 px-1 flex group-hover:hidden">
+                                            class="absolute text-sm bg-sky-500 text-white right-0 sm:right-2 top-2 px-1 flex group-hover:hidden">
                                             {{ $series->title }}</div>
                                         <div
                                             class="hidden sm:flex sm:flex-col absolute bottom-2 group-hover:bottom-0 ease-in duration-100 text-white">
@@ -70,12 +69,11 @@
                                                 x-text="sliceStr('{{ $series->overview }}', 150)">
                                             </p>
                                             <div
-                                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-lg hidden sm:flex group-hover:flex sm:flex-col">
+                                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-7xl hidden sm:flex group-hover:flex sm:flex-col">
                                                 <h1>
                                                     {{ $series->title }}
                                                 </h1>
                                                 <p class="text-sm text-white"></p>
-
                                             </div>
                                         </div>
                                     </div>
@@ -89,8 +87,6 @@
                                         </div>
                                         <span class="text-sm text-gray-500 flex sm:hidden">{{ $series->title }}</span>
                                     </div>
-                                    
-                                {{-- </a> --}}
                             </div>
                         </div>
                     @empty

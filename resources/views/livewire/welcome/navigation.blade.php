@@ -24,7 +24,11 @@
                         class="hover:text-primary ease-in duration-100 {{ request()->routeIs('bookmarks') ? 'text-primary' : '' }}">
                         <a href="{{ route('bookmarks') }}" wire:navigate>Bookmark</a>
                     </li>
-                    <livewire:get-coins-button />
+                    <li
+                        class="hover:text-primary ease-in duration-100 {{ request()->routeIs('bookmarks') ? 'text-primary' : '' }}">
+                        <button type="button" @click="$dispatch('open-modal', 'get-coins')" href="{{ route('bookmarks') }}" wire:navigate>Coins</button>
+                    </li>
+                    {{-- <livewire:get-coins-button /> --}}
                 </ul>
             </div>
         </div>
@@ -59,8 +63,9 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
                                 @auth
-                                    <button type="button" @click="$dispatch('open-modal', 'get-coins')" class="text-sm text-gray-700 w-full text-start px-4 py-2 hover:bg-gray-200">
-                                       Coins {{ Auth::user()->coins }}
+                                    <button type="button" @click="$dispatch('open-modal', 'get-coins')"
+                                        class="text-sm text-gray-700 w-full text-start px-4 py-2 hover:bg-gray-200">
+                                        Coins {{ Auth::user()->coins }}
                                     </button>
                                 @endauth
                                 @hasanyrole('admin|editor|demo')
@@ -97,47 +102,71 @@
             <h1 class="font-comicBold text-4xl"><span class="text-primary">Doujin</span>Sky</h1>
         </header>
         <div class="grid grid-cols-3 gap-x-1">
-            <div>
-                <button class="w-full border border-primary rounded-sm py-1 text-lg">regsiter</button>
-            </div>
-            <div class="col-span-2">
-                <button class="w-full bg-primary text-white py-1 rounded-sm text-lg">login</button>
-            </div>
+            @auth
+                <div></div>
+            @else
+                <div>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" wire:navigate>
+                            <div class="w-full border border-primary rounded-sm py-1 text-lg">regsiter</div>
+                        </a>
+                    @endif
+                </div>
+                <div class="col-span-2">
+                    <a href="{{ route('login') }}" wire:navigate>
+                        <div class="w-full bg-primary text-white py-1 rounded-sm text-lg">login</div>
+                    </a>
+                </div>
+            @endauth
         </div>
         <ul class="mt-3">
+            <li class="border-b border-b-primary border-opacity-30 py-2">
+                <a href="{{ route('home.genres') }}" wire:navigate>
+                    <div class="flex items-center justify-between px-3">
+                        <div class="flex items-center space-x-3">
+                            <x-icons.bookshelf default="27px" active="rgb(156, 163, 175)" />
+                            <p class="font-comicBold text-lg">Genres</p>
+                        </div>
+                        @if (request()->routeIs('home.genres'))
+                            <x-icons.check default="20px" />
+                        @endif
+                    </div>
+                </a>
+            </li>
             <li class="border-b border-b-primary border-opacity-30 py-2 bg-gra">
-                <div class="flex items-center justify-between px-3">
-                    <div class="flex items-center space-x-3 ">
-                        <x-icons.schedule default="25px" active="rgb(156, 163, 175)" />
-                        <p class="font-comicBold text-lg bg-gra">Jadwal</p>
+                <a href="{{ route('bookmarks') }}" wire:navigate>
+                    <div class="flex items-center justify-between px-3">
+                        <div class="flex items-center space-x-3 ">
+                            <x-icons.bookmark default="30px" color="rgb(156, 163, 175)" />
+                            <p class="font-comicBold text-lg bg-gra">Bookmarks</p>
+                        </div>
+                        @if (request()->routeIs('bookmarks'))
+                            <x-icons.check default="20px" />
+                        @endif
                     </div>
-                    @if (request()->routeIs('/'))
-                        <x-icons.check default="20px" />
-                    @endif
-                </div>
+                </a>
+            </li>    
+            <li class="border-b border-b-primary border-opacity-30 py-2 bg-gra">
+                <a href="{{ route('home.categories') }}" wire:navigate>
+                    <div class="flex items-center justify-between px-3">
+                        <div class="flex items-center space-x-3 ">
+                            <x-icons.schedule default="25px" active="rgb(156, 163, 175)" />
+                            <p class="font-comicBold text-lg bg-gra">Categories</p>
+                        </div>
+                        @if (request()->routeIs('home.categories'))
+                            <x-icons.check default="20px" />
+                        @endif
+                    </div>
+                </a>
             </li>
             <li class="border-b border-b-primary border-opacity-30 py-2">
-                <div class="flex items-center justify-between px-3">
-                    <div class="flex items-center space-x-3">
-                        <x-icons.bookshelf default="27px" active="rgb(156, 163, 175)" />
-                        <p class="font-comicBold text-lg">Genre</p>
-                    </div>
-                    @if (request()->routeIs('/'))
-                        <x-icons.check default="20px" />
-                    @endif
-                </div>
-
-            </li>
-            <li class="border-b border-b-primary border-opacity-30 py-2">
-                <div class="flex items-center justify-between px-3">
+                <button type="button" @click="$dispatch('open-modal', 'get-coins')" class="flex w-full items-center justify-between px-3">
                     <div class="flex items-center space-x-3 ">
-                        <x-icons.star default="27px" active="rgb(156, 163, 175)" />
-                        <p class="font-comicBold text-lg">Populer</p>
+                            <x-icons.coins default="24px" color="rgb(156, 163, 175)" />
+                            <p class="font-comicBold text-lg">Coins</p>
                     </div>
-                    @if (request()->routeIs('/'))
-                        <x-icons.check default="20px" />
-                    @endif
-                </div>
+                    <p class="font-comicBold text-gray-500">{{ Auth::user()->coins }}</p>
+                </button>
             </li>
         </ul>
         <button class="absolute bottom-0 right-0" @click="setNav = false">

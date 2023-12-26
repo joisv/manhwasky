@@ -65,7 +65,7 @@
     <main class="@if (!request()->is('chapter')) lg:mt-20 @endif" :class="setNav ? 'backdrop-blur-sm' : ''">
         {{ $slot }}
     </main>
-    <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden" @click="setNav = true">
+    <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden z-50" @click="setNav = true" :class="setNav ? 'hidden' : ''" >
         <x-icons.dotmenu default="25px" />
     </button>
     <x-modal name="get-coins" maxWidth="sm" :show="$errors->isNotEmpty()">

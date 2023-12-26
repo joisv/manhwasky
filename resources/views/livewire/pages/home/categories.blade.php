@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto">
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-0 sm:gap-3 gap-y-16 max-w-5xl mt-2 mx-auto px-2 2xl:px-0">
         @empty(!$series)
             @forelse ($series as $index => $series)
                 <div class="w-full h-32 sm:h-44 relative group " wire:loading.remove>
@@ -91,8 +91,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-2 border-x border-b border-gray-400">
-                            <div class="flex sm:hidden justify-between items-center">
+                        <div>
+                            <div class="sm:hidden justify-between items-center">
                                 <h1 class="group-hover:bg-transparent font-comicBold text-lg "
                                     x-text="sliceStr('{{ $series->title }}', 9)">
                                 </h1>
