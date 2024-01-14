@@ -24,7 +24,7 @@
             </x-tables.addbtn>
         </x-slot>
         <x-slot name="sort">
-            <div class="flex items-center space-x-2 w-1/2 ">
+            <div class="flex items-center space-x-2 sm:w-1/2 w-full">
                 <div class="w-fit">
                     <select id="countries"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 px-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -58,6 +58,7 @@
                 {{-- <input type="hidden" wire:model.live="firstId" value="{{ $chapters[0]->id }}"> --}}
             </x-tables.th>
             <x-tables.th>Series</x-tables.th>
+            <x-tables.th>Title</x-tables.th>
             <x-tables.th>Created</x-tables.th>
             <x-tables.th>Updated</x-tables.th>
             <x-tables.th>Action</x-tables.th>
@@ -72,6 +73,9 @@
                     </x-tables.td>
                     <x-tables.td>
                         {{ $chapter->series->title }}
+                    </x-tables.td>
+                    <x-tables.td>
+                        {{ $chapter->title }}
                     </x-tables.td>
                     <x-tables.td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $chapter->created)->format('F j, Y') }}</x-tables.td>
                     <x-tables.td>{{ $chapter->updated_at->format('d M Y') }}</x-tables.td>

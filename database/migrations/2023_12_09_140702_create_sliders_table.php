@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('main');
-            $table->string('title');
+            $table->unsignedBigInteger('series_id');
             $table->string('background')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('url');
+            $table->string('main')->nullable();
             $table->timestamps();
+            $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
         });
     }
 

@@ -75,7 +75,7 @@
             x-transition:leave-start="opacity-100 -translate-y-0" x-transition:leave-end="opacity-0 -translate-y-full">
             <div>
                 <button type="button" @click="window.history.back()">
-                    <x-icons.arrow default="45px" rotate="-rotate(180)" />
+                    <x-icons.arrow default="45px" rotate="rotate(-90), rotate(90)" />
                 </button>
             </div>
             <div>

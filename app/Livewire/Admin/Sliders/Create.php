@@ -11,11 +11,15 @@ class Create extends Component
 {
     use LivewireAlert;
     
-    public $title;
-    public $description;
+    public $series_id;
     public $main;
     public $background = '#000000';
-    public $url;
+    
+    #[On('setSelectedSeries')]
+    public function setSeries($value)
+    {
+        $this->series_id = $value;    
+    }
     
     #[On('select-poster')]
     public function setImage($id, $url)
@@ -38,24 +42,20 @@ class Create extends Component
     public function save()
     {
         $this->validate([
-            'title' => 'required|string|min:3',
-            'main' => 'required',
-            'url' => 'required|string',
+            'series_id' => 'required',
+            'main' => 'nullable',
             'background' => 'nullable|string',
-            'description' => 'nullable|min:8|string'
         ]);    
 
         Slider::create([
-            'title' => $this->title,
+            'series_id' => $this->series_id,
             'main' => $this->main,
             'background' => $this->background,
-            'url' => $this->url,
-            'description' => $this->description
         ]);
 
         $this->dispatch('close-modal');
         $this->alert('success', 'Slider created successfully');
-        $this->reset(['title', 'main', 'background', 'description', 'url']);
+        $this->reset(['series_id', 'main', 'background']);
     }
     
     public function render()

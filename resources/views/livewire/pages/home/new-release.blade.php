@@ -69,7 +69,7 @@
                                                 x-text="sliceStr('{{ $series->overview }}', 150)">
                                             </p>
                                             <div
-                                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-7xl hidden sm:flex group-hover:flex sm:flex-col">
+                                                class="group-hover:bg-transparent font-comicBold p-2 bg-primary text-lg hidden sm:flex group-hover:flex sm:flex-col">
                                                 <h1>
                                                     {{ $series->title }}
                                                 </h1>

@@ -56,8 +56,7 @@
                     wire:model.live="selectedAll">
                 {{-- <input type="hidden" wire:model.live="firstId" value="{{ $chapters[0]->id }}"> --}}
             </x-tables.th>
-            <x-tables.th>Title</x-tables.th>
-            <x-tables.th>Url</x-tables.th>
+            <x-tables.th>Series</x-tables.th>
             <x-tables.th>Created</x-tables.th>
             <x-tables.th>Updated</x-tables.th>
             <x-tables.th>Action</x-tables.th>
@@ -71,10 +70,7 @@
                             wire:model.live="mySelected" value="{{ $slider->id }}">
                     </x-tables.td>
                     <x-tables.td>
-                        {{ $slider->title }}
-                    </x-tables.td>
-                    <x-tables.td>
-                        {{ $slider->url }}
+                        {{ $slider->series->title }}
                     </x-tables.td>
                     <x-tables.td>{{ $slider->created_at->format('F j, Y') }}</x-tables.td>
                     <x-tables.td>{{ $slider->updated_at->format('F j, Y') }}</x-tables.td>

@@ -4,21 +4,20 @@ use App\Livewire\Actions\Logout;
 use Livewire\Volt\Component;
 use App\Settings\GeneralSetting;
 new class extends Component {
-
     public function with(GeneralSetting $setting): array
     {
         return [
             'setting' => $setting,
         ];
     }
-    
+
     public function logout(Logout $logout)
     {
         $logout();
 
         $this->redirect('/', navigate: true);
     }
-}
+};
 ?>
 
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -30,7 +29,10 @@ new class extends Component {
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <div class="w-36 h-14">
-                            <img class="w-full h-full object-cover" src="{{ asset('storage/'. $setting->logo_cms) }}" alt="">
+                            @if ($setting->logo_cms)
+                                <img class="w-full h-full object-cover" src="{{ asset('storage/' . $setting->logo_cms) }}"
+                                    alt="">
+                            @endif
                         </div>
                     </a>
                 </div>

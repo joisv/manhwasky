@@ -65,7 +65,7 @@
                                 @auth
                                     <button type="button" @click="$dispatch('open-modal', 'get-coins')"
                                         class="text-sm text-gray-700 w-full text-start px-4 py-2 hover:bg-gray-200">
-                                        Coins {{ Auth::user()->coins }}
+                                        Coins {{ Auth::user()?->coins }}
                                     </button>
                                 @endauth
                                 @hasanyrole('admin|editor|demo')
@@ -165,7 +165,7 @@
                             <x-icons.coins default="24px" color="rgb(156, 163, 175)" />
                             <p class="font-comicBold text-lg">Coins</p>
                     </div>
-                    <p class="font-comicBold text-gray-500">{{ Auth::user()->coins }}</p>
+                    <p class="font-comicBold text-gray-500">{{ Auth::user()?->coins }}</p>
                 </button>
             </li>
         </ul>

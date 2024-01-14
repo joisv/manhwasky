@@ -12,8 +12,11 @@ class Slider extends Model
     protected $fillable = [
         'main',
         'background',
-        'title',
-        'description',
-        'url'
+        'series_id'
     ];
+
+    public function series()
+    {
+        return $this->belongsTo(Series::class);    
+    }
 }

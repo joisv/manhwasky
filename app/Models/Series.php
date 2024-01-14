@@ -68,5 +68,10 @@ class Series extends Model
     {
         $this->belongsToMany(User::class, 'purchase_series', 'user_id', 'series_id');    
     }
+
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
     
 }
