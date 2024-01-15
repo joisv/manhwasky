@@ -26,7 +26,7 @@
                     </li>
                     <li
                         class="hover:text-primary ease-in duration-100 {{ request()->routeIs('bookmarks') ? 'text-primary' : '' }}">
-                        <button type="button" @click="$dispatch('open-modal', 'get-coins')" href="{{ route('bookmarks') }}" wire:navigate>Coins</button>
+                        <button type="button" @click="$dispatch('open-modal', 'get-coins')">Coins</button>
                     </li>
                     {{-- <livewire:get-coins-button /> --}}
                 </ul>
