@@ -11,17 +11,17 @@
                         <article class="w-1/2 absolute sm:right-4">
                             <h1
                                 class="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold sm:font-semibold ">
-                                {{ Str::limit($slider->title, 30, '...') }}</h1>
+                                {{ Str::limit($slider->series->title, 30, '...') }}</h1>
                             <p class="text-gray-100 font-medium md:text-xl hidden sm:flex"
-                                x-text="sliceStr('{{ $slider->description }}', 150)"></p>
+                                x-text="sliceStr('{{ $slider->series->description }}', 150)"></p>
                             <p class="text-gray-100 font-medium text-sm sm:hidden flex"
-                                x-text="sliceStr('{{ $slider->description }}', 50)"></p>
-                            <a href="{{ $slider->url }}">
+                                x-text="sliceStr('{{ $slider->series->description }}', 50)"></p>
+                            <button type="button" wire:click="startRead('{{ $slider->series->slug }}')">
                                 <div
                                     class="w-fit py-1 px-2 text-sm sm:text-lg bg-yellow-500 text-black font-semibold sm:mt-5 mt-1 focus:ring-1 focus:ring-yellow-600">
                                     Mulai
                                     membaca</div>
-                            </a>
+                            </button>
                         </article>
                     </div>
                 </div>

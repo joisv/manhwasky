@@ -18,6 +18,11 @@ class Sliders extends Component
         return $sliders;
     }
 
+    public function startRead($slug)
+    {
+        $this->redirect(route('content', $slug), navigate: true);
+    }
+    
     public function render()
     {
         return view('livewire.pages.home.sliders', [

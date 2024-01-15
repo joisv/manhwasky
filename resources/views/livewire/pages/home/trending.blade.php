@@ -1,8 +1,8 @@
 <div class="space-y-3 w-full border border-gray-300 p-3 rounded-sm min-h-full" wire:init="getTrending">
-    <div>
+    {{-- <div>
         <header class="text-xl text-gray-600 font-comicBold">Newsfeed</header>
         <div class="h-16 w-full bg-rose-500"></div>
-    </div>
+    </div> --}}
     <div class="space-y-1">
         <header class="text-xl text-gray-600 font-comicBold">Trending</header>
         @empty(!$trending)

@@ -5,7 +5,7 @@
         <div class="gap-1 flex flex-1 items-center ">
             @foreach ($selectedSeries as $selected)
                 <button type="button" wire:click="restoreSeries"
-                    class="bg-blue-500 w-fit px-2 py-0 text-white text-base font-semibold text-start">{{ $selected['name'] }}</button>
+                    class="bg-blue-500 w-fit px-2 py-0 text-white text-base font-semibold text-start">{{ $selected['title'] }}</button>
             @endforeach
         </div>
         <div class="flex space-x-1 items-center w-full">

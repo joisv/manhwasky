@@ -32,15 +32,15 @@ class SetSeries extends Component
         });
     }
 
-    public function setSelectedSeries($id, $name)
+    public function setSelectedSeries($id, $title)
     {
         $this->removeSeries($id);
         $this->selectedSeries = [];
-        $this->selectedSeries[] = ['id' => $id, 'name' => $name];
+        $this->selectedSeries[] = ['id' => $id, 'title' => $title];
         $this->dispatch('setSelectedSeries', $this->selectedSeries[0]['id']);
     }
 
-    #[On('create-chapter')]
+    #[On('create-slider')]
     public function isCreate()
     {
         $this->selectedSeries = [];

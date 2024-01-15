@@ -23,24 +23,7 @@
                 </x-primary-button>
             </header>
             <div class="space-y-2">
-                <div class="space-x-1">
-                    <x-input-label for="title">Title</x-input-label>
-                    <input type="text"
-                        class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
-                        placeholder="title" id="title" wire:model="title" >
-                    @error('title')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="space-x-1">
-                    <x-input-label for="url">Url</x-input-label>
-                    <input type="text"
-                        class="border-x-0 border-t-0 w-full placeholder:text-gray-400 border-b-2 border-b-gray-300 focus:ring-0 py-2 px-1 focus:border-t-0"
-                        placeholder="eg. boarding-diary (tidak dengan 'https://domain.ext' jika mengarah ke local)" id="url" wire:model="url" >
-                    @error('url')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </div>
+                <livewire:admin.sliders.set-series />
                 <div class="space-y-1">
                     <x-input-label for="background" :value="__('Backgorund Color')" />
                     <div class="flex items-center">
@@ -98,19 +81,9 @@
                         </button>
                         <div x-cloak x-show="main" x-collapse>
                             <x-primary-button type="button" x-data
-                                wire:click="setImg">{{ $main ? 'change' : 'add' }}</x-primary-button>
+                                wire:click.live="setImg">{{ $main ? 'change' : 'add' }}</x-primary-button>
                         </div>
                     </div>
-                </div>
-                <div class="space-y-1">
-                    <x-input-label for="description">Description</x-input-label>
-                    <textarea id="description" rows="4"
-                        class="block p-2.5 w-full min-h-[40vh] text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Chapter url, pisahkan dengan koma (http://foo.huh/baz.wepb, etc..)" wire:model="description"
-                        x-on:focus="selectShow = false"></textarea>
-                    @error('description')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
                 </div>
             </div>
         </div>

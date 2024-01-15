@@ -34,12 +34,14 @@
                     <div class="flex space-x-1">
                         <h3 class="sm:text-xl text-lg text-gray-600">Tags:</h3>
                         <div class="flex flex-wrap gap-1 w-full">
-                            @foreach (explode(',', trim($series->tag, ', ')) as $tag)
-                                <div
-                                    class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm">
-                                    #{{ $tag }}
-                                </div>
-                            @endforeach
+                            @empty(!$series->tag)
+                                @foreach (explode(',', trim($series->tag, ', ')) as $tag)
+                                    <div
+                                        class="px-2 py-1 h-fit sm:text-base text-sm text-gray-500 font-comicRegular bg-gray-200 flex items-center justify-center rounded-sm">
+                                        #{{ $tag }}
+                                    </div>
+                                @endforeach
+                            @endempty
                         </div>
                     </div>
                 </div>
@@ -80,7 +82,7 @@
                                     alt="" class="w-full h-full object-cover">
                             </div>
                             <div wire:click="chapterRead({{ $chapter->is_free }}, '{{ $chapter->slug }}')"
-                                class="sm:flex justify-between w-full items-center cursor-pointer" >
+                                class="sm:flex justify-between w-full items-center cursor-pointer">
                                 <div>
                                     <h1 class="sm:text-2xl text-xl font-comicBold">{{ $chapter->title }}</h1>
                                     <p class="text-sm">

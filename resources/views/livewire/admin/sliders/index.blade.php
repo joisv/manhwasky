@@ -1,6 +1,7 @@
 <div x-data="{
     createSlider() {
-            $dispatch('open-modal', 'create-slider')
+            $dispatch('open-modal', 'create-slider');
+            $dispatch('create-slider');
         },
         editSlider(id) {
 
