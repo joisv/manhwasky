@@ -1,4 +1,4 @@
-<div class="relative space-y-2" x-cloak x-show="setSearchOpen">
+<div class="relative space-y-2 z-50" x-cloak x-show="setSearchOpen">
     <x-search class="focus:ring-0 focus:border-primary p-0" @click.outside="setSearchOpen = false"
         wire:model.live.debounce.500ms="searchInput" />
     @empty(!$searchInput)

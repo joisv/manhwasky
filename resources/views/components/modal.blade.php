@@ -2,7 +2,8 @@
     'name',
     'show' => false,
     'maxWidth' => '2xl',
-    'bg_default' => 'bg-gray-500 dark:bg-gray-900'
+    'bg_default' => 'bg-gray-500 dark:bg-gray-900',
+    'is_transparent' => false
 ])
 
 @php
@@ -68,7 +69,7 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="mb-6 bg-white dark:bg-gray-800 rounded-sm shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
+        class="mb-6 {{ $is_transparent ? 'bg-transparent' : 'shadow-xl bg-white' }} dark:bg-gray-800 rounded-sm transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"

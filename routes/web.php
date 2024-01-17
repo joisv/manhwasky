@@ -64,9 +64,10 @@ Route::middleware(['auth', 'role:admin|demo'])->prefix('admin')->group(function 
     Route::view('sliders', 'admin/sliders/index')->name('sliders');
     Route::view('settings', 'admin/settings')->name('settings');
 
-    Route::view('profile', 'profile')
-        ->name('profile');
 });
+Route::middleware('auth')->get('profile', function() {
+    return view('profile');
+})->name('profile');
 
 
 require __DIR__ . '/auth.php';
