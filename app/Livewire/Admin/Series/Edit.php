@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Series;
 
+use App\Models\Gallery;
 use App\Models\Genre;
 use App\Models\Series;
 use Carbon\Carbon;
@@ -128,7 +129,7 @@ class Edit extends Component
         $this->date = $this->series->created;
         $this->gallery_id = $this->series->gallery_id;
         $this->category_id = $this->series->category_id;
-        $this->urlPoster = $this->series->urlPoster;
+        $this->urlPoster = Gallery::where('id', $this->series->gallery_id)->select('image')->first()?->image;
         $this->status = $this->series->status;
         $this->price = $this->series->price;
         $this->is_free = $this->series->is_free;

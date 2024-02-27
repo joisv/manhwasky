@@ -1,11 +1,11 @@
-<!DOCTYPE html >
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" href="{{ asset('storage/'. $setting->favicon) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('storage/' . $setting->favicon) }}" type="image/x-icon">
     {{ $seo ?? '' }}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -65,19 +65,23 @@
     <main class="@if (!request()->is('chapter')) lg:mt-20 @endif" :class="setNav ? 'backdrop-blur-sm' : ''">
         {{ $slot }}
     </main>
-    <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden z-50" @click="setNav = true" :class="setNav ? 'hidden' : ''" >
-        <x-icons.dotmenu default="25px" />
-    </button>
+    @if (!request()->routeIs('chapter'))
+        <button type="button" class="p-2 bg-primary fixed bottom-3 right-3 flex lg:hidden z-50" @click="setNav = true"
+            :class="setNav ? 'hidden' : ''">
+            <x-icons.dotmenu default="25px" />
+        </button>
+    @endif
     <x-modal name="get-coins" maxWidth="sm" :show="$errors->isNotEmpty()">
         <livewire:coins-modal />
     </x-modal>
     <footer>
-        <div class="w-full px-4 static bottom-0 mt-10 py-5 space-y-2 bg-gray-100">
+        <div class="w-full px-4 static bottom-0 mt-44 py-5 space-y-2 bg-gray-100">
             <div class="w-full text-center">
                 <h1 class="font-comicBold text-4xl"><span class="text-primary">Doujin</span>Sky</h1>
-                <span class=" w-full">Copyright @ {{ config('app.name') }}. All right reserved.</span>
+                <span class=" w-full font-comicBold opacity-70">Copyright @ {{ config('app.name') }}. All right
+                    reserved.</span>
             </div>
-            <p class="font-comicBold text-base text-center max-w-5xl mx-auto">All the comics on this website are only
+            <p class="font-comicRegular text-base text-center max-w-2xl mx-auto">All the comics on this website are only
                 previews of the
                 original comics, there may be many language errors, character names, and story lines. For the original
                 version, please buy the comic if it's available in your city.</p>

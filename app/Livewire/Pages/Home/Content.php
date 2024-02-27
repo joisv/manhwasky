@@ -28,15 +28,16 @@ class Content extends Component
 
         if ($this->direction) {
             $this->sortDirection = 'desc';
+            $this->getChapters();
         } else {
             $this->sortDirection = 'asc';
+            $this->chapters->reverse();
         }
-        $this->getChapters();
     }
 
     public function getChapters()
     {
-        $this->chapters = $this->series->chapters()->orderBy('created', $this->sortDirection)->get();
+        $this->chapters = $this->series->chapters()->orderBy('created', $this->sortDirection)->orderBy('id', $this->sortDirection)->get();
     }
 
     public function chapterRead($chapter_is_free, $slug)

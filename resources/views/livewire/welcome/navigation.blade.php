@@ -231,7 +231,7 @@
                 </li>
             @endauth
         </ul>
-        <button class="absolute bottom-0 right-0" @click="setNav = false">
+        <button class="absolute bottom-4 right-0" @click="setNav = false">
             <x-icons.arrow color="#350B75" />
         </button>
     </div>

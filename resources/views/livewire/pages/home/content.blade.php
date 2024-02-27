@@ -58,7 +58,7 @@
 
         </div>
     </div>
-    <div class="flex flex-col-reverse sm:grid grid-cols-3 gap-3 min-h-[50vh]">
+    <div class="flex flex-col-reverse sm:grid sm:grid-cols-3 sm:gap-2 min-h-[50vh] ">
         <livewire:pages.home.trending />
         <div class="w-full border-t-2 border-gray-300 rota pt-2 col-span-2 max-h-screen overflow-y-auto p-3">
             <div class="flex relative w-full justify-end">

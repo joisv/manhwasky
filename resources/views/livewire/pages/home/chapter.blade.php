@@ -100,8 +100,8 @@
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 translate-y-full">
 
-                <a @if (!empty($prev)) href="{{ route('chapter', [$series->title, $prev]) }}" @endif
-                    wire:navigate>
+                <a @if (!empty($prev)) href="{{ route('chapter', [$series->title, $prev]) }}" 
+                    wire:navigate @endif>
                     <button type="button"
                         class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($prev) ? 'opacity-30' : '' }}">
                         <x-icons.prev default="34px" color="#000000"></x-icons.prev>
@@ -117,8 +117,8 @@
                     <x-icons.pause default="34px" color="#000000" class="ml-1"></x-icons.pause>
                 </button>
                 {{-- play and puse --}}
-                <a @if (!empty($next)) href="{{ route('chapter', [$series->title, $next]) }}" @endif
-                    wire:navigate>
+                <a @if (!empty($next)) href="{{ route('chapter', [$series->title, $next]) }}"
+                    wire:navigate @endif>
                     <button type="button"
                         class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($next) ? 'opacity-30' : '' }}">
                         <x-icons.prev class="rotate-180" default="34px" color="#000000"></x-icons.prev>
@@ -126,7 +126,7 @@
                 </a>
             </div>
         </div>
-        <div x-cloak
+        {{-- <div x-cloak
             class="fixed max-w-[250px] p-2 w-full h-[80vh] bg-gray-100 bg-opacity-70 backdrop-blur-sm bottom-0 right-0 top-[10%] ease ease-in duration-100"
             :class="!chapterList ? 'translate-x-full' : ''">
             <button @click="chapterList = ! chapterList" type="button"
@@ -149,6 +149,6 @@
                     </a>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
