@@ -16,7 +16,7 @@ class NewRelease extends Component
     public function render()
     {
         return view('livewire.pages.home.new-release', [
-            'series' => Series::latest('id')->take(10)->get()
+            'series' => Series::latest('id')->take(9)->get()
         ]);
     }
 }
