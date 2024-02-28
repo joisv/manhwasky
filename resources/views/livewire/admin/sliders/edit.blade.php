@@ -24,6 +24,9 @@
             </header>
             <div class="space-y-2">
                 <livewire:admin.sliders.set-series />
+                @error('series_id')
+                    <span class="error">{{ $message }}</span>
+                @enderror
                 <div class="space-y-1">
                     <x-input-label for="background" :value="__('Backgorund Color')" />
                     <div class="flex items-center">

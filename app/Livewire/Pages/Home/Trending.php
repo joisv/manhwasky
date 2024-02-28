@@ -11,7 +11,10 @@ class Trending extends Component
 
     public function getTrending()
     {
-        $this->trending = Series::with('gallery')->orderBy('views')->take(10)->get();    
+        $this->trending = Series::with('gallery')
+        ->orderByDesc('views') // Mengurutkan berdasarkan views secara descending
+        ->take(8) // Mengambil 8 hasil teratas
+        ->get();    
     }
     
     public function render()

@@ -100,8 +100,8 @@
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 translate-y-full">
 
-                <a @if (!empty($prev)) href="{{ route('chapter', [$series->title, $prev]) }}" 
-                    wire:navigate @endif>
+                <a @if (!empty($prev)) href="{{ route('chapter', [$series->title, $prev]) }}" @endif
+                    wire:navigate >
                     <button type="button"
                         class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($prev) ? 'opacity-30' : '' }}">
                         <x-icons.prev default="34px" color="#000000"></x-icons.prev>
@@ -117,8 +117,8 @@
                     <x-icons.pause default="34px" color="#000000" class="ml-1"></x-icons.pause>
                 </button>
                 {{-- play and puse --}}
-                <a @if (!empty($next)) href="{{ route('chapter', [$series->title, $next]) }}"
-                    wire:navigate @endif>
+                <a @if (!empty($next)) href="{{ route('chapter', [$series->title, $next]) }}" @endif
+                    wire:navigate>
                     <button type="button"
                         class="border-2 border-gray-800 p-1 rounded-full bg-white flex items-center justify-center {{ empty($next) ? 'opacity-30' : '' }}">
                         <x-icons.prev class="rotate-180" default="34px" color="#000000"></x-icons.prev>

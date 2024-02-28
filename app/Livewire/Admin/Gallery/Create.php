@@ -57,7 +57,7 @@ class Create extends Component
     #[On('delete-poster')]
     public function deletePoster($id)
     {
-        if (auth()->user()-can('delete')) {
+        if (auth()->user()->can('delete')) {
             # code...
             $gallery = Gallery::find($id);
             $gallery->delete();

@@ -4,7 +4,7 @@
         $rand =+ 1;
     }
 @endphp
-<div class="w-full max-w-5xl mx-auto min-h-[50vh]" x-data="{
+<div class="w-full max-w-5xl mx-auto" x-data="{
     swiper: null,
     slidePerView: 3,
 
@@ -52,8 +52,8 @@
     sliderInitGenre(slidePreview);
 })">
     <header class="mb-3 sm:mb-8 p-2 sm:p-0">
-        <h1 class="text-4xl text-gray-600 font-comicBold">New Releases</h1>
-        <p class="text-gray-400 font-comicRegular text-xl">Check out the latest manhwa/comics that just dropped</p>
+        <h1 class="text-2xl sm:text-4xl text-gray-600 font-comicBold">New Releases</h1>
+        <p class="text-gray-400 font-comicRegular text-lg sm:text-xl">Check out the latest manhwa/comics that just dropped</p>
     </header>
     {{-- <div class="w-full space-y-3">
         <h1 class="text-xl font-comicBold text-gray-600 text-center">Newrelease</h1>

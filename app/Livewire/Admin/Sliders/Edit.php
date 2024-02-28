@@ -41,6 +41,7 @@ class Edit extends Component
     public function getSliderEdit($id)
     {
         $this->slider = Slider::find($id);
+        $this->series_id = $this->slider->series->id;
         $this->selectedSeries = [];
         $this->selectedSeries[] = [
             'title' => $this->slider->series->title,

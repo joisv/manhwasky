@@ -7,7 +7,9 @@
                     <img src="{{ asset('storage/' . $setting->logo) }}" alt="logo" class="w-full h-full object-cover">
                 </div>
             @else
-                <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Doujin</span>Sky</h1>
+            <a href="{{ route('home') }}" wire:navigate>
+                <h1 class="font-little text-4xl font-semibold "><span class="text-primary">Manhwa</span>Sky</h1>
+            </a>
             @endempty
             <div>
                 <ul class="flex space-x-2 text-lg font-comicBold text-gray-600">
@@ -97,11 +99,14 @@
     </div>
     <div x-cloak x-data
         class="flex flex-col lg:hidden w-full max-w-[300px] bg-white h-screen fixed z-50 p-2 right-0 ease-in duration-100"
-        :class="{ 'translate-x-full' : !setNav, '' : setNav }">
+        :class="{ 'translate-x-full': !setNav, '': setNav }">
         <header class="flex items-center justify-between h-16 w-full ">
-            <h1 class="font-comicBold text-4xl"><span class="text-primary">Doujin</span>Sky</h1>
+            <a href="{{ route('home') }}" wire:navigate>
+                <h1 class="font-comicBold text-4xl"><span class="text-primary">Manhwa</span>Sky</h1>
+            </a>
         </header>
-        <button @click="() => {
+        <button
+            @click="() => {
             $dispatch('open-modal', 'search-modal');
             setNav = ! setNav;    
         }"
@@ -159,6 +164,39 @@
                         </div>
                     </a>
                 </li>
+                @hasanyrole('admin|editor|demo')
+                    <li class="border-b border-b-primary border-opacity-30 py-2 bg-gra">
+                        <a href="{{ route('dashboard') }}" wire:navigate>
+                            <div class="flex items-center justify-between px-3">
+                                <div class="flex items-center space-x-3 ">
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H13.4C13.9601 3 14.2401 3 14.454 3.10899C14.6422 3.20487 14.7951 3.35785 14.891 3.54601C15 3.75992 15 4.03995 15 4.6V5.4C15 5.96005 15 6.24008 14.891 6.45399C14.7951 6.64215 14.6422 6.79513 14.454 6.89101C14.2401 7 13.9601 7 13.4 7H4.6C4.03995 7 3.75992 7 3.54601 6.89101C3.35785 6.79513 3.20487 6.64215 3.10899 6.45399C3 6.24008 3 5.96005 3 5.4V4.6Z"
+                                                stroke="rgb(156, 163, 175)" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                            <path
+                                                d="M3 11.6C3 11.0399 3 10.7599 3.10899 10.546C3.20487 10.3578 3.35785 10.2049 3.54601 10.109C3.75992 10 4.03995 10 4.6 10H19.4C19.9601 10 20.2401 10 20.454 10.109C20.6422 10.2049 20.7951 10.3578 20.891 10.546C21 10.7599 21 11.0399 21 11.6V12.4C21 12.9601 21 13.2401 20.891 13.454C20.7951 13.6422 20.6422 13.7951 20.454 13.891C20.2401 14 19.9601 14 19.4 14H4.6C4.03995 14 3.75992 14 3.54601 13.891C3.35785 13.7951 3.20487 13.6422 3.10899 13.454C3 13.2401 3 12.9601 3 12.4V11.6Z"
+                                                stroke="rgb(156, 163, 175)" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                            <path
+                                                d="M3 18.6C3 18.0399 3 17.7599 3.10899 17.546C3.20487 17.3578 3.35785 17.2049 3.54601 17.109C3.75992 17 4.03995 17 4.6 17H9.4C9.96005 17 10.2401 17 10.454 17.109C10.6422 17.2049 10.7951 17.3578 10.891 17.546C11 17.7599 11 18.0399 11 18.6V19.4C11 19.9601 11 20.2401 10.891 20.454C10.7951 20.6422 10.6422 20.7951 10.454 20.891C10.2401 21 9.96005 21 9.4 21H4.6C4.03995 21 3.75992 21 3.54601 20.891C3.35785 20.7951 3.20487 20.6422 3.10899 20.454C3 20.2401 3 19.9601 3 19.4V18.6Z"
+                                                stroke="rgb(156, 163, 175)" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                    <p class="font-comicRegular text-lg bg-gra">Admin panel</p>
+                                </div>
+                                @if (request()->routeIs('dashboard'))
+                                    <x-icons.check default="20px" />
+                                @endif
+                            </div>
+                        </a>
+                    </li>
+                @endhasanyrole
             @endauth
             <li class="border-b border-b-primary border-opacity-30 py-2">
                 <a href="{{ route('home.genres') }}" wire:navigate>

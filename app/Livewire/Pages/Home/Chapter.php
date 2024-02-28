@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Home;
 
 use App\Models\Chapter as ModelsChapter;
 use App\Models\Series;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Chapter extends Component
@@ -17,13 +18,16 @@ class Chapter extends Component
     {
         $this->series = $series;    
         $this->chapter = $chapter;
-        $this->prev = $this->getButton('id', '<', $this->chapter->id);
-        $this->next =  $this->getButton('id', '>', $this->chapter->id);
+        $this->prev = $this->getButton('created', '<', Carbon::parse($this->chapter->created));
+        $this->next =  $this->getButton('created', '>', Carbon::parse($this->chapter->created));
     }
     
-    public function getButton($column = 'id', $sign, $value)
+    public function getButton($column = 'created', $sign, $value)
     {
-        return ModelsChapter::where($column, $sign, $value)->pluck('slug')->first();
+        return $this->series->chapters()
+        ->where($column, $sign, $value)
+        ->orWhere('id', $sign, $this->chapter->id)
+        ->first();
     }
     
     public function render()

@@ -11,6 +11,7 @@
     </div>
     <div class="w-full min-h-screen space-y-20 sm:space-y-10">
         <livewire:pages.home.today />
+        <livewire:pages.home.premium />
         <livewire:pages.home.new-release />
     </div>
 </x-home-layout>
