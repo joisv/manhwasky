@@ -85,7 +85,7 @@
                     }" class="text-base sm:text-xl font-comicBold text-gray-600 w-full p-2">recommend</button>
                 </div>
             </div>
-            <div :class="{ 'max-h-screen': activeTab != 'preview' }" class="overflow-y-auto">
+            <div :class="{ 'max-h-screen': activeTab === 'chapters' }" class="overflow-y-auto">
                 <div x-cloak x-show="activeTab === 'preview'">
                     <livewire:pages.home.preview :$series />
                 </div>
