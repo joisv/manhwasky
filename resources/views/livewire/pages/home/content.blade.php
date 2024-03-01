@@ -1,5 +1,5 @@
-<div class="min-h-screen max-w-5xl mx-auto space-y-4" wire:init="getChapters" @redirect-to.window="console.log('dsa')">
-    <div class="sm:grid grid-cols-4 items-center p-2 xl:p-0">
+<div class="min-h-screen max-w-5xl mx-auto space-y-4">
+    <div class="sm:grid grid-cols-4 items-center xl:p-0">
         <div class="w-full h-72 col-span-2 overflow-hidden">
             <img src="{{ asset('storage/' . $series->gallery->image) }}" alt=""
                 class="object-cover w-full h-full object-top">
@@ -58,59 +58,94 @@
 
         </div>
     </div>
-    <div class="flex flex-col-reverse sm:grid sm:grid-cols-3 sm:gap-2 min-h-[50vh] ">
+    <div class="flex flex-col-reverse sm:grid sm:grid-cols-3 sm:gap-2 min-h-[50vh]" x-data="{
+        activeTab: 'preview'
+    }">
         <livewire:pages.home.trending />
-        <div class="w-full border-t-2 border-gray-300 rota pt-2 col-span-2 max-h-screen overflow-y-auto p-3">
-            <div class="flex relative w-full justify-end">
-                <button class="block" wire:click="setDirection">
-                    <div class="absolute right-3">
-                        <x-icons.arrow rotate="rotate(90)" color="{{ !$direction ? 'rgb(209 213 219)' : '#000000' }}"
-                            default="30px" />
-                    </div>
-                    <div class="absolute right-0">
-                        <x-icons.arrow rotate="rotate(90), rotate(180)" default="30px"
-                            color="{{ $direction ? 'rgb(209 213 219)' : '#000000' }}" />
-                    </div>
-                </button>
-            </div>
-            <div class="space-y-2 mt-9">
-                @empty(!$chapters)
-                    @forelse ($chapters as $chapter)
-                        <div class="flex space-x-3 items-center">
-                            <div class="w-36 sm:h-40 h-36 relative overflow-hidden">
-                                <img src="{{ $chapter->thumbnail ? asset('storage/' . $chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}"
-                                    alt="" class="w-full h-full object-cover">
-                            </div>
-                            <div wire:click="chapterRead({{ $chapter->is_free }}, '{{ $chapter->slug }}')"
-                                class="sm:flex justify-between w-full items-center cursor-pointer">
-                                <div>
-                                    <h1 class="sm:text-2xl text-xl font-comicBold">{{ $chapter->title }}</h1>
-                                    <p class="text-sm">
-                                        {{ Carbon\Carbon::createFromFormat('Y-m-d', $chapter->created)->format('F j, Y') }}
-                                    </p>
-                                </div>
-                                @if ($chapter->series->is_free || $chapter->is_free)
-                                    <div
-                                        class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
-                                        Free</div>
-                                @elseif($hasSeries)
-                                    <div
-                                        class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
-                                        Unlocked</div>
-                                @else
-                                    <x-icons.padlock default="25px" color="rgb(107, 114, 128)" />
-                                @endif
-                            </div>
-                        </div>
-                    @empty
-                        <div
-                            class="flex justify-center items-center min-h-[45vh] h-full text-lg sm:text-xl text-gray-400 font-comicBold">
-                            tidak ada chapter</div>
-                    @endforelse
-                @endempty
-                <div class=" min-h-[45vh] justify-center items-center" wire:loading.flex wire:target="getChapters">
-                    <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
+        <div class="w-full border-t-2 border-gray-200 rota pt-2 col-span-2 overflow-y-auto p-3"
+            :class="{ 'max-h-screen': activeTab === 'chapters' }">
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <button :class="{ 'border-b-2 border-b-gray-400': activeTab === 'preview' }"
+                        @click.prevent="activeTab = 'preview'"
+                        class="text-base sm:text-xl font-comicBold text-gray-600 w-full p-2">preview</button>
                 </div>
+                <div>
+                    <button :class="{ 'border-b-2 border-b-gray-400': activeTab === 'chapters' }"
+                        @click.prevent="() => {
+                    $wire.getChapters();
+                    activeTab = 'chapters'    
+                    }"
+                        class="text-base sm:text-xl font-comicBold text-gray-600 w-full p-2">chapters</button>
+                </div>
+                <div>
+                    <button :class="{ 'border-b-2 border-b-gray-400': activeTab === 'recommend' }"
+                        @click.prevent="() => {
+                            $dispatch('get-recommend')
+                    activeTab = 'recommend'    
+                    }" class="text-base sm:text-xl font-comicBold text-gray-600 w-full p-2">recommend</button>
+                </div>
+            </div>
+            <div x-cloak x-show="activeTab === 'preview'">
+                <livewire:pages.home.preview :$series />
+            </div>
+            <div x-cloak x-show="activeTab === 'chapters'">
+                {{-- sort --}}
+                <div class="flex relative w-full justify-end">
+                    <button class="block" wire:click="setDirection">
+                        <div class="absolute right-3">
+                            <x-icons.arrow rotate="rotate(90)"
+                                color="{{ !$direction ? 'rgb(209 213 219)' : '#000000' }}" default="30px" />
+                        </div>
+                        <div class="absolute right-0">
+                            <x-icons.arrow rotate="rotate(90), rotate(180)" default="30px"
+                                color="{{ $direction ? 'rgb(209 213 219)' : '#000000' }}" />
+                        </div>
+                    </button>
+                </div>
+                {{-- chapters --}}
+                <div class="space-y-2 mt-9">
+                    @empty(!$chapters)
+                        @forelse ($chapters as $chapter)
+                            <div class="flex space-x-3 items-center">
+                                <div class="w-36 sm:h-40 h-36 relative overflow-hidden">
+                                    <img src="{{ $chapter->thumbnail ? asset('storage/' . $chapter->thumbnail) : 'https://placehold.co/144x160?text=Thumb+not+found' }}"
+                                        alt="" class="w-full h-full object-cover">
+                                </div>
+                                <div wire:click="chapterRead({{ $chapter->is_free }}, '{{ $chapter->slug }}')"
+                                    class="sm:flex justify-between w-full items-center cursor-pointer">
+                                    <div>
+                                        <h1 class="sm:text-2xl text-xl font-comicBold">{{ $chapter->title }}</h1>
+                                        <p class="text-sm">
+                                            {{ Carbon\Carbon::createFromFormat('Y-m-d', $chapter->created)->format('F j, Y') }}
+                                        </p>
+                                    </div>
+                                    @if ($chapter->series->is_free || $chapter->is_free)
+                                        <div
+                                            class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
+                                            Free</div>
+                                    @elseif($hasSeries)
+                                        <div
+                                            class="py-1 px-4 border-2 border-gray-300 bg-gra text-primary rounded-sm text-xm w-fit mt-2 sm:mt-0">
+                                            Unlocked</div>
+                                    @else
+                                        <x-icons.padlock default="25px" color="rgb(107, 114, 128)" />
+                                    @endif
+                                </div>
+                            </div>
+                        @empty
+                            <div
+                                class="flex justify-center items-center min-h-[45vh] h-full text-lg sm:text-xl text-gray-400 font-comicBold">
+                                tidak ada chapter</div>
+                        @endforelse
+                    @endempty
+                    <div class=" min-h-[45vh] justify-center items-center" wire:loading.flex wire:target="getChapters">
+                        <p class="text-3xl text-gray-400 animate-pulse font-comicBold">loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div x-cloak x-show="activeTab === 'recommend'">
+                <livewire:pages.home.recommend :$series />
             </div>
         </div>
     </div>

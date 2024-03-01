@@ -72,7 +72,7 @@
                             clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="w-36 right-2 bg-gray-100 absolute p-2 space-y-1"  x-cloak x-show="setSort" x-transition>
+                <div class="w-36 right-2 bg-gray-100 absolute p-2 space-y-1 z-50"  x-cloak x-show="setSort" x-transition>
                     @foreach (['All', 'Views', 'Created', 'Updated' , 'Ongoing', 'Pending', 'Finish'] as $sort)
                         <button @click="sortBy('{{ $sort }}')" type="button"
                             class="w-full text-start flex items-center justify-between">

@@ -8,6 +8,9 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
+
+use function Laravel\Prompts\alert;
 
 class Content extends Component
 {
@@ -40,6 +43,7 @@ class Content extends Component
         $this->chapters = $this->series->chapters()->orderBy('created', $this->sortDirection)->orderBy('id', $this->sortDirection)->get();
     }
 
+    #[Renderless]
     public function chapterRead($chapter_is_free, $slug)
     {
         if ($chapter_is_free || $this->series->is_free || $this->hasSeries) {
@@ -54,10 +58,13 @@ class Content extends Component
                 } else {
                     $this->dispatch('open-modal', 'coins-required');
                 }
+            } else{
+                $this->alert('error', 'this chapter required coins to read');
             }
         }
     }
     
+    #[Renderless]
     public function startRead()
     {
         $free = $this->series->is_free;
