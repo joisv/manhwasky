@@ -2,7 +2,7 @@
     expanded: false
 }">
     <p  class="text-start p-1 bg-gray-200 rounded-md font-comicRegular cursor-pointer" x-collapse.min.55px x-show="expanded"  @click="expanded = ! expanded">{{ $series->overview }}</p>
-    <div class="max-w-3xl mx-auto flex justify-center">
+    <div class="max-w-3xl mx-auto">
         @if (!empty($preview))
             @foreach ($preview->contents as $content)
                 <div>
