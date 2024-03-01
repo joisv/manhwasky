@@ -62,7 +62,7 @@
         activeTab: 'preview'
     }">
         <livewire:pages.home.trending />
-        <div class="w-full border-t-2 border-gray-200 rota pt-2 col-span-2 p-3">
+        <div class="w-full border-t-2 border-gray-200 pt-2 col-span-2 sm:p-3 p-2">
             <div class="grid grid-cols-3 gap-2">
                 <div>
                     <button :class="{ 'border-b-2 border-b-gray-400': activeTab === 'preview' }"
@@ -85,7 +85,7 @@
                     }" class="text-base sm:text-xl font-comicBold text-gray-600 w-full p-2">recommend</button>
                 </div>
             </div>
-            <div :class="{ 'max-h-screen': activeTab === 'chapters' }" class="overflow-y-auto">
+            <div :class="{ 'max-h-screen overflow-y-auto': activeTab === 'chapters' }">
                 <div x-cloak x-show="activeTab === 'preview'">
                     <livewire:pages.home.preview :$series />
                 </div>

@@ -9,7 +9,7 @@
         <h1 class="text-2xl sm:text-4xl text-gray-600 font-comicBold">New Releases</h1>
         <p class="text-gray-400 font-comicRegular text-lg sm:text-xl">Check out the latest manhwa/comics that just dropped</p>
     </header> --}}
-    <div class="grid grid-cols-3 md:grid-cols-4 gap-y-12 gap-x-2 sm:gap-y-16 max-w-5xl mx-auto mt-3 px-2 2xl:px-0">
+    <div class="grid grid-cols-3 md:grid-cols-4 gap-y-12 gap-x-2 sm:gap-y-16 max-w-5xl mx-auto mt-3 2xl:px-0">
         @empty(!$recommend)
             @forelse ($recommend as $index => $series)
                 <div class="w-full h-32 sm:h-44 relative group @if ($rand === $index) sm:col-span-2 @endif"

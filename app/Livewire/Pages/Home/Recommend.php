@@ -32,7 +32,7 @@ class Recommend extends Component
             }
         })
         ->whereNotIn('id', [$this->series->id])
-            ->take(10)
+            ->take(9)
             ->get();
     }
 
